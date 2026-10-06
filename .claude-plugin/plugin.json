@@ -1,8 +1,8 @@
 {
   "name": "unslop",
   "displayName": "unslop",
-  "version": "1.0.1",
-  "description": "Audit skill for the tells of AI-generated UI. Connects the read-only UNSLOP rule canon over MCP and writes fix plans; never edits source code.",
+  "version": "1.0.2",
+  "description": "Audit skill for the tells of AI-generated UI. Reads the UNSLOP rule canon from a read-only MCP server and writes fix plans; only its execute mode changes source code, one plan at a time in an isolated worktree.",
   "author": {
     "name": "Oleg.Design",
     "url": "https://oleg.design"

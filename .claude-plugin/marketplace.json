@@ -9,7 +9,7 @@
     {
       "name": "unslop",
       "source": "./",
-      "description": "Audit a project for the tells of AI-generated UI and write fix plans. Connects the UNSLOP canon MCP server on install."
+      "description": "Audit a project for the tells of AI-generated UI and write fix plans. Declares the remote read-only UNSLOP canon MCP server; your client connects to it at session start."
     }
   ]
 }

@@ -1,12 +1,12 @@
 ---
 name: audit
 description: >-
-  Audit a project for "slop" (the tells of AI-generated or low-craft UI) with the bundled deterministic detector (design-system use, tokens and code, typography, colour, surfaces, layout, motion, copy, imagery, accessibility) and the UNSLOP rule canon read over MCP. Then write self-contained fix plans for other agents or cheaper models to execute. Read-only on source code: it plans fixes, it does not apply them. Use when the user says "unslop this", asks for a pre-ship craft review, or wants generated UI checked before it goes out.
+  Audit a project for "slop" (the tells of AI-generated or low-craft UI) with the bundled deterministic detector (design-system use, tokens and code, typography, colour, surfaces, layout, motion, copy, imagery, accessibility) and the UNSLOP rule canon read over MCP. Then write self-contained fix plans for other agents or cheaper models to execute. The audit is read-only on source code and writes only fix plans; the separate execute mode applies one plan in an isolated worktree. Use when the user says "unslop this", asks for a pre-ship craft review, or wants generated UI checked before it goes out.
 ---
 
 # unslop
 
-An audit skill that finds slop, the recognizable fingerprints of AI-generated or careless UI, across an entire project, and turns each confirmed finding into an executable fix plan. The expensive model THINKS and PLANS; a cheap model EXECUTES. The skill itself never touches source code.
+An audit skill that finds slop, the recognizable fingerprints of AI-generated or careless UI, across an entire project, and turns confirmed findings into executable fix plans, one plan per fix or per tight cluster of findings. The expensive model THINKS and PLANS; a cheap model EXECUTES. The audit itself never touches source code; only `unslop execute <plan>` does (see Modes).
 
 Two sources feed an audit:
 
@@ -50,7 +50,7 @@ A server that is not connected, or an index that cannot be read, is an unavailab
 
 **Then load and pin.** The routed helper below needs its dependencies (the MCP SDK). Find them in this order and never install without consent:
 
-1. `node_modules/` in the plugin root: Claude Code installs it there whenever it installs or updates the plugin from a marketplace. Run the helper from the plugin root.
+1. `node_modules/` in the plugin root, for example in a clone whose dependencies are installed. Claude Code does not put it there for this plugin: its automatic dependency install skips plugins whose `package.json` sets npm `overrides`, and this one does. If it exists, run the helper from the plugin root.
 2. A dependency copy for this plugin version, `DEPS`, in the plugin data directory. `<version>` is the `version` in the plugin's `package.json`.
    - Claude Code: `DEPS` is `${CLAUDE_PLUGIN_DATA}/deps-<version>`.
    - Codex: `DEPS` is `$CODEX_HOME/plugins/data/unslop/deps-<version>` (`~/.codex` when `CODEX_HOME` is unset).

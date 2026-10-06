@@ -1,6 +1,6 @@
 {
   "name": "unslop",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "private": true,
   "description": "Audit skill for the tells of AI-generated UI: a deterministic detector plus a rule canon read over MCP.",
   "type": "module",

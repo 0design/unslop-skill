@@ -4,6 +4,30 @@ Plugin releases and public canon versions. Rule texts are generated from
 `canon/public/records.json` with `npm run canon:generate:public`; never edit
 `canon/public-generated/` by hand.
 
+## 1.0.2 (plugin, 2026-10-07)
+
+Corrects statements in 1.0.1 that did not match the plugin. Wording only: the skill's
+workflow, the detector, the canon client and the rule texts are unchanged.
+
+- Plugin and package version `1.0.2`.
+- `plugin.json` description: 1.0.1 said the plugin "never edits source code". The skill's
+  execute mode, `unslop execute <plan>`, applies one plan in an isolated worktree.
+- Marketplace description: 1.0.1 said the plugin "connects the UNSLOP canon MCP server on
+  install". The plugin declares the remote server in `.mcp.json`; the client connects to it
+  at session start.
+- `skills/audit/SKILL.md`, description and opening: 1.0.1 said the skill is read-only on
+  source code and never touches it. The audit is; the execute mode changes code. The opening
+  said each confirmed finding becomes a fix plan; Phase 4 writes one plan per fix or per
+  tight cluster of findings.
+- `skills/audit/SKILL.md`, Phase 0: 1.0.1 said Claude Code installs `node_modules/` in the
+  plugin root. Claude Code's automatic dependency install skips plugins whose `package.json`
+  sets npm `overrides`, and this one does.
+- `README.md`: the same corrections in the summary (plan granularity) and in Install (the
+  plugin declares the server, it does not connect it; Claude Code does not install the MCP
+  SDK). Install no longer says that the skill asks before it downloads: the skill tells your
+  agent to ask, and these steps are instructions, not a technical lock; your agent's own
+  permission prompts still apply.
+
 ## 1.0.1 (plugin, 2026-10-06)
 
 - Plugin and package version `1.0.1`.

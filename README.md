@@ -1,6 +1,6 @@
 # unslop
 
-An audit skill for coding agents that looks for the tells of AI-generated UI and turns each confirmed finding into a fix plan another agent can execute. The audit is read-only: it writes plans, not code changes.
+An audit skill for coding agents that looks for the tells of AI-generated UI and writes fix plans another agent can execute, one plan per fix or per tight cluster of confirmed findings. The audit is read-only: it writes plans, not code changes.
 
 This repository contains four parts:
 
@@ -15,7 +15,7 @@ The public rule texts are in `canon/public/` (source) and `canon/public-generate
 
 ## Install
 
-unslop ships as a plugin for Claude Code and Codex. The plugin installs the skill and connects the read-only canon MCP server (`https://oleg.design/unslop/mcp`); there is nothing else to configure. This repository is both the plugin and its marketplace catalog, for both clients.
+unslop ships as a plugin for Claude Code and Codex. The plugin contains the skill and declares the remote read-only canon MCP server (`https://oleg.design/unslop/mcp`) in `.mcp.json`; your client connects to it at session start. There is nothing else to configure. This repository is both the plugin and its marketplace catalog, for both clients.
 
 Claude Code, in your shell:
 
@@ -35,7 +35,7 @@ codex plugin add unslop@unslop
 
 or run `/plugins` inside Codex and install unslop from the `unslop` marketplace. Start a new session and ask for an unslop audit; Codex lists the skill as `unslop:audit`. `codex mcp list` shows the `unslop` server.
 
-The first step of every audit checks that the `unslop` server is connected and reports the canon version it serves. The routed canon helper needs Node.js 20 or newer and the MCP SDK. Claude Code installs the SDK with the plugin. In Codex, or wherever it is missing, the skill asks before it downloads anything, then installs a copy per plugin version into the plugin data directory (Claude Code: `${CLAUDE_PLUGIN_DATA}`; Codex: `~/.codex/plugins/data/unslop`, a location this plugin chooses because Codex exposes no data directory to skills). Without consent the audit reports that no verified canon is available and issues no pass.
+The first step of every audit checks that the `unslop` server is connected and reports the canon version it serves. The routed canon helper needs Node.js 20 or newer and the MCP SDK. Claude Code does not install the SDK with this plugin: its automatic dependency install skips plugins whose `package.json` sets npm `overrides`, and this one does. Wherever it is missing, the skill tells your agent to ask before it downloads anything and, after you agree, to install a copy per plugin version into the plugin data directory (Claude Code: `${CLAUDE_PLUGIN_DATA}`; Codex: `~/.codex/plugins/data/unslop`, a location this plugin chooses because Codex exposes no data directory to skills). Without your agreement, the skill tells your agent to report that no verified canon is available and to issue no pass. These steps are instructions the skill gives your agent, not a technical lock; your agent's own permission prompts still apply.
 
 To remove: `claude plugin uninstall unslop@unslop` or `codex plugin remove unslop@unslop`.
 
