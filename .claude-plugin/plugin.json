@@ -1,0 +1,20 @@
+{
+  "name": "unslop",
+  "displayName": "unslop",
+  "version": "1.0.0",
+  "description": "Audit skill for the tells of AI-generated UI. Connects the read-only UNSLOP rule canon over MCP and writes fix plans; never edits source code.",
+  "author": {
+    "name": "Oleg.Design",
+    "url": "https://oleg.design"
+  },
+  "homepage": "https://oleg.design",
+  "repository": "https://github.com/0design/unslop-skill",
+  "license": "MIT AND CC-BY-4.0",
+  "keywords": [
+    "ui",
+    "design",
+    "audit",
+    "design-system",
+    "mcp"
+  ]
+}

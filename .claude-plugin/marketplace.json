@@ -1,0 +1,15 @@
+{
+  "name": "unslop",
+  "description": "The unslop audit skill with its MCP rule canon.",
+  "owner": {
+    "name": "Oleg.Design",
+    "url": "https://oleg.design"
+  },
+  "plugins": [
+    {
+      "name": "unslop",
+      "source": "./",
+      "description": "Audit a project for the tells of AI-generated UI and write fix plans. Connects the UNSLOP canon MCP server on install."
+    }
+  ]
+}

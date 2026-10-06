@@ -1,0 +1,4 @@
+/* near-miss: full pill on a tag is the documented exception */
+.tag {
+  border-radius: 9999px;
+}

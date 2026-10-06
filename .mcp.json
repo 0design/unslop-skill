@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "unslop": {
+      "type": "http",
+      "url": "https://oleg.design/unslop/mcp"
+    }
+  }
+}

@@ -1,0 +1,5 @@
+@keyframes pop {
+  from {
+    transform: scale(0);
+  }
+}

@@ -1,0 +1,5 @@
+/* token-aware file: the system is provably here, yet the border is hardcoded */
+.panel {
+  color: var(--text-primary);
+  border: 1px solid #e5e7eb;
+}

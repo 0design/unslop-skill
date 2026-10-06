@@ -1,0 +1,4 @@
+.panel {
+  color: var(--text-primary);
+  border: 1px solid var(--border-subtle);
+}

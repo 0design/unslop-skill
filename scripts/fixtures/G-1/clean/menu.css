@@ -1,0 +1,4 @@
+/* near-miss: ease-in-out must not trigger the ease-in rule */
+.menu {
+  transition: opacity 150ms ease-in-out;
+}

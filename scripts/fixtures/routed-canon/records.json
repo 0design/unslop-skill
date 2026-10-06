@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "note": "Test fixture for the routed canon generator and store. Not canon: rule texts here are placeholders.",
+  "release": {
+    "version": "test-1",
+    "publishedAt": "2026-10-02T00:00:00Z",
+    "source": "test-fixture",
+    "license": "test-fixture"
+  },
+  "topics": {
+    "css": {
+      "globs": [
+        "**/*.css",
+        "**/*.scss"
+      ]
+    },
+    "markup": {
+      "globs": [
+        "**/*.{html,jsx,tsx,vue,svelte}"
+      ]
+    }
+  },
+  "records": [
+    {
+      "id": "B-1",
+      "topic": "css",
+      "title": "Fixture rule bound to detector B-1",
+      "statement": "Placeholder statement for a detector-mode rule in the css topic.",
+      "mode": "detector",
+      "strength": "hard",
+      "source": "test-fixture",
+      "license": "test-fixture"
+    },
+    {
+      "id": "B-2",
+      "topic": "markup",
+      "title": "Fixture rule bound to detector B-2",
+      "statement": "Placeholder statement for a detector-mode rule in the markup topic.",
+      "mode": "detector",
+      "strength": "hard",
+      "source": "test-fixture",
+      "license": "test-fixture"
+    }
+  ]
+}

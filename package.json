@@ -1,0 +1,29 @@
+{
+  "name": "unslop",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Audit skill for the tells of AI-generated UI: a deterministic detector plus a rule canon read over MCP.",
+  "type": "module",
+  "license": "(MIT AND CC-BY-4.0)",
+  "author": "Oleg.Design",
+  "engines": {
+    "node": ">=20"
+  },
+  "bin": {
+    "unslop": "scripts/detect.mjs",
+    "unslop-canon-server": "scripts/canon-server.mjs"
+  },
+  "scripts": {
+    "test": "node --test scripts/test.mjs scripts/canon.test.mjs scripts/canon-mcp.test.mjs scripts/canon-routed.test.mjs scripts/canon-audit.test.mjs scripts/verdict.test.mjs scripts/plugin.test.mjs",
+    "detect": "node scripts/detect.mjs",
+    "canon:route": "node scripts/canon-route.mjs",
+    "canon:generate:public": "node scripts/canon-routed.mjs generate --input canon/public/records.json --out canon/public-generated"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.30.0"
+  },
+  "overrides": {
+    "fast-uri": "3.1.8",
+    "ip-address": "10.7.2"
+  }
+}

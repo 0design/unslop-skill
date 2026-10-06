@@ -1,0 +1,38 @@
+name: test
+
+on:
+  # Push only on the release lines, not on every working branch: a working branch is tested through its PR or when it
+  # reaches a release line.
+  push:
+    branches: [main, stage, 'public/**']
+  pull_request:
+
+permissions:
+  contents: read
+
+# A newer push to the same PR or release line cancels the older run (this workflow only tests; it deploys nothing).
+# main is never cancelled and never shares a group.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && format('pr-{0}', github.event.pull_request.number) || github.ref == 'refs/heads/main' && format('run-{0}', github.run_id) || github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # Both supported Node versions (engines >=20) on every push to a release line; one (22) on a PR.
+        node-version: ${{ github.event_name == 'pull_request' && fromJSON('[22]') || fromJSON('[20, 22]') }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          # Test the PR head itself, not GitHub's synthetic merge commit (refs/pull/N/merge).
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: npm
+      - run: npm ci
+      - run: npm test

@@ -1,0 +1,930 @@
+{
+  "schemaVersion": 1,
+  "release": {
+    "version": "public-2026.10.04-12",
+    "publishedAt": "2026-10-04T00:00:00Z",
+    "source": "UNSLOP",
+    "license": "CC-BY-4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+    "classes": {
+      "slop": {
+        "title": "Slop",
+        "definition": "A result of missing judgment: the agent substituted a default, broke something already approved, or left a defect or unfinished work."
+      },
+      "bad-tone": {
+        "title": "Bad tone",
+        "definition": "Dishonest or disrespectful communication with a person: pressure, manipulation, dark patterns or false signals."
+      },
+      "instruction": {
+        "title": "Instruction",
+        "definition": "How the agent works: permissions, scope and the order of checks. It is not directly visible on screen and is verified through the process."
+      },
+      "project-decision": {
+        "title": "Project decision",
+        "definition": "A specific approved decision of one product that results are compared against. Deviating from it is slop under US-008. Project decisions stay with their project and are not part of this public canon."
+      }
+    }
+  },
+  "topics": {
+    "process": {
+      "always": true
+    },
+    "interface": {
+      "globs": [
+        "**/*.{css,scss}",
+        "**/*.{html,jsx,tsx,vue,svelte}"
+      ]
+    },
+    "copy": {
+      "globs": [
+        "**/*.{html,jsx,tsx,vue,svelte}",
+        "**/*.md",
+        "**/*.{js,ts}"
+      ]
+    }
+  },
+  "records": [
+    {
+      "id": "US-001",
+      "topic": "process",
+      "class": "slop",
+      "status": "accepted",
+      "scope": "global",
+      "title": "Explicit requirements outrank generic style lists",
+      "statement": "Follow the user's current explicit requirements when they differ from general style preferences. Review how well the requested design works and how it uses the project's design system. Do not reject an intentional choice merely because it appears in a generic anti-pattern list.",
+      "mode": "judgement",
+      "strength": "hard",
+      "source": "UNSLOP",
+      "attribution": "UNSLOP by Oleg.Design",
+      "license": "CC-BY-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "id": "US-002",
+      "topic": "process",
+      "class": "instruction",
+      "status": "accepted",
+      "scope": "global",
+      "title": "Needed additions are proposed; execution is proactive",
+      "statement": "When the agent believes an element outside the request is needed, it sends a separate proposal with the element's purpose and a preview instead of adding it to the result (UR-1). Inside the authorized scope, technical steps, checks and fixes of defects against the stated intent are done without asking, and signals such as risks, contradictions or lost elements are raised without asking. Outside that scope, or when a step is irreversible or external, the agent reports and asks first.",
+      "mode": "judgement",
+      "strength": "soft",
+      "source": "UNSLOP",
+      "attribution": "UNSLOP by Oleg.Design",
+      "license": "CC-BY-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "id": "US-003",
+      "topic": "process",
+      "class": "slop",
+      "status": "accepted",
+      "scope": "global",
+      "title": "Verify the actual result before handoff",
+      "statement": "Before presenting a revision, verify the actual result against its requirements. Check design-system use, behavior and visual output separately. Reading guidelines or passing a build is not evidence that the interface meets its acceptance criteria. Use an independent reviewer before handoff.",
+      "mode": "judgement",
+      "strength": "hard",
+      "source": "UNSLOP",
+      "attribution": "UNSLOP by Oleg.Design",
+      "license": "CC-BY-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "id": "US-004",
+      "topic": "process",
+      "class": "slop",
+      "status": "accepted",
+      "scope": "global",
+      "title": "Fix systemic issues at the design-system source",
+      "statement": "Make a systemic fix in the governing design-system component, token or recipe. Use its existing API or a defined extension, then verify the consuming interfaces. Do not conceal a local override behind a new token name.",
+      "mode": "judgement",
+      "strength": "hard",
+      "source": "UNSLOP",
+      "attribution": "UNSLOP by Oleg.Design",
+      "license": "CC-BY-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "id": "US-005",
+      "topic": "process",
+      "class": "instruction",
+      "status": "accepted",
+      "scope": "global",
+      "title": "Design-system changes inside authorized work",
+      "statement": "A change to the design system does not by itself require renewed permission for work the user has already authorized. Ask when an unresolved product or design choice needs the owner's decision, and stay within the authorized scope.",
+      "mode": "judgement",
+      "strength": "soft",
+      "source": "UNSLOP",
+      "attribution": "UNSLOP by Oleg.Design",
+      "license": "CC-BY-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "id": "US-006",
+      "topic": "process",
+      "class": "instruction",
+      "status": "accepted",
+      "scope": "global",
+      "title": "Visual recipes stay project-scoped",
+      "statement": "Keep a project's visual recipes scoped to that project. Reuse the principle of consistency without turning a particular color, shape or treatment into a universal requirement.",
+      "mode": "judgement",
+      "strength": "soft",
+      "source": "UNSLOP",
+      "attribution": "UNSLOP by Oleg.Design",
+      "license": "CC-BY-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "id": "US-007",
+      "topic": "process",
+      "class": "slop",
+      "status": "accepted",
+      "scope": "global",
+      "title": "Keep provenance of examples and claims",
+      "statement": "Preserve the provenance of examples, references and claimed results. Distinguish a recorded example from a live verified run, and an agent proposal from an owner-approved decision. State missing evidence explicitly.",
+      "mode": "judgement",
+      "strength": "hard",
+      "source": "UNSLOP",
+      "attribution": "UNSLOP by Oleg.Design",
+      "license": "CC-BY-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "id": "US-008",
+      "topic": "process",
+      "class": "slop",
+      "status": "accepted",
+      "scope": "global",
+      "title": "Leave everything outside the change intact",
+      "statement": "Preserve approved content, behavior and composition outside the requested change. Compare the original requirement, the baseline and the candidate. Treat unverified areas as unknown rather than passed.",
+      "mode": "judgement",
+      "strength": "hard",
+      "source": "UNSLOP",
+      "attribution": "UNSLOP by Oleg.Design",
+      "license": "CC-BY-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "id": "US-009",
+      "topic": "copy",
+      "class": "slop",
+      "status": "accepted",
+      "scope": "global",
+      "title": "No agent or process service notes on production pages",
+      "statement": "Production pages of any project do not show the agent's or the process's service notes: verification dates, internal source IDs, blocks such as \"Sources, checked\" with a date, or lines such as \"Sources:\" followed by internal IDs. Facts are checked against fresh sources, but that evidence lives in the working records. Sources meant for readers, such as sources in science or medicine, or citations, are not forbidden.",
+      "mode": "judgement",
+      "strength": "hard",
+      "source": "UNSLOP",
+      "attribution": "UNSLOP by Oleg.Design",
+      "license": "CC-BY-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "id": "US-010",
+      "topic": "process",
+      "class": "slop",
+      "status": "accepted",
+      "scope": "global",
+      "title": "Product-wide removal covers every occurrence",
+      "statement": "When asked to remove a pattern throughout a product, locate and update every occurrence in the agreed scope. Verify the affected routes and components before handoff instead of fixing only the example that was pointed out.",
+      "mode": "judgement",
+      "strength": "hard",
+      "source": "UNSLOP",
+      "attribution": "UNSLOP by Oleg.Design",
+      "license": "CC-BY-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "id": "UR-1",
+      "topic": "process",
+      "class": "slop",
+      "status": "accepted",
+      "scope": "global",
+      "title": "Ship only requested content",
+      "statement": "Anything a person will see (text, copy, labels, meta rows, blocks, decoration, effects, layers, product claims) ships only if the request or the approved layout contains it. A request covers only its own content: placeholder rows or invented items inside a requested block are unrequested. Approval of a direction, a discussion or a reference unlocks proposals, not implementation. Each unrequested element in a delivered result is a finding; repeating it after a correction raises its severity. Text the user supplied verbatim is not a finding. Proposals and execution follow US-002.",
+      "mode": "judgement",
+      "strength": "hard",
+      "source": "UNSLOP",
+      "attribution": "UNSLOP by Oleg.Design",
+      "license": "CC-BY-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "id": "KR-1",
+      "topic": "interface",
+      "class": "slop",
+      "status": "accepted",
+      "scope": "global",
+      "title": "Concentric radii for nested shapes",
+      "statement": "Derive nested corner radii from each other instead of picking them by eye: inner radius = outer radius − padding, or outer = inner + padding. An inner radius equal to or larger than the outer one is a finding.",
+      "mode": "judgement",
+      "strength": "hard",
+      "source": "UNSLOP",
+      "credits": [
+        {
+          "name": "Jakub Krehel",
+          "work": "Details that make interfaces feel better (make-interfaces-feel-better skill)",
+          "url": "https://jakub.kr/writing/details-that-make-interfaces-feel-better"
+        }
+      ],
+      "attribution": "UNSLOP by Oleg.Design",
+      "license": "CC-BY-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "id": "KR-3",
+      "topic": "interface",
+      "class": "slop",
+      "status": "accepted",
+      "scope": "global",
+      "title": "Touch targets on touch screens",
+      "statement": "On touch screens every interactive element has a hit area of at least 44×44 px, and the hit areas of neighboring elements do not overlap. The desktop recommendation is KR-3d.",
+      "mode": "judgement",
+      "strength": "hard",
+      "source": "UNSLOP",
+      "credits": [
+        {
+          "name": "Jakub Krehel",
+          "work": "Details that make interfaces feel better (make-interfaces-feel-better skill)",
+          "url": "https://jakub.kr/writing/details-that-make-interfaces-feel-better"
+        }
+      ],
+      "attribution": "UNSLOP by Oleg.Design",
+      "license": "CC-BY-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "id": "KR-3d",
+      "topic": "interface",
+      "class": "slop",
+      "status": "accepted",
+      "scope": "global",
+      "title": "Desktop hit areas for key actions",
+      "statement": "On desktop, a 44×44 px hit area is only a recommendation for key actions. Hit areas of 15 px or more inside menus and similar lists are not a finding.",
+      "mode": "judgement",
+      "strength": "soft",
+      "source": "UNSLOP",
+      "credits": [
+        {
+          "name": "Jakub Krehel",
+          "work": "Details that make interfaces feel better (make-interfaces-feel-better skill)",
+          "url": "https://jakub.kr/writing/details-that-make-interfaces-feel-better"
+        }
+      ],
+      "attribution": "UNSLOP by Oleg.Design",
+      "license": "CC-BY-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "id": "KR-4",
+      "topic": "interface",
+      "class": "slop",
+      "status": "accepted",
+      "scope": "global",
+      "title": "Optical, not arithmetic, centering",
+      "statement": "Center asymmetric shapes, such as a play triangle or an icon inside a button, optically, preferably inside the SVG itself. Arithmetic centering that looks off-center is a finding.",
+      "mode": "judgement",
+      "strength": "hard",
+      "source": "UNSLOP",
+      "credits": [
+        {
+          "name": "Jakub Krehel",
+          "work": "Details that make interfaces feel better (make-interfaces-feel-better skill)",
+          "url": "https://jakub.kr/writing/details-that-make-interfaces-feel-better"
+        }
+      ],
+      "attribution": "UNSLOP by Oleg.Design",
+      "license": "CC-BY-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "id": "KR-5",
+      "topic": "interface",
+      "class": "slop",
+      "status": "accepted",
+      "scope": "global",
+      "title": "Shadow for layers, border for state",
+      "statement": "Show that a card or popover sits on its own layer with a shadow from the design system's tokens, not with a 1px solid border. Keep borders for states such as focus or selection, and for places that do not read without one. Unlike the source recipe, a 0-blur ring shadow counts as a border (DEC-2); whether an edge is needed is decided by DEC-2.",
+      "mode": "judgement",
+      "strength": "hard",
+      "source": "UNSLOP",
+      "credits": [
+        {
+          "name": "Jakub Krehel",
+          "work": "Details that make interfaces feel better (make-interfaces-feel-better skill)",
+          "url": "https://jakub.kr/writing/details-that-make-interfaces-feel-better"
+        }
+      ],
+      "attribution": "UNSLOP by Oleg.Design",
+      "license": "CC-BY-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "id": "KR-7",
+      "topic": "interface",
+      "class": "slop",
+      "status": "accepted",
+      "scope": "global",
+      "title": "Balanced wrapping for content text",
+      "statement": "Content headings use text-wrap: balance. Content paragraphs use text-wrap: pretty, so no orphan is left on the last line. This applies only to content headings and paragraphs; custom typographic compositions are not a finding.",
+      "mode": "judgement",
+      "strength": "hard",
+      "source": "UNSLOP",
+      "credits": [
+        {
+          "name": "Jakub Krehel",
+          "work": "Details that make interfaces feel better (make-interfaces-feel-better skill)",
+          "url": "https://jakub.kr/writing/details-that-make-interfaces-feel-better"
+        }
+      ],
+      "attribution": "UNSLOP by Oleg.Design",
+      "license": "CC-BY-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "id": "KR-10",
+      "topic": "interface",
+      "class": "slop",
+      "status": "accepted",
+      "scope": "global",
+      "title": "Press feedback scales to exactly 0.96",
+      "statement": "A pressed button responds with scale(0.96); no feedback and a deeper squeeze are both findings.",
+      "mode": "judgement",
+      "strength": "hard",
+      "source": "UNSLOP",
+      "credits": [
+        {
+          "name": "Jakub Krehel",
+          "work": "Details that make interfaces feel better (make-interfaces-feel-better skill)",
+          "url": "https://jakub.kr/writing/details-that-make-interfaces-feel-better"
+        }
+      ],
+      "attribution": "UNSLOP by Oleg.Design",
+      "license": "CC-BY-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "id": "KR-11",
+      "topic": "interface",
+      "class": "slop",
+      "status": "accepted",
+      "scope": "global",
+      "title": "Icon stroke matches the adjacent text",
+      "statement": "An icon's stroke width matches the stroke of the text next to it. Calculate it where possible and propose adjusting the icon stroke or slightly changing the font weight; next to bold text, prefer a filled icon instead of adding another stroke width. There is no fixed stroke value.",
+      "mode": "judgement",
+      "strength": "hard",
+      "source": "UNSLOP",
+      "credits": [
+        {
+          "name": "Jakub Krehel",
+          "work": "Details that make interfaces feel better (make-interfaces-feel-better skill)",
+          "url": "https://jakub.kr/writing/details-that-make-interfaces-feel-better"
+        }
+      ],
+      "attribution": "UNSLOP by Oleg.Design",
+      "license": "CC-BY-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "id": "KR-13",
+      "topic": "interface",
+      "class": "slop",
+      "status": "accepted",
+      "scope": "global",
+      "title": "Interactive motion can be interrupted",
+      "statement": "Use CSS transitions for interactive states where a person can change their mind mid-motion, such as opening and closing a menu. Keep keyframe animations for one-off sequences.",
+      "mode": "judgement",
+      "strength": "hard",
+      "source": "UNSLOP",
+      "credits": [
+        {
+          "name": "Jakub Krehel",
+          "work": "Details that make interfaces feel better (make-interfaces-feel-better skill)",
+          "url": "https://jakub.kr/writing/details-that-make-interfaces-feel-better"
+        }
+      ],
+      "attribution": "UNSLOP by Oleg.Design",
+      "license": "CC-BY-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "id": "KR-15",
+      "topic": "interface",
+      "class": "slop",
+      "status": "accepted",
+      "scope": "global",
+      "title": "No animation on first render",
+      "statement": "Do not play an entrance animation every time the page loads unless the entrance is intended. An intentional entrance stays as designed.",
+      "mode": "judgement",
+      "strength": "hard",
+      "source": "UNSLOP",
+      "credits": [
+        {
+          "name": "Jakub Krehel",
+          "work": "Details that make interfaces feel better (make-interfaces-feel-better skill)",
+          "url": "https://jakub.kr/writing/details-that-make-interfaces-feel-better"
+        }
+      ],
+      "attribution": "UNSLOP by Oleg.Design",
+      "license": "CC-BY-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "id": "KR-16",
+      "topic": "interface",
+      "class": "slop",
+      "status": "accepted",
+      "scope": "global",
+      "title": "Duration follows the weight of the action",
+      "statement": "Give direct feedback a short duration (100–160 ms) and context changes a longer one within the motion budget. One duration for every transition is a finding.",
+      "mode": "judgement",
+      "strength": "hard",
+      "source": "UNSLOP",
+      "credits": [
+        {
+          "name": "Jakub Krehel",
+          "work": "Details that make interfaces feel better (make-interfaces-feel-better skill)",
+          "url": "https://jakub.kr/writing/details-that-make-interfaces-feel-better"
+        },
+        {
+          "name": "invisibledetails.com",
+          "work": "Small details that add up (free notes)",
+          "url": "https://invisibledetails.com"
+        }
+      ],
+      "attribution": "UNSLOP by Oleg.Design",
+      "license": "CC-BY-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "id": "KR-18",
+      "topic": "interface",
+      "class": "slop",
+      "status": "accepted",
+      "scope": "global",
+      "title": "Smooth scrolling without breaking scripted scroll",
+      "statement": "Do not rely on html { scroll-behavior: smooth } when the page scrolls from code: in embedded viewers scrollTo() and scrollIntoView() may not move the page. Implement smoothness in JavaScript and confirm arrival; if scrollY has not changed after 400 ms, jump to the target.",
+      "mode": "judgement",
+      "strength": "hard",
+      "source": "UNSLOP",
+      "attribution": "UNSLOP by Oleg.Design",
+      "license": "CC-BY-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "id": "KR-19",
+      "topic": "interface",
+      "class": "slop",
+      "status": "accepted",
+      "scope": "global",
+      "title": "Monospace type only where explicitly allowed",
+      "statement": "Monospace type is not slop in itself, but AI-generated interfaces overuse it, so treat it as slop by default. Use it only in code blocks and inline code in technical text, in terminal or CLI commands shown for copying, and in diff or patch views. Nowhere else: not for IDs, numbers, labels, tags, headings or interface elements. Numerals in regular text never use monospace digits; code keeps its own digits (TY-1).",
+      "mode": "judgement",
+      "strength": "hard",
+      "source": "UNSLOP",
+      "attribution": "UNSLOP by Oleg.Design",
+      "license": "CC-BY-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "id": "KR-21",
+      "topic": "interface",
+      "class": "slop",
+      "status": "accepted",
+      "scope": "global",
+      "title": "Hover highlight needs a click",
+      "statement": "A row or card that changes color on hover must do something on click. Either make it clickable or remove the hover highlight.",
+      "mode": "judgement",
+      "strength": "hard",
+      "source": "UNSLOP",
+      "attribution": "UNSLOP by Oleg.Design",
+      "license": "CC-BY-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "id": "J-12",
+      "topic": "interface",
+      "class": "slop",
+      "status": "accepted",
+      "scope": "global",
+      "title": "Disclosure needs a visible indicator",
+      "statement": "A details/summary disclosure whose default marker was removed shows a chevron or plus sign that changes state when it opens, so the row does not read as a caption. Size the summary's hit area per KR-3 on touch screens and KR-3d on desktop.",
+      "mode": "judgement",
+      "strength": "hard",
+      "source": "UNSLOP",
+      "attribution": "UNSLOP by Oleg.Design",
+      "license": "CC-BY-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "id": "XP-31",
+      "topic": "interface",
+      "class": "slop",
+      "status": "accepted",
+      "scope": "global",
+      "title": "Indented lists keep their markers",
+      "statement": "A plain prose list that is indented shows visible markers; indentation without markers reads as shifted paragraphs, often after a CSS reset such as ul { list-style: none }. Classed navigation lists without markers by design are not a finding.",
+      "mode": "judgement",
+      "strength": "hard",
+      "source": "UNSLOP",
+      "attribution": "UNSLOP by Oleg.Design",
+      "license": "CC-BY-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "id": "NR-02",
+      "topic": "interface",
+      "class": "slop",
+      "status": "accepted",
+      "scope": "global",
+      "title": "Icon transitions transform instead of swapping",
+      "statement": "In projects that already have animated icon toggles (menu and close, play and pause, arrows and chevrons), icons of the same shape in another orientation (arrows, chevrons, plus and cross) change by rotation; interpolating coordinates between them bends the lines. Where a transformation is intended, a coordinate morph or a crossfade of two SVGs is a finding. The check is manual: an agent does not notice on its own that a transition looks wrong, so a person sets the boundary. Otherwise a plain crossfade between icons is not slop in itself and requires neither morphing nor an animation library.",
+      "mode": "judgement",
+      "strength": "hard",
+      "source": "UNSLOP",
+      "credits": [
+        {
+          "name": "Benji Taylor",
+          "work": "Morphing icons with Claude",
+          "url": "https://benji.org"
+        }
+      ],
+      "attribution": "UNSLOP by Oleg.Design",
+      "license": "CC-BY-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "id": "KR-8",
+      "topic": "interface",
+      "class": "slop",
+      "status": "accepted",
+      "scope": "global",
+      "title": "Font smoothing chosen per typeface and size",
+      "statement": "Choose font smoothing for each typeface and size. Do not set one smoothing value, such as -webkit-font-smoothing: antialiased, on the root for every typeface.",
+      "mode": "judgement",
+      "strength": "soft",
+      "source": "UNSLOP",
+      "credits": [
+        {
+          "name": "Jakub Krehel",
+          "work": "Details that make interfaces feel better (make-interfaces-feel-better skill)",
+          "url": "https://jakub.kr/writing/details-that-make-interfaces-feel-better"
+        }
+      ],
+      "attribution": "UNSLOP by Oleg.Design",
+      "license": "CC-BY-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "id": "KR-9",
+      "topic": "interface",
+      "class": "slop",
+      "status": "accepted",
+      "scope": "global",
+      "title": "Image outlines only as an option for content images",
+      "statement": "For images that are part of the content, such as images inside an article, a thin low-opacity 1px outline may be offered as an option, never required. An outline around images anywhere else is slop. Transparent images and images the author intentionally integrated with their surroundings are not a finding.",
+      "mode": "judgement",
+      "strength": "hard",
+      "source": "UNSLOP",
+      "credits": [
+        {
+          "name": "Jakub Krehel",
+          "work": "Details that make interfaces feel better (make-interfaces-feel-better skill)",
+          "url": "https://jakub.kr/writing/details-that-make-interfaces-feel-better"
+        }
+      ],
+      "attribution": "UNSLOP by Oleg.Design",
+      "license": "CC-BY-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "id": "C-11",
+      "topic": "interface",
+      "class": "bad-tone",
+      "status": "accepted",
+      "scope": "global",
+      "title": "Prose on all-caps display pages stays in normal case",
+      "statement": "On a page that sets display text in capitals, prose gets its own class with text-transform: none and the text typeface. A global text-transform rule on body does not remove the need for that class.",
+      "mode": "judgement",
+      "strength": "soft",
+      "source": "UNSLOP",
+      "attribution": "UNSLOP by Oleg.Design",
+      "license": "CC-BY-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "id": "TY-1",
+      "topic": "interface",
+      "class": "slop",
+      "status": "accepted",
+      "scope": "global",
+      "title": "Plain font numerals in regular text",
+      "statement": "Regular text uses the font's ordinary numerals. Do not use tabular figures (tabular-nums, tnum), a slashed zero (slashed-zero, zero) or monospace digits. Monospace text where KR-19 allows it, such as code, keeps its own digits.",
+      "mode": "judgement",
+      "strength": "hard",
+      "source": "UNSLOP",
+      "attribution": "UNSLOP by Oleg.Design",
+      "license": "CC-BY-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "id": "LK-01",
+      "topic": "copy",
+      "class": "bad-tone",
+      "status": "accepted",
+      "scope": "global",
+      "title": "No false urgency",
+      "statement": "Interface copy does not create urgency the product does not have, such as an invented deadline or a claim that only a few places are left without data behind it. A real deadline with a date is not a finding.",
+      "mode": "judgement",
+      "strength": "soft",
+      "source": "UNSLOP",
+      "credits": [
+        {
+          "name": "Nick DiLallo",
+          "work": "This is good UX writing (UX Collective)",
+          "url": "https://uxdesign.cc/this-is-good-ux-writing-10c4b956a6c3"
+        }
+      ],
+      "attribution": "UNSLOP by Oleg.Design",
+      "license": "CC-BY-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "id": "XP-33",
+      "topic": "copy",
+      "class": "slop",
+      "status": "accepted",
+      "scope": "global",
+      "title": "No placeholder or service text in production",
+      "statement": "Service and temporary text does not reach the visible production interface: template default placeholders, a loading state that never loads, aria-only text shown on screen, notes for developers. An empty field hides its element or stops the build. A real empty state with useful text for the user is not a finding.",
+      "mode": "judgement",
+      "strength": "hard",
+      "source": "UNSLOP",
+      "attribution": "UNSLOP by Oleg.Design",
+      "license": "CC-BY-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "id": "XP-34",
+      "topic": "copy",
+      "class": "slop",
+      "status": "accepted",
+      "scope": "global",
+      "title": "Stage shows exactly what production will show",
+      "statement": "Stage must look like a ready candidate for production: what a person sees on stage is exactly what they will see in production. Anything visible on stage that slips through review can be carried into production. Show no commit hashes, preview or stage labels, environment badges or build versions on screen. Identify a build only invisibly: an HTTP header, a build.json file, a meta tag or an HTML comment. The rendered stage and production differ in visible text only by the changes of the release.",
+      "mode": "judgement",
+      "strength": "hard",
+      "source": "UNSLOP",
+      "attribution": "UNSLOP by Oleg.Design",
+      "license": "CC-BY-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "id": "KR-20",
+      "topic": "copy",
+      "class": "slop",
+      "status": "accepted",
+      "scope": "global",
+      "title": "Machine formats translated for people",
+      "statement": "Do not show machine formats such as cron expressions, ISO 8601 durations or raw timestamps to people; translate them into plain language, for example \"daily at 06:30 UTC\". Leave an unfamiliar format as it is: an invented interpretation is worse than the raw string.",
+      "mode": "judgement",
+      "strength": "hard",
+      "source": "UNSLOP",
+      "attribution": "UNSLOP by Oleg.Design",
+      "license": "CC-BY-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "id": "XP-22a",
+      "topic": "copy",
+      "class": "slop",
+      "status": "accepted",
+      "scope": "global",
+      "title": "Compare products at the level of intent",
+      "statement": "When comparing products or writing promotion, compare what each product is meant to do. Do not use internal version numbers, release states or target/today markers.",
+      "mode": "judgement",
+      "strength": "hard",
+      "source": "UNSLOP",
+      "attribution": "UNSLOP by Oleg.Design",
+      "license": "CC-BY-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "id": "XP-22b",
+      "topic": "copy",
+      "class": "bad-tone",
+      "status": "accepted",
+      "scope": "global",
+      "title": "Only verified claims about competitors",
+      "statement": "State a claim about a competitor only with a verified source; where there is no verified fact, show a dash. Convey the advantage through the wording of your own product's intent.",
+      "mode": "judgement",
+      "strength": "soft",
+      "source": "UNSLOP",
+      "attribution": "UNSLOP by Oleg.Design",
+      "license": "CC-BY-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "id": "XP-23",
+      "topic": "copy",
+      "class": "slop",
+      "status": "accepted",
+      "scope": "global",
+      "title": "Use the approved positioning in comparisons",
+      "statement": "Before building a comparison or a promotional page, read the product's approved positioning and show its axes. A comparison assembled from technical mechanisms that omits the agreed differentiation is a finding.",
+      "mode": "judgement",
+      "strength": "hard",
+      "source": "UNSLOP",
+      "attribution": "UNSLOP by Oleg.Design",
+      "license": "CC-BY-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "id": "DEC-1",
+      "topic": "interface",
+      "class": "slop",
+      "status": "accepted",
+      "scope": "global",
+      "title": "Structure before decoration",
+      "statement": "Carry grouping, hierarchy and separation with space, type and alignment first, then with background. Add a line, container, shadow, badge, icon tile or gradient only when the content does not read without it, when it marks a state or an interactive boundary, or when the approved design system defines it. Test by hand: remove the element; if nothing is lost, it is a finding. Replacing one decoration with another (a border with a ring shadow, a card with a tinted box) is the same finding. Example: a section card holding cards, each with lines between its rows. Not a finding: an input boundary, a focus state, decoration the approved design system defines.",
+      "mode": "judgement",
+      "strength": "hard",
+      "source": "UNSLOP",
+      "attribution": "UNSLOP by Oleg.Design",
+      "license": "CC-BY-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "id": "DEC-2",
+      "topic": "interface",
+      "class": "slop",
+      "status": "accepted",
+      "scope": "global",
+      "title": "Lines only where structure needs them",
+      "statement": "A border, divider, outline or ring shadow is not the default way to group content: use spacing, type and background first. Remove a line when switching it off changes neither grouping, interactivity nor state, or when two other cues already mark the same edge. Keep lines for input and control boundaries, focus and selection, dense data tables, images that blend into the background (KR-9), and lines the approved design system defines. A framed box inside a framed box is a finding; input fields and controls inside a frame are not, because their boundaries are among the exceptions above. Any visible line up to 2px counts as a line under this rule: border, outline outside :focus-visible, box-shadow with 0 blur and a positive spread, hr, 1–2px pseudo-elements, divide-x and divide-y. Lines between list rows belong only in dense data where the eye follows a row across columns; when space already separates the rows, the lines are a finding. Check by hand in order: remove, look for a substitute, look for double encoding, apply the exceptions. Detection signals (share of framed containers, nesting depth, double encoding, lines between rows, line density, a border with a wide shadow) only prompt a review and give no verdict: their thresholds are not calibrated. Example: a rounded-xl border shadow-sm section holding three rounded-xl border cards, each with divide-y. Not a finding: a settings group without frames, where spacing separates the groups and inputs have a 3:1 boundary (WCAG 1.4.11).",
+      "mode": "judgement",
+      "strength": "hard",
+      "source": "UNSLOP",
+      "credits": [
+        {
+          "name": "Refactoring UI",
+          "work": "Use fewer borders",
+          "url": "https://www.refactoringui.com/"
+        },
+        {
+          "name": "Aurora Harley (NN/g)",
+          "work": "Common Region",
+          "url": "https://www.nngroup.com/articles/common-region/"
+        },
+        {
+          "name": "impeccable.style",
+          "work": "AI slop catalog",
+          "url": "https://impeccable.style/slop"
+        }
+      ],
+      "attribution": "UNSLOP by Oleg.Design",
+      "license": "CC-BY-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "id": "DEC-3",
+      "topic": "interface",
+      "class": "slop",
+      "status": "accepted",
+      "scope": "global",
+      "title": "Cards are not the default container",
+      "statement": "A container with a border or shadow and with a radius or background, that is a card, is only for a real object: one that is dragged, clicked as a whole or has its own state (a kanban item, a product). A card inside a card is a finding; input fields and controls inside a card do not count as cards. Example: every section of the page wrapped in a card. Detection signal: a card inside a card, or cards in more than half of the page's sections. Detection signals only prompt a review and give no verdict: their thresholds are not calibrated.",
+      "mode": "judgement",
+      "strength": "hard",
+      "source": "UNSLOP",
+      "credits": [
+        {
+          "name": "impeccable.style",
+          "work": "AI slop catalog",
+          "url": "https://impeccable.style/slop"
+        }
+      ],
+      "attribution": "UNSLOP by Oleg.Design",
+      "license": "CC-BY-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "id": "DEC-4",
+      "topic": "interface",
+      "class": "slop",
+      "status": "accepted",
+      "scope": "global",
+      "title": "Shadows only for real layers",
+      "statement": "A shadow means a layer above the content. Use it for a real layer or when the approved design system defines it. A shadow on an element that is not a layer is a finding, including a shadow used in place of a border that DEC-2 would remove. Real layers: popovers, menus, modals, sticky elements, dragged objects, and a card that really is a layer above the content (KR-5). Example: a shadow on every card and section by default. Detection signal: a shadow on any other element. Detection signals only prompt a review and give no verdict: their thresholds are not calibrated.",
+      "mode": "judgement",
+      "strength": "hard",
+      "source": "UNSLOP",
+      "attribution": "UNSLOP by Oleg.Design",
+      "license": "CC-BY-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "id": "DEC-5",
+      "topic": "copy",
+      "class": "bad-tone",
+      "status": "accepted",
+      "scope": "global",
+      "title": "No fabricated proof",
+      "statement": "Show metrics, testimonials and client logos only from the product's data and with a source; fabricated ones are a finding. Example: \"10,000+ teams\", \"3x faster\" or a row of logos in a template with no data behind it. Not a finding: a metric from product data with its source; a testimonial with a name and a link. This extends LK-01 and XP-22b to claims about one's own product. Detection signal: numbers with \"+\", \"%\" or \"x\" without a source in the data, a testimonial without a name or a link. Detection signals only prompt a review and give no verdict: their thresholds are not calibrated.",
+      "mode": "judgement",
+      "strength": "soft",
+      "source": "UNSLOP",
+      "attribution": "UNSLOP by Oleg.Design",
+      "license": "CC-BY-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "id": "DEC-6",
+      "topic": "interface",
+      "class": "slop",
+      "status": "accepted",
+      "scope": "global",
+      "title": "Muted text needs a role and contrast",
+      "statement": "Use muted text only for truly secondary meta information and with at least the WCAG text contrast: 4.5:1 for regular text, 3:1 for large text. Muting everything secondary by default is a finding. Example: every description under headings in regular-size gray text at 3:1. Not a finding: the date and author under an article at 4.5:1. Detection signal: a large share of text nodes below the WCAG threshold for their size or using a muted token; gray text on a colored background. Detection signals only prompt a review and give no verdict: their thresholds are not calibrated.",
+      "mode": "judgement",
+      "strength": "hard",
+      "source": "UNSLOP",
+      "credits": [
+        {
+          "name": "impeccable.style",
+          "work": "AI slop catalog",
+          "url": "https://impeccable.style/slop"
+        }
+      ],
+      "attribution": "UNSLOP by Oleg.Design",
+      "license": "CC-BY-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "id": "DEC-7",
+      "topic": "interface",
+      "class": "slop",
+      "status": "accepted",
+      "scope": "global",
+      "title": "Labels above headings only as a system",
+      "statement": "Use an eyebrow, kicker, section numbering or a pill above the H1 only as a deliberate element of the brand system or for a real sequence of steps. A label above every heading by default is a finding. Example: \"01 / FEATURES\", \"02 / PRICING\" above every section. Not a finding: one deliberate kicker in the brand system; real steps of a process. Detection signal: two or more sections with a small uppercase label above h2, or a pill above the H1. Detection signals only prompt a review and give no verdict: their thresholds are not calibrated. Related: UR-1.",
+      "mode": "judgement",
+      "strength": "hard",
+      "source": "UNSLOP",
+      "credits": [
+        {
+          "name": "impeccable.style",
+          "work": "AI slop catalog",
+          "url": "https://impeccable.style/slop"
+        }
+      ],
+      "attribution": "UNSLOP by Oleg.Design",
+      "license": "CC-BY-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "id": "DEC-8",
+      "topic": "interface",
+      "class": "slop",
+      "status": "accepted",
+      "scope": "global",
+      "title": "No identical feature grids with icon tiles",
+      "statement": "Three or more identical blocks of an icon in a colored tile, a heading and text give everything the same weight; this template is a finding. Example: \"three features\" with icons in squares. Not a finding: truly equivalent options (pricing tiers, comparisons); iconography the design system defines and that carries meaning. Detection signal: neighboring containers of the same size and structure, a 32–128px icon tile right before a heading, one icon per card. Detection signals only prompt a review and give no verdict: their thresholds are not calibrated.",
+      "mode": "judgement",
+      "strength": "hard",
+      "source": "UNSLOP",
+      "credits": [
+        {
+          "name": "impeccable.style",
+          "work": "AI slop catalog",
+          "url": "https://impeccable.style/slop"
+        }
+      ],
+      "attribution": "UNSLOP by Oleg.Design",
+      "license": "CC-BY-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "id": "DEC-9",
+      "topic": "interface",
+      "class": "slop",
+      "status": "accepted",
+      "scope": "global",
+      "title": "Decorative gradients and glow only from the design system",
+      "statement": "Gradient text, a purple-to-blue gradient and colored glow on a dark background are allowed only as brand identity fixed in the design system; otherwise they are a finding. Example: a purple gradient hero heading in a project without such a brand. Not a finding: a brand gradient defined by design-system tokens. Detection signal: background-clip: text with a gradient, hues 250–290 in a hero background, a colored blurred shadow on a dark background. Detection signals only prompt a review and give no verdict: their thresholds are not calibrated.",
+      "mode": "judgement",
+      "strength": "hard",
+      "source": "UNSLOP",
+      "credits": [
+        {
+          "name": "impeccable.style",
+          "work": "AI slop catalog",
+          "url": "https://impeccable.style/slop"
+        }
+      ],
+      "attribution": "UNSLOP by Oleg.Design",
+      "license": "CC-BY-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  ]
+}
