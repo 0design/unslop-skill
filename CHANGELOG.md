@@ -4,6 +4,21 @@ Plugin releases and public canon versions. Rule texts are generated from
 `canon/public/records.json` with `npm run canon:generate:public`; never edit
 `canon/public-generated/` by hand.
 
+## 1.0.1 (plugin, 2026-10-06)
+
+- Plugin and package version `1.0.1`.
+- This changelog records the retirement of canon version `public-2026.10.02-2` (next
+  entry). The skill, the detector, the canon client and the rule texts are unchanged.
+
+## public-2026.10.02-2 retired (2026-10-06)
+
+Since 2026-10-06 the MCP endpoint no longer serves the texts of `public-2026.10.02-2`.
+A request for that version (`unslop://canon-index/public-2026.10.02-2` or one of its
+topics) is answered with the current version, `public-2026.10.04-12`, under the requested
+URI. The response's `_meta` carries `requestedVersion`, `servedVersion` and
+`retired: true`, and the file's checksum is the served version's. A version that never
+existed still returns `UNKNOWN_VERSION`.
+
 ## 1.0.0 (plugin, 2026-10-06)
 
 First release of the unslop plugin from the repository https://github.com/0design/unslop-skill.
