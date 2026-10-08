@@ -4,19 +4,19 @@
   "patterns": [
     {
       "id": "approval-wording",
-      "re": "(?<![A-Za-z0-9])owner[*_`~]*(?:(?:['’]|&#x?0*27;|&#39;|&apos;|&rsquo;|&#8217;|\\\\u2019|\\\\u0027)s)?[*_`~]*(?:[\\s:;,—–-]|&nbsp;|&#160;|&#xa0;)+[*_`~]*(?:OK|decision|approv\\w*|decid\\w*|confirm\\w*|sign(?:s|ed)?\\s+off|accept\\w*|agree\\w*)\\b",
+      "re": "(?<![A-Za-z0-9])owner(?:[*_`~()\\[\\]]*(?:['’]|&#x?0*27;|&#39;|&apos;|&rsquo;|&#8217;|\\\\u2019|\\\\u0027)s)?[*_`~()\\[\\]]*(?:[\\s:;,/—–-]|&nbsp;|&#160;|&#xa0;)+[*_`~()\\[\\]]*(?:\\w+(?:[\\s:;,/—–-]|&nbsp;|&#160;|&#xa0;)+[*_`~()\\[\\]]*){0,2}(?:OK|decision|sign-?off|said|approv\\w*|decid\\w*|confirm\\w*|sign(?:s|ed)?\\s+off|accept\\w*|agree\\w*)\\b",
       "flags": "i",
       "why": "Approval wording attributed to a project owner (also with Markdown emphasis, separators and other verbs)"
     },
     {
       "id": "person-approval",
-      "re": "\\b(?:approv\\w*|sign(?:s|ed)?\\s+off|decid\\w*|confirm\\w*|accept\\w*)\\s+(?:by|from|per)\\s+(?:Oleg|(?:the\\s+)?(?:project\\s+)?owner)\\b",
+      "re": "\\b(?:approv\\w*|sign(?:s|ed)?\\s+off|decid\\w*|confirm\\w*|accept\\w*)\\s+(?:by|from|per)\\s+(?:Oleg|(?:the\\s+|our\\s+)?(?:project\\s+|repo\\s+|repository\\s+)?owner)\\b",
       "flags": "i",
       "why": "Approval attributed to a named person or the owner"
     },
     {
       "id": "person-verb",
-      "re": "\\bOleg(?:(?:['’]|&#x?0*27;|&#39;|&apos;|&rsquo;|&#8217;|\\\\u2019|\\\\u0027)s)?(?:\\s+\\p{L}+)?(?:[\\s:;,—–-]|&nbsp;|&#160;|&#xa0;)+(?:approv\\w*|decid\\w*|said|sign(?:s|ed)?\\s+off|OK|decision)\\b",
+      "re": "\\bOleg(?:(?:['’]|&#x?0*27;|&#39;|&apos;|&rsquo;|&#8217;|\\\\u2019|\\\\u0027)s)?(?:\\s+\\p{L}+)?(?:[\\s:;,/—–-]|&nbsp;|&#160;|&#xa0;)+(?:approv\\w*|decid\\w*|said|sign(?:s|ed)?\\s+off|OK|decision|confirm\\w*|agree\\w*|reject\\w*|asked|wants?)\\b",
       "flags": "iu",
       "why": "Statement attributed to a named person"
     },
@@ -46,7 +46,7 @@
     },
     {
       "id": "tracker-link",
-      "re": "linear\\.app(?:/[\\w-]+)*",
+      "re": "\\blinear\\.app\\b(?:/[\\w-]+)*",
       "flags": "i",
       "why": "Link to an internal tracker"
     },
@@ -64,7 +64,7 @@
     },
     {
       "id": "pull-request-number",
-      "re": "\\bPRs?\\s*[#-]?\\s*\\d+\\b",
+      "re": "\\bPRs?[ \\t]*#\\d+\\b|\\bPR[ \\t-]\\d{1,4}\\b(?![.\\d])",
       "flags": "",
       "why": "Pull request shorthand such as PR plus a number"
     },
@@ -95,19 +95,19 @@
     {
       "id": "approval-wording",
       "file": "canon/**",
-      "re": "own[e]r(?:['’]s)?[ ]decision|own[e]r-approved",
+      "re": "own[e]r(?:['’]s)?[ ]decision|own[e]r-approved(?:[ ]decision)?",
       "reason": "Wording of published rule texts: owner is a generic role name in a public agent rule"
     },
     {
       "id": "approval-wording",
       "file": "skills/audit/references/design-system-integrity.md",
-      "re": "own[e]r[ ]decision",
+      "re": "own[e]r[ ](?:visual[ ])?(?:decision|acceptance)",
       "reason": "Wording of a published skill reference: owner is a generic role name"
     },
     {
       "id": "rule-id",
       "file": "scripts/**",
-      "re": "DS-2b",
+      "re": "DS-2[b]",
       "reason": "Sub-rule that the retired combined rule points to, named in the shipped detector and its tests"
     },
     {

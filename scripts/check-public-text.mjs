@@ -10,7 +10,7 @@
 // Patterns and allowlist live in scripts/public-text-patterns.json. An allowlist entry is bound to one pattern id, one
 // file glob (relative to the scanned root, or the --stdin name) and the exact matched text (or a regex over it). A hit
 // is never allowed by a broader rule. Every file is scanned except known binary types and .map files, files with a NUL
-// byte and files that are not valid UTF-8; the summary line counts what was skipped. Text is normalized (NFKC, format
+// byte; the summary line counts what was skipped. Text is normalized (NFKD, format
 // characters and combining marks removed) before matching, so zero-width characters do not hide a phrase.
 // A pattern may carry `knownFrom`: a repository path or a list of them (a `*` is allowed in the last path segment).
 // The matched text is not a hit when the same token appears in a .json or .mjs file there: the rule identifiers that
@@ -185,19 +185,14 @@ function listFiles(root) {
   return found;
 }
 
-// Every file is scanned unless it is a known binary type, contains a NUL byte, or is not valid UTF-8.
+// Every file is scanned unless it is a known binary type or contains a NUL byte; bytes that are not valid UTF-8 decode
+// to replacement characters instead of hiding the file.
 function isTextFile(file, buffer) {
   const dot = file.lastIndexOf('.');
   const slash = Math.max(file.lastIndexOf('/'), file.lastIndexOf(sep));
   const extension = dot > slash ? file.slice(dot).toLowerCase() : '';
   if (BINARY_EXTENSIONS.has(extension)) return false;
-  if (buffer.subarray(0, BINARY_PROBE).includes(0)) return false;
-  try {
-    new TextDecoder('utf-8', { fatal: true }).decode(buffer);
-    return true;
-  } catch {
-    return false;
-  }
+  return !buffer.subarray(0, BINARY_PROBE).includes(0);
 }
 
 function lineStartsOf(text) {
@@ -229,7 +224,7 @@ function fragmentAround(text, lineStart, lineEnd, matchIndex, matchLength) {
 }
 
 function scanFile(relPath, rawText, config, counters) {
-  const text = rawText.normalize('NFKC').replace(/[\p{Cf}\p{M}]/gu, '');
+  const text = rawText.normalize('NFKD').replace(/[\p{Cf}\p{M}]/gu, '');
   const hits = [];
   let starts = null;
   for (const pattern of config.patterns) {

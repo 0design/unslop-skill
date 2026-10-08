@@ -236,7 +236,12 @@ test('emphasis, separators and other approval verbs are flagged', () => {
     cat('approved by the project ', 'own', 'er'),
     cat('Ol', "eg's approval"),
     cat('Ol', 'eg: OK'),
-    cat('Ol', 'eg Kuharuk decided'),
+    cat('Ol', 'eg Smith decided'),
+    cat('own', 'er has already approved'),
+    cat('[own', 'er] approved'),
+    cat('own', 'er said'),
+    cat('approved by our ', 'own', 'er'),
+    cat('own', 'er/approved'),
   ];
   const result = scan(tree(Object.fromEntries(forms.map((form, index) => [`form-${index}.md`, form]))));
   assert.equal(result.status, 1, result.stdout + result.stderr);
@@ -247,7 +252,7 @@ test('pull request numbers and branch names that carry a work item key are flagg
   for (const [text, id] of [
     [cat('PR', '#12'), 'pull-request-number'],
     [cat('PR ', '#12'), 'pull-request-number'],
-    [cat('PR', '12'), 'pull-request-number'],
+    [cat('PR', '-12'), 'pull-request-number'],
     [cat('Merge pull request #1 from org/', '0', 'd-437-guard'), 'issue-branch'],
     [cat('0', 'D-1'), 'issue-key'],
   ]) {
@@ -263,7 +268,7 @@ test('zero-width characters, soft hyphens and combining marks do not hide a phra
     cat('own', '\u00ad', 'er approved'),
     cat('ow', '\u200d', 'ner approved'),
     cat('\uff4f\uff57\uff4e\uff45\uff52', ' approved'),
-    cat('own', 'e\u0301', 'r approved').replace('e\u0301', 'e'),
+    cat('own', 'er appro\u0301', 'ved'),
   ];
   hidden.forEach((text, index) => assert.equal(scanText(`t-${index}`, `${text}\n`).status, 1, JSON.stringify(text)));
 });
@@ -301,4 +306,25 @@ test('an allowlist glob with ** matches whole path segments only', () => {
   assert.equal(result.status, 1, result.stdout + result.stderr);
   assert.match(result.stdout, /a\/prefix-b\.md:1:\d+  plan-step/);
   assert.doesNotMatch(result.stdout, /a\/b\.md|a\/x\/y/);
+});
+
+test('long runs of emphasis characters do not slow the scan down', () => {
+  const started = Date.now();
+  const result = scanText('pull-request-description', `${cat('own', 'er')}${'*'.repeat(200000)}\n${cat('own', 'er')} ${'_ '.repeat(100000)}\n`);
+  assert.ok(result.status === 0 || result.status === 1, result.stderr);
+  assert.ok(Date.now() - started < 5000, `scan took ${Date.now() - started} ms`);
+});
+
+test('a file that is not valid UTF-8 is still scanned', () => {
+  const dir = tree({ 'ok.md': 'plain' });
+  writeFileSync(join(dir, 'latin1.md'), Buffer.concat([Buffer.from(OWNER_APPROVED), Buffer.from([0xff, 0xfe, 0x41])]));
+  const result = scan(dir);
+  assert.equal(result.status, 1, result.stdout + result.stderr);
+  assert.match(result.stdout, /latin1\.md:1:\d+  approval-wording/);
+});
+
+test('false positives seen in review stay quiet: numbers with PR, the word linear.apply, 3D-style words', () => {
+  const clean = ['PR 1.0 of the spec', 'call linear.apply(x) and nonlinear.app', cat('a 4', 'K-60 display'), 'see PR\n12 later'].join('\n');
+  const result = scanText('t', `${clean}\n`);
+  assert.doesNotMatch(result.stdout, /pull-request-number|tracker-link/);
 });
