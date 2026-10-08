@@ -255,6 +255,8 @@ test('pull request numbers and branch names that carry a work item key are flagg
     [cat('PR', '-12'), 'pull-request-number'],
     [cat('Merge pull request #1 from org/', '0', 'd-437-guard'), 'issue-branch'],
     [cat('0', 'D-1'), 'issue-key'],
+    [cat('QF', '-GUARD-01'), 'internal-id'],
+    [cat('RETRO', '-0927-16'), 'internal-id'],
   ]) {
     const result = scanText('commit-messages', `${text}\n`);
     assert.equal(result.status, 1, `${text}: ${result.stdout}${result.stderr}`);
@@ -306,6 +308,13 @@ test('an allowlist glob with ** matches whole path segments only', () => {
   assert.equal(result.status, 1, result.stdout + result.stderr);
   assert.match(result.stdout, /a\/prefix-b\.md:1:\d+  plan-step/);
   assert.doesNotMatch(result.stdout, /a\/b\.md|a\/x\/y/);
+});
+
+test('long runs of an identifier prefix do not slow the scan down', () => {
+  const started = Date.now();
+  const result = scanText('pull-request-description', `${cat('QF', '-').repeat(200000)}\n${cat('BP', '-A1B-').repeat(100000)}\n`);
+  assert.ok(result.status === 0 || result.status === 1, result.stderr);
+  assert.ok(Date.now() - started < 5000, `scan took ${Date.now() - started} ms`);
 });
 
 test('long runs of emphasis characters do not slow the scan down', () => {
