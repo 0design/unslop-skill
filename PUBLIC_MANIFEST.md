@@ -6,6 +6,7 @@ Every file in this tree, why it is public, and its license. Generated from `git 
 |---|---|---|
 | `.claude-plugin/marketplace.json` | Marketplace manifest: lets Claude Code and Codex install the plugin from this repository | MIT |
 | `.claude-plugin/plugin.json` | Plugin manifest for Claude Code and Codex: name, version, the root skill | MIT |
+| `.github/workflows/public-text.yml` | CI: scans tracked files, pull request text and commit messages for internal wording; no secrets | MIT |
 | `.github/workflows/test.yml` | CI: npm ci, npm test; no secrets | MIT |
 | `.gitignore` | Keeps caches, env files and keys out of git | MIT |
 | `.mcp.json` | Plugin MCP declaration: the read-only canon endpoint, no credentials | MIT |
@@ -30,6 +31,7 @@ Every file in this tree, why it is public, and its license. Generated from `git 
 | `scripts/canon-routed.test.mjs` | Test suite | MIT |
 | `scripts/canon-server.mjs` | Local stdio MCP server for --store development runs | MIT |
 | `scripts/canon.test.mjs` | Test suite | MIT |
+| `scripts/check-public-text.mjs` | Public text guard CLI used by CI | MIT |
 | `scripts/detect.mjs` | Detector CLI | MIT |
 | `scripts/fixtures/B-1/clean/tokens.css` | Detector and routing test fixture | MIT |
 | `scripts/fixtures/B-1/slop/button.css` | Detector and routing test fixture | MIT |
@@ -138,6 +140,8 @@ Every file in this tree, why it is public, and its license. Generated from `git 
 | `scripts/lib/verdict.mjs` | Shared library for detector and canon client | MIT |
 | `scripts/lib/walker.mjs` | Shared library for detector and canon client | MIT |
 | `scripts/plugin.test.mjs` | Test suite | MIT |
+| `scripts/public-text-patterns.json` | Patterns and reviewed exceptions of the public text guard | MIT |
+| `scripts/public-text.test.mjs` | Test suite | MIT |
 | `scripts/rules/b.mjs` | Detector rules by section | MIT |
 | `scripts/rules/c.mjs` | Detector rules by section | MIT |
 | `scripts/rules/d.mjs` | Detector rules by section | MIT |

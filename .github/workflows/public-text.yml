@@ -1,0 +1,57 @@
+name: public-text
+
+# Fails when text published from this repository carries internal process wording: the tracked files, a pull request's
+# title and description, and the commit messages a pull request or a push brings in. The wording itself is in
+# scripts/public-text-patterns.json; scripts/check-public-text.mjs runs the scan. No secrets, nothing is deployed.
+on:
+  push:
+    branches: [main]
+  pull_request:
+    # `edited` runs the scan again when the title or description changes.
+    types: [opened, synchronize, reopened, edited]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && format('pr-{0}', github.event.pull_request.number) || format('run-{0}', github.run_id) }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          # Scan the pull request head itself, not GitHub's synthetic merge commit.
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Scan tracked files
+        run: node scripts/check-public-text.mjs
+      # The title, description and range come in through env, never interpolated into the script.
+      - name: Scan the pull request title and description
+        if: github.event_name == 'pull_request'
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+          PR_BODY: ${{ github.event.pull_request.body }}
+        run: |
+          printf '%s\n' "$PR_TITLE" | node scripts/check-public-text.mjs --stdin pull-request-title
+          if [ -n "$PR_BODY" ]; then printf '%s\n' "$PR_BODY" | node scripts/check-public-text.mjs --stdin pull-request-description; fi
+      - name: Scan the commit messages of the pull request
+        if: github.event_name == 'pull_request'
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: git log --format=%B "$BASE_SHA..$HEAD_SHA" | node scripts/check-public-text.mjs --stdin commit-messages
+      - name: Scan the commit messages of the push
+        if: github.event_name == 'push'
+        env:
+          BEFORE_SHA: ${{ github.event.before }}
+          AFTER_SHA: ${{ github.sha }}
+        run: |
+          # A new branch or a forced push has no usable "before"; scan the last commit then.
+          if git cat-file -e "$BEFORE_SHA^{commit}" 2>/dev/null; then range="$BEFORE_SHA..$AFTER_SHA"; else range="$AFTER_SHA^..$AFTER_SHA"; fi
+          git log --format=%B "$range" | node scripts/check-public-text.mjs --stdin commit-messages

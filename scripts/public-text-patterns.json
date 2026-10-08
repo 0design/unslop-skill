@@ -1,0 +1,108 @@
+{
+  "version": 1,
+  "note": "Phrase patterns for internal process wording that must not be published from this repository. Each allowlist entry names one pattern id, one file glob and the exact matched text (or a regex over it) with a reason; it covers product wording only. A pattern with knownFrom ignores tokens that this repository itself defines. Allowlist regexes are written so that their own text does not match the patterns.",
+  "patterns": [
+    {
+      "id": "approval-wording",
+      "re": "\\bowner(?:(?:['’]|&#x?0*27;|&#39;|&apos;|&rsquo;|&#8217;|\\\\u2019|\\\\u0027)s)?(?:[\\s-]|&nbsp;|&#160;|&#xa0;)+(?:OK|decision|approv(?:ed|al)?)\\b",
+      "flags": "i",
+      "why": "Approval wording attributed to a project owner"
+    },
+    {
+      "id": "person-approval",
+      "re": "\\b(?:approved|signed off|decided|confirmed)\\s+by\\s+(?:Oleg|the\\s+owner)\\b",
+      "flags": "i",
+      "why": "Approval attributed to a named person or the owner"
+    },
+    {
+      "id": "person-verb",
+      "re": "\\bOleg(?:\\s+\\p{L}+)?\\s+(?:approved|decided|said|signed off)\\b",
+      "flags": "iu",
+      "why": "Statement attributed to a named person"
+    },
+    {
+      "id": "cyrillic",
+      "re": "\\p{Script=Cyrillic}",
+      "flags": "u",
+      "why": "Text in a language this repository does not publish in: internal discussion written in it must not reach the public tree"
+    },
+    {
+      "id": "question-round",
+      "re": "\\bquiz(?:zes)?\\b",
+      "flags": "i",
+      "why": "Question round used as a review step"
+    },
+    {
+      "id": "issue-key",
+      "re": "\\b\\d[A-Z]{1,3}-\\d{2,}\\b",
+      "flags": "",
+      "why": "Key of an internal work item"
+    },
+    {
+      "id": "tracker-link",
+      "re": "linear\\.app(?:/[\\w-]+)*",
+      "flags": "i",
+      "why": "Link to an internal tracker"
+    },
+    {
+      "id": "plan-step",
+      "re": "\\bplan step\\b",
+      "flags": "i",
+      "why": "Internal process stage label"
+    },
+    {
+      "id": "review-round",
+      "re": "\\b(?:review|PR) rounds?\\b",
+      "flags": "i",
+      "why": "Internal review process label"
+    },
+    {
+      "id": "pull-request-number",
+      "re": "\\bPR\\s*#\\d+",
+      "flags": "",
+      "why": "Pull request reference"
+    },
+    {
+      "id": "do-not-merge",
+      "re": "\\bdo not merge\\b",
+      "flags": "i",
+      "why": "Merge instruction"
+    },
+    {
+      "id": "internal-id",
+      "re": "\\b(?:QF|BP|PUB|RETRO|DELIVERY)-\\d+\\b",
+      "flags": "",
+      "why": "Identifier of an internal rule or decision log entry"
+    },
+    {
+      "id": "rule-id",
+      "re": "\\b(?:US|UR|KR|XP|DEC|TY|J|LK|NR|DS)-\\d+[a-z]?\\b",
+      "flags": "",
+      "why": "Rule identifier that this repository does not define",
+      "knownFrom": [
+        "canon/public",
+        "scripts/rules"
+      ]
+    }
+  ],
+  "allowlist": [
+    {
+      "id": "approval-wording",
+      "file": "canon/**",
+      "re": "own[e]r(?:['’]s)?[ ]decision|own[e]r-approved",
+      "reason": "Wording of published rule texts: owner is a generic role name in a public agent rule"
+    },
+    {
+      "id": "approval-wording",
+      "file": "skills/audit/references/design-system-integrity.md",
+      "re": "own[e]r[ ]decision",
+      "reason": "Wording of a published skill reference: owner is a generic role name"
+    },
+    {
+      "id": "rule-id",
+      "file": "scripts/**",
+      "re": "DS-2[ab]",
+      "reason": "Sub-rules that the retired combined rule DS-2 points to, named in the shipped detector and its tests"
+    }
+  ]
+}
