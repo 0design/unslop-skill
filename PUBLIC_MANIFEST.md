@@ -20,7 +20,7 @@ Every file in this tree, why it is public, and its license. Generated from `git 
 | `canon/public-generated/public-2026.10.04-12/topics/copy.json` | Generated routed canon (published version, served by the MCP endpoint) | CC BY 4.0 |
 | `canon/public-generated/public-2026.10.04-12/topics/interface.json` | Generated routed canon (published version, served by the MCP endpoint) | CC BY 4.0 |
 | `canon/public-generated/public-2026.10.04-12/topics/process.json` | Generated routed canon (published version, served by the MCP endpoint) | CC BY 4.0 |
-| `canon/public/records.json` | Public rule texts (source), owner-approved wording | CC BY 4.0 |
+| `canon/public/records.json` | Public rule texts (source) | CC BY 4.0 |
 | `package-lock.json` | Dependencies (MCP SDK only), test command; private: true blocks npm publish | MIT |
 | `package.json` | Dependencies (MCP SDK only), test command; private: true blocks npm publish | MIT |
 | `scripts/canon-audit.test.mjs` | Test suite | MIT |
@@ -157,7 +157,7 @@ Every file in this tree, why it is public, and its license. Generated from `git 
 ## Not in this tree
 
 - Working notes, planning material and reference documents that are not part of the product.
-- Rule texts that have not been approved for publication.
+- Unpublished rule texts.
 - Deployment configuration for the hosted MCP endpoint.
 - Development and demo tooling that the skill, the detector and the canon client do not need,
   including the leak scan, which runs before each export.

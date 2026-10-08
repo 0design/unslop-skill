@@ -68,11 +68,9 @@ supersedes them. The generator refuses to rewrite an existing version with diffe
 content, so each corrected candidate takes the next number. Since 2026-10-05 the MCP
 endpoint serves this version; its health check reports `public-2026.10.04-12`.
 
-**Wording status.** All rule texts and the four class definitions in this version are
-owner-approved. US-001, US-003 to US-008 and US-010 keep the wording approved on
-2026-10-02; every other text in this version, including the replaced US-002, the
-narrowed US-009, the DEC family and the class definitions, was approved by the owner on
-2026-10-05 without edits.
+**Wording status.** US-001, US-003 to US-008 and US-010 keep the wording of 2026-10-02.
+Every other text in this version, including the replaced US-002, the narrowed US-009, the
+DEC family and the class definitions, dates from 2026-10-05.
 
 ### Added
 
@@ -127,7 +125,7 @@ narrowed US-009, the DEC family and the class definitions, was approved by the o
   without them hash exactly as before.
 - Test gate for `canon/public/records.json`: every record is `accepted`, `global` and has
   a public class; candidates, project-scoped rules and project decisions fail the suite.
-- The leak scan also rejects private candidate-card and owner-project decision IDs.
+- The leak scan also rejects private candidate-card and project-decision IDs.
 
 ### Changed
 
@@ -141,8 +139,8 @@ narrowed US-009, the DEC family and the class definitions, was approved by the o
 - KR-5: unlike the source recipe, a 0-blur ring shadow counts as a border; whether an
   edge is needed is decided by DEC-2.
 - **Spelling.** All public rule texts, titles, class definitions and credit titles use US
-  English (color, center, neighbor, judgment, catalog), matching the owner-approved
-  wording of US-003 and US-006. The schema value `mode: "judgement"` is an identifier and
+  English (color, center, neighbor, judgment, catalog), matching the wording of
+  US-003 and US-006. The schema value `mode: "judgement"` is an identifier and
   stays as it is. A test rejects British forms in public prose.
 - KR-19 and TY-1 agree on numerals: regular text never uses monospace digits; code keeps
   its own digits.
