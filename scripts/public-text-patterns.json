@@ -4,39 +4,45 @@
   "patterns": [
     {
       "id": "approval-wording",
-      "re": "\\bowner(?:(?:['’]|&#x?0*27;|&#39;|&apos;|&rsquo;|&#8217;|\\\\u2019|\\\\u0027)s)?(?:[\\s-]|&nbsp;|&#160;|&#xa0;)+(?:OK|decision|approv(?:ed|al)?)\\b",
+      "re": "(?<![A-Za-z0-9])owner[*_`~]*(?:(?:['’]|&#x?0*27;|&#39;|&apos;|&rsquo;|&#8217;|\\\\u2019|\\\\u0027)s)?[*_`~]*(?:[\\s:;,—–-]|&nbsp;|&#160;|&#xa0;)+[*_`~]*(?:OK|decision|approv\\w*|decid\\w*|confirm\\w*|sign(?:s|ed)?\\s+off|accept\\w*|agree\\w*)\\b",
       "flags": "i",
-      "why": "Approval wording attributed to a project owner"
+      "why": "Approval wording attributed to a project owner (also with Markdown emphasis, separators and other verbs)"
     },
     {
       "id": "person-approval",
-      "re": "\\b(?:approved|signed off|decided|confirmed)\\s+by\\s+(?:Oleg|the\\s+owner)\\b",
+      "re": "\\b(?:approv\\w*|sign(?:s|ed)?\\s+off|decid\\w*|confirm\\w*|accept\\w*)\\s+(?:by|from|per)\\s+(?:Oleg|(?:the\\s+)?(?:project\\s+)?owner)\\b",
       "flags": "i",
       "why": "Approval attributed to a named person or the owner"
     },
     {
       "id": "person-verb",
-      "re": "\\bOleg(?:\\s+\\p{L}+)?\\s+(?:approved|decided|said|signed off)\\b",
+      "re": "\\bOleg(?:(?:['’]|&#x?0*27;|&#39;|&apos;|&rsquo;|&#8217;|\\\\u2019|\\\\u0027)s)?(?:\\s+\\p{L}+)?(?:[\\s:;,—–-]|&nbsp;|&#160;|&#xa0;)+(?:approv\\w*|decid\\w*|said|sign(?:s|ed)?\\s+off|OK|decision)\\b",
       "flags": "iu",
       "why": "Statement attributed to a named person"
     },
     {
       "id": "cyrillic",
-      "re": "\\p{Script=Cyrillic}",
+      "re": "\\p{Script=Cyrillic}+",
       "flags": "u",
       "why": "Text in a language this repository does not publish in: internal discussion written in it must not reach the public tree"
     },
     {
       "id": "question-round",
-      "re": "\\bquiz(?:zes)?\\b",
+      "re": "\\bquiz(?:zes)?\\s*(?:#|№)?\\d+\\b|\\bquiz(?:zes)?\\s+(?:round|answer|decision|result)s?\\b|\\b(?:per|from|after|in|via)\\s+(?:the\\s+)?quiz\\b",
       "flags": "i",
       "why": "Question round used as a review step"
     },
     {
       "id": "issue-key",
-      "re": "\\b\\d[A-Z]{1,3}-\\d{2,}\\b",
+      "re": "\\b\\d[A-Z]{1,3}-\\d+\\b",
       "flags": "",
       "why": "Key of an internal work item"
+    },
+    {
+      "id": "issue-branch",
+      "re": "\\b\\d[a-z]{1,3}-\\d+-[a-z][\\w-]*",
+      "flags": "i",
+      "why": "Branch name that starts with a work item key"
     },
     {
       "id": "tracker-link",
@@ -58,9 +64,9 @@
     },
     {
       "id": "pull-request-number",
-      "re": "\\bPR\\s*#\\d+",
+      "re": "\\bPRs?\\s*[#-]?\\s*\\d+\\b",
       "flags": "",
-      "why": "Pull request reference"
+      "why": "Pull request shorthand such as PR plus a number"
     },
     {
       "id": "do-not-merge",
@@ -70,7 +76,7 @@
     },
     {
       "id": "internal-id",
-      "re": "\\b(?:QF|BP|PUB|RETRO|DELIVERY)-\\d+\\b",
+      "re": "\\b(?:QF|BP|PUB|RETRO|DELIVERY)-[A-Z0-9-]*\\d+\\b",
       "flags": "",
       "why": "Identifier of an internal rule or decision log entry"
     },
@@ -101,8 +107,14 @@
     {
       "id": "rule-id",
       "file": "scripts/**",
-      "re": "DS-2[ab]",
-      "reason": "Sub-rules that the retired combined rule DS-2 points to, named in the shipped detector and its tests"
+      "re": "DS-2b",
+      "reason": "Sub-rule that the retired combined rule points to, named in the shipped detector and its tests"
+    },
+    {
+      "id": "approval-wording",
+      "file": "skills/audit/SKILL.md",
+      "re": "own[e]r[ ]acceptance",
+      "reason": "Wording of the published skill: owner is a generic role name"
     }
   ]
 }

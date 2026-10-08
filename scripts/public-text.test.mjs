@@ -3,7 +3,7 @@
 // carry the wording it checks for and passes its own scan.
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
-import { copyFileSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { copyFileSync, existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, symlinkSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { dirname, join } from 'node:path';
 import { after, test } from 'node:test';
@@ -44,8 +44,9 @@ const SAMPLES = [
   ['person-approval', cat('approv', 'ed by ', 'Ol', 'eg')],
   ['person-verb', cat('Ol', 'eg ', 'said')],
   ['cyrillic', String.fromCodePoint(0x43f, 0x440, 0x438, 0x432, 0x456, 0x442)],
-  ['question-round', cat('qu', 'iz')],
+  ['question-round', cat('qu', 'iz ', '4')],
   ['issue-key', cat('0', 'D-', '123')],
+  ['issue-branch', cat('team/', '0', 'd-123-fix-wording')],
   ['tracker-link', cat('linear', '.app/', 'team')],
   ['plan-step', cat('plan ', 'step')],
   ['review-round', cat('review ', 'round')],
@@ -106,7 +107,7 @@ test('a rule id the repository defines is not a hit, one it does not define is',
   assert.equal(result.status, 1, result.stdout + result.stderr);
   assert.doesNotMatch(result.stdout, /a\.md/);
   assert.match(result.stdout, /b\.md:1:\d+  rule-id/);
-  assert.match(result.stdout, /1 hit\(s\), 0 allowlisted, \d+ rule id\(s\) defined here/);
+  assert.match(result.stdout, /1 hit\(s\), 0 allowlisted, \d+ mention\(s\) of rule ids defined here/);
 });
 
 test('knownFrom pointing at nothing is a configuration error', () => {
@@ -182,7 +183,7 @@ test('the pattern list and this test file pass their own scan', () => {
   assert.equal(result.status, 0, result.stdout + result.stderr);
 });
 
-test('the tracked files of this repository pass the guard', () => {
+test('the tracked files of this repository pass the guard', { skip: !existsSync(join(root, '.git')) }, () => {
   const result = spawnSync(process.execPath, [guard], { cwd: root, encoding: 'utf8' });
   assert.equal(result.status, 0, result.stdout + result.stderr);
 });
@@ -199,4 +200,105 @@ test('the pattern list and allowlist are well formed', () => {
     assert.ok(ids.has(entry.id) && entry.file && entry.reason, `${entry.id}: allowlist entry is incomplete`);
     assert.ok((typeof entry.text === 'string') !== (typeof entry.re === 'string'), `${entry.id} needs exactly one of text or re`);
   }
+});
+
+test('every file is scanned except binary ones: jsx, tsx, dotfiles, shell and extensionless files included', () => {
+  const dir = tree({
+    'fixtures/card.jsx': `// ${OWNER_APPROVED}`,
+    'fixtures/card.tsx': `// ${OWNER_APPROVED}`,
+    '.gitignore': OWNER_APPROVED,
+    'run.sh': `# ${OWNER_APPROVED}`,
+    'notes.mdx': OWNER_APPROVED,
+    'plain': OWNER_APPROVED,
+  });
+  writeFileSync(join(dir, 'image.png'), Buffer.from([0x89, 0x50, 0, 0]));
+  const result = scan(dir);
+  assert.equal(result.status, 1, result.stdout + result.stderr);
+  for (const name of ['fixtures/card.jsx', 'fixtures/card.tsx', '.gitignore', 'run.sh', 'notes.mdx', 'plain']) {
+    assert.match(result.stdout, new RegExp(`^${name.replace('.', '\\.')}:1:\\d+  approval-wording`, 'm'), name);
+  }
+  assert.match(result.stdout, /scanned 6 text file\(s\).*1 skipped \(binary or \.map\)/);
+});
+
+test('emphasis, separators and other approval verbs are flagged', () => {
+  const forms = [
+    cat('**own', 'er** approved'),
+    cat('_own', 'er_ approved'),
+    cat('`own', 'er` approved'),
+    cat('own', 'er: approved'),
+    cat('own', 'er, approved'),
+    cat('own', 'er \u2014 approved'),
+    cat('own', 'er approves'),
+    cat('own', 'er has approved'.replace(' has', '')),
+    cat('own', 'er confirmed'),
+    cat('own', 'er signed off'),
+    cat('approved by ', 'own', 'er'),
+    cat('approved by the project ', 'own', 'er'),
+    cat('Ol', "eg's approval"),
+    cat('Ol', 'eg: OK'),
+    cat('Ol', 'eg Kuharuk decided'),
+  ];
+  const result = scan(tree(Object.fromEntries(forms.map((form, index) => [`form-${index}.md`, form]))));
+  assert.equal(result.status, 1, result.stdout + result.stderr);
+  forms.forEach((form, index) => assert.match(result.stdout, new RegExp(`form-${index}\\.md:1:\\d+  `), form));
+});
+
+test('pull request numbers and branch names that carry a work item key are flagged', () => {
+  for (const [text, id] of [
+    [cat('PR', '#12'), 'pull-request-number'],
+    [cat('PR ', '#12'), 'pull-request-number'],
+    [cat('PR', '12'), 'pull-request-number'],
+    [cat('Merge pull request #1 from org/', '0', 'd-437-guard'), 'issue-branch'],
+    [cat('0', 'D-1'), 'issue-key'],
+  ]) {
+    const result = scanText('commit-messages', `${text}\n`);
+    assert.equal(result.status, 1, `${text}: ${result.stdout}${result.stderr}`);
+    assert.match(result.stdout, new RegExp(`  ${id}  `), text);
+  }
+});
+
+test('zero-width characters, soft hyphens and combining marks do not hide a phrase', () => {
+  const hidden = [
+    cat('own', '\u200b', 'er approved'),
+    cat('own', '\u00ad', 'er approved'),
+    cat('ow', '\u200d', 'ner approved'),
+    cat('\uff4f\uff57\uff4e\uff45\uff52', ' approved'),
+    cat('own', 'e\u0301', 'r approved').replace('e\u0301', 'e'),
+  ];
+  hidden.forEach((text, index) => assert.equal(scanText(`t-${index}`, `${text}\n`).status, 1, JSON.stringify(text)));
+});
+
+test('a quiz is flagged as a review step, not as a word', () => {
+  assert.equal(scanText('t', 'per the ' + cat('qu', 'iz') + '\n').status, 1);
+  assert.equal(scanText('t', cat('qu', 'iz ', 'round') + '\n').status, 1);
+  assert.equal(scanText('t', 'A ' + cat('qu', 'iz') + ' app audit sample\n').status, 0);
+});
+
+test('Cyrillic text is reported once per run of letters, not per letter', () => {
+  const result = scanText('t', `${String.fromCodePoint(0x43f, 0x440, 0x438, 0x432, 0x456, 0x442)} x\n`);
+  assert.equal(result.status, 1);
+  assert.match(result.stdout, /1 hit\(s\)/);
+});
+
+test('a broken symlink is ignored and an invalid allowlist regex is a configuration error', () => {
+  const dir = tree({ 'ok.md': 'plain' });
+  symlinkSync(join(scratch, 'does-not-exist'), join(dir, 'dangling.md'));
+  assert.equal(scan(dir).status, 0);
+  const patterns = withPatterns((base) => ({
+    ...base,
+    allowlist: [{ id: 'plan-step', file: '*.md', re: '(', reason: 'fixture' }],
+  }));
+  assert.equal(scan(tree({ 'index.md': 'plain' }), ['--patterns', patterns]).status, 2);
+});
+
+test('an allowlist glob with ** matches whole path segments only', () => {
+  const matched = cat('plan ', 'step');
+  const patterns = withPatterns((base) => ({
+    ...base,
+    allowlist: [{ id: 'plan-step', file: 'a/**/b.md', text: matched, reason: 'fixture' }],
+  }));
+  const result = scan(tree({ 'a/b.md': matched, 'a/x/y/b.md': matched, 'a/prefix-b.md': matched }), ['--patterns', patterns]);
+  assert.equal(result.status, 1, result.stdout + result.stderr);
+  assert.match(result.stdout, /a\/prefix-b\.md:1:\d+  plan-step/);
+  assert.doesNotMatch(result.stdout, /a\/b\.md|a\/x\/y/);
 });

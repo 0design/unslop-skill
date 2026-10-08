@@ -9,18 +9,19 @@
 // Exit codes: 0 no unallowed hits, 1 unallowed hits, 2 usage or configuration error.
 // Patterns and allowlist live in scripts/public-text-patterns.json. An allowlist entry is bound to one pattern id, one
 // file glob (relative to the scanned root, or the --stdin name) and the exact matched text (or a regex over it). A hit
-// is never allowed by a broader rule. Only text files are scanned: the listed extensions, or extensionless UTF-8 files;
-// .map files and files containing NUL bytes are skipped.
+// is never allowed by a broader rule. Every file is scanned except known binary types and .map files, files with a NUL
+// byte and files that are not valid UTF-8; the summary line counts what was skipped. Text is normalized (NFKC, format
+// characters and combining marks removed) before matching, so zero-width characters do not hide a phrase.
 // A pattern may carry `knownFrom`: a repository path or a list of them (a `*` is allowed in the last path segment).
 // The matched text is not a hit when the same token appears in a .json or .mjs file there: the rule identifiers that
 // this repository itself defines are public by design, so only identifiers outside it are flagged.
 import { spawnSync } from 'node:child_process';
-import { readFileSync, readdirSync, statSync } from 'node:fs';
+import { lstatSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import { dirname, join, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const here = dirname(fileURLToPath(import.meta.url));
-const TEXT_EXTENSIONS = new Set(['.md', '.txt', '.json', '.mjs', '.cjs', '.js', '.ts', '.css', '.html', '.xml', '.svg', '.csv', '.yaml', '.yml', '.toml']);
+const BINARY_EXTENSIONS = new Set(['.map', '.png', '.jpg', '.jpeg', '.gif', '.webp', '.avif', '.ico', '.icns', '.woff', '.woff2', '.ttf', '.otf', '.eot', '.pdf', '.zip', '.gz', '.tgz', '.mp3', '.mp4', '.webm', '.mov', '.wasm']);
 const MAX_FRAGMENT = 100;
 const BINARY_PROBE = 8192;
 const PATTERN_KEYS = new Set(['id', 're', 'flags', 'why', 'knownFrom']);
@@ -61,9 +62,13 @@ function globToRegExp(glob) {
   for (let i = 0; i < glob.length; i += 1) {
     const char = glob[i];
     if (char === '*' && glob[i + 1] === '*') {
-      source += '.*';
       i += 1;
-      if (glob[i + 1] === '/') i += 1;
+      if (glob[i + 1] === '/') {
+        i += 1;
+        source += '(?:.*/)?';
+      } else {
+        source += '.*';
+      }
     } else if (char === '*') {
       source += '[^/]*';
     } else if (char === '?') {
@@ -152,9 +157,15 @@ function loadConfig(file) {
     const hasText = typeof entry.text === 'string' && entry.text !== '';
     const hasRe = typeof entry.re === 'string' && entry.re !== '';
     if (hasText === hasRe) fail(`allowlist[${index}] needs exactly one non-empty text or re`);
-    const matchesText = hasText
-      ? (matched) => matched === entry.text
-      : (matched) => new RegExp(`^(?:${entry.re})$`, 'u').test(matched);
+    let allowedRe = null;
+    if (hasRe) {
+      try {
+        allowedRe = new RegExp(`^(?:${entry.re})$`, 'u');
+      } catch (error) {
+        fail(`allowlist[${index}].re does not compile: ${error.message}`);
+      }
+    }
+    const matchesText = hasText ? (matched) => matched === entry.text : (matched) => allowedRe.test(matched);
     return { index, id: entry.id, file: globToRegExp(entry.file), matchesText, used: 0, entry };
   });
   return { patterns, allowlist };
@@ -165,7 +176,7 @@ function listFiles(root) {
   const walk = (dir) => {
     for (const name of readdirSync(dir).sort()) {
       const full = join(dir, name);
-      const info = statSync(full);
+      const info = lstatSync(full);
       if (info.isDirectory()) walk(full);
       else if (info.isFile()) found.push(full);
     }
@@ -174,14 +185,13 @@ function listFiles(root) {
   return found;
 }
 
+// Every file is scanned unless it is a known binary type, contains a NUL byte, or is not valid UTF-8.
 function isTextFile(file, buffer) {
   const dot = file.lastIndexOf('.');
   const slash = Math.max(file.lastIndexOf('/'), file.lastIndexOf(sep));
   const extension = dot > slash ? file.slice(dot).toLowerCase() : '';
-  if (extension === '.map') return false;
+  if (BINARY_EXTENSIONS.has(extension)) return false;
   if (buffer.subarray(0, BINARY_PROBE).includes(0)) return false;
-  if (TEXT_EXTENSIONS.has(extension)) return true;
-  if (extension !== '') return false;
   try {
     new TextDecoder('utf-8', { fatal: true }).decode(buffer);
     return true;
@@ -218,7 +228,8 @@ function fragmentAround(text, lineStart, lineEnd, matchIndex, matchLength) {
   return `${prefix}${text.slice(start, end).replace(/\s+/g, ' ')}${suffix}`.slice(0, MAX_FRAGMENT);
 }
 
-function scanFile(relPath, text, config, counters) {
+function scanFile(relPath, rawText, config, counters) {
+  const text = rawText.normalize('NFKC').replace(/[\p{Cf}\p{M}]/gu, '');
   const hits = [];
   let starts = null;
   for (const pattern of config.patterns) {
@@ -260,7 +271,7 @@ function scanFile(relPath, text, config, counters) {
 
 const options = parseArgs(process.argv.slice(2));
 const config = loadConfig(resolve(options.patterns));
-const counters = { known: 0 };
+const counters = { known: 0, skipped: 0 };
 const all = [];
 let scanned = 0;
 let where;
@@ -277,7 +288,7 @@ if (options.stdin !== null) {
   if (options.dir === null) {
     root = repoRoot;
     const listed = spawnSync('git', ['ls-files', '-z'], { cwd: repoRoot, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
-    if (listed.status !== 0) fail(`git ls-files failed: ${listed.stderr.trim()}`);
+    if (listed.error || listed.status !== 0) fail(`git ls-files failed: ${(listed.error?.message ?? listed.stderr ?? '').trim()}`);
     files = listed.stdout.split('\0').filter(Boolean).sort().map((name) => join(repoRoot, name));
     where = 'tracked files';
   } else {
@@ -301,7 +312,10 @@ if (options.stdin !== null) {
     }
     if (!info.isFile()) continue;
     const buffer = readFileSync(file);
-    if (!isTextFile(file, buffer)) continue;
+    if (!isTextFile(file, buffer)) {
+      counters.skipped += 1;
+      continue;
+    }
     scanned += 1;
     const relPath = relative(root, file).split(sep).join('/');
     all.push(...scanFile(relPath, buffer.toString('utf8'), config, counters));
@@ -318,7 +332,7 @@ for (const entry of config.allowlist) {
     process.stdout.write(`warning: allowlist[${entry.index}] (${entry.id}, ${entry.entry.file}) matched no hit; remove it\n`);
   }
 }
-const knownNote = counters.known > 0 ? `, ${counters.known} rule id(s) defined here` : '';
+const knownNote = (counters.known > 0 ? `, ${counters.known} mention(s) of rule ids defined here` : '') + (counters.skipped > 0 ? `, ${counters.skipped} skipped (binary or .map)` : '');
 process.stdout.write(
   `public text guard (${where}): scanned ${scanned} text file(s), ${unallowed.length} hit(s), ${all.length - unallowed.length} allowlisted${knownNote}\n`,
 );
