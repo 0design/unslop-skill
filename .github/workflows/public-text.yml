@@ -1,0 +1,75 @@
+name: public-text
+
+# Fails when text published from this repository carries internal process wording: the tracked files, a pull request's
+# title and description, and the commit messages a pull request or a push brings in. The wording itself is in
+# scripts/public-text-patterns.json; scripts/check-public-text.mjs runs the scan. No secrets, nothing is deployed.
+on:
+  push:
+    branches: [main, stage, 'public/**']
+  pull_request:
+    # `edited` runs the scan again when the title or description changes.
+    types: [opened, synchronize, reopened, edited]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && format('pr-{0}', github.event.pull_request.number) || format('run-{0}', github.run_id) }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          # Scan the pull request head itself, not GitHub's synthetic merge commit.
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Scan tracked files
+        run: node scripts/check-public-text.mjs
+      # The title, description and commit range come in through env, never interpolated into the script. Empty text
+      # (no description, no commits in the range) is skipped: the scanner treats empty input as an error.
+      - name: Scan the pull request title and description
+        if: github.event_name == 'pull_request'
+        shell: bash
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+          PR_BODY: ${{ github.event.pull_request.body }}
+        run: |
+          printf '%s\n' "$PR_TITLE" | node scripts/check-public-text.mjs --stdin pull-request-title
+          if [ -n "$(printf '%s' "$PR_BODY" | tr -d '[:space:]')" ]; then
+            printf '%s\n' "$PR_BODY" | node scripts/check-public-text.mjs --stdin pull-request-description
+          fi
+      - name: Scan the commit messages of the pull request
+        if: github.event_name == 'pull_request'
+        shell: bash
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          messages="$(git log --format=%B "$BASE_SHA..$HEAD_SHA")"
+          if [ -n "$(printf '%s' "$messages" | tr -d '[:space:]')" ]; then
+            printf '%s\n' "$messages" | node scripts/check-public-text.mjs --stdin commit-messages
+          fi
+      - name: Scan the commit messages of the push
+        if: github.event_name == 'push'
+        shell: bash
+        env:
+          BEFORE_SHA: ${{ github.event.before }}
+          AFTER_SHA: ${{ github.sha }}
+        run: |
+          # A new branch or a forced push has no usable "before"; scan the pushed commit alone then.
+          if git cat-file -e "$BEFORE_SHA^{commit}" 2>/dev/null; then
+            messages="$(git log --format=%B "$BEFORE_SHA..$AFTER_SHA")"
+          else
+            messages="$(git log -1 --format=%B "$AFTER_SHA")"
+          fi
+          if [ -n "$(printf '%s' "$messages" | tr -d '[:space:]')" ]; then
+            printf '%s\n' "$messages" | node scripts/check-public-text.mjs --stdin commit-messages
+          fi
