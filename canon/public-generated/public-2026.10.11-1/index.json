@@ -1,5 +1,5 @@
 {
-  "checksum": "8edff0793f949353cf31219ffccfb3a9d75690cd790e7bcc915a101ea9ea706f",
+  "checksum": "9d6713e5b595a8aedf6dce9c51a020e3bd77d471d9723a8b3b8ca6ca7589cf68",
   "payload": {
     "classes": {
       "bad-tone": {
@@ -22,13 +22,13 @@
     "kind": "unslop-canon-index",
     "license": "CC-BY-4.0",
     "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
-    "publishedAt": "2026-10-04T00:00:00Z",
+    "publishedAt": "2026-10-11T00:00:00Z",
     "schemaVersion": 1,
     "source": "UNSLOP",
     "topics": {
       "copy": {
-        "bytes": 7019,
-        "checksum": "9752a7dcf487a36b0fe1e86520071aad2a9563016c5f309c6d231162d79cecaf",
+        "bytes": 7018,
+        "checksum": "09998c80aa21ad848da7597e13eb4efc64741ac6b399182f145028750bc9d65b",
         "globs": [
           "**/*.{html,jsx,tsx,vue,svelte}",
           "**/*.md",
@@ -58,8 +58,8 @@
         }
       },
       "interface": {
-        "bytes": 28090,
-        "checksum": "fb1cdc4c6e4be0471c0af3a072d710a08b6923abbe0d8a76c883927c87a98068",
+        "bytes": 28932,
+        "checksum": "cb8c241c297362f5b6ef2d101fbc993a9a3f6fef15034ea7e0ab2b11a8d2b731",
         "globs": [
           "**/*.{css,scss}",
           "**/*.{html,jsx,tsx,vue,svelte}"
@@ -93,6 +93,7 @@
           "KR-9",
           "NR-02",
           "TY-1",
+          "XP-18",
           "XP-31"
         ],
         "titles": {
@@ -124,13 +125,14 @@
           "KR-9": "Image outlines only as an option for content images",
           "NR-02": "Icon transitions transform instead of swapping",
           "TY-1": "Plain font numerals in regular text",
+          "XP-18": "No gray text on colored backgrounds",
           "XP-31": "Indented lists keep their markers"
         }
       },
       "process": {
         "always": true,
-        "bytes": 7325,
-        "checksum": "c7d860c08a5020d6bab4310fa66efeb36a6833b50f2a69b5054e95dc4fb335f7",
+        "bytes": 7324,
+        "checksum": "091808e31f312699197c849c88628dfc4693e90c0a0c5bdafd72eb29d42850eb",
         "globs": [],
         "ruleIds": [
           "UR-1",
@@ -158,6 +160,6 @@
         }
       }
     },
-    "version": "public-2026.10.04-12"
+    "version": "public-2026.10.11-1"
   }
 }

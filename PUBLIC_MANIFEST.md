@@ -17,10 +17,10 @@ Every file in this tree, why it is public, and its license. Generated from `git 
 | `LICENSES/emilkowalski-skills-MIT.txt` | Third-party notice: motion thresholds adapted from Emil Kowalski (MIT) | MIT (© Emil Kowalski) |
 | `PUBLIC_MANIFEST.md` | This list | MIT |
 | `README.md` | What this is, MCP endpoint, how to run | MIT |
-| `canon/public-generated/public-2026.10.04-12/index.json` | Generated routed canon (published version, served by the MCP endpoint) | CC BY 4.0 |
-| `canon/public-generated/public-2026.10.04-12/topics/copy.json` | Generated routed canon (published version, served by the MCP endpoint) | CC BY 4.0 |
-| `canon/public-generated/public-2026.10.04-12/topics/interface.json` | Generated routed canon (published version, served by the MCP endpoint) | CC BY 4.0 |
-| `canon/public-generated/public-2026.10.04-12/topics/process.json` | Generated routed canon (published version, served by the MCP endpoint) | CC BY 4.0 |
+| `canon/public-generated/public-2026.10.11-1/index.json` | Generated routed canon (published version, served by the MCP endpoint) | CC BY 4.0 |
+| `canon/public-generated/public-2026.10.11-1/topics/copy.json` | Generated routed canon (published version, served by the MCP endpoint) | CC BY 4.0 |
+| `canon/public-generated/public-2026.10.11-1/topics/interface.json` | Generated routed canon (published version, served by the MCP endpoint) | CC BY 4.0 |
+| `canon/public-generated/public-2026.10.11-1/topics/process.json` | Generated routed canon (published version, served by the MCP endpoint) | CC BY 4.0 |
 | `canon/public/records.json` | Public rule texts (source) | CC BY 4.0 |
 | `package-lock.json` | Dependencies (MCP SDK only), test command; private: true blocks npm publish | MIT |
 | `package.json` | Dependencies (MCP SDK only), test command; private: true blocks npm publish | MIT |

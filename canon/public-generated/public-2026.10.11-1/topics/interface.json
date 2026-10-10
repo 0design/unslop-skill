@@ -1,5 +1,5 @@
 {
-  "checksum": "fb1cdc4c6e4be0471c0af3a072d710a08b6923abbe0d8a76c883927c87a98068",
+  "checksum": "cb8c241c297362f5b6ef2d101fbc993a9a3f6fef15034ea7e0ab2b11a8d2b731",
   "payload": {
     "kind": "unslop-canon-topic",
     "rules": [
@@ -525,6 +525,19 @@
       {
         "attribution": "UNSLOP by Oleg.Design",
         "class": "slop",
+        "id": "XP-18",
+        "license": "CC-BY-4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "mode": "judgement",
+        "source": "UNSLOP",
+        "statement": "On a colored background, such as a brand or accent fill, text is white or black. To mute it, lower the opacity of that white or black, for example rgb(255 255 255 / 0.6); never use a gray token or a gray hex value. Accent-colored text is the only exception. Muted text still meets the contrast in DEC-6. Example: #aaa text in a purple table cell. Not a finding: white text at 0.6 opacity in the same cell when it meets that contrast.",
+        "strength": "hard",
+        "title": "No gray text on colored backgrounds",
+        "topic": "interface"
+      },
+      {
+        "attribution": "UNSLOP by Oleg.Design",
+        "class": "slop",
         "id": "XP-31",
         "license": "CC-BY-4.0",
         "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
@@ -538,6 +551,6 @@
     ],
     "schemaVersion": 1,
     "topic": "interface",
-    "version": "public-2026.10.04-12"
+    "version": "public-2026.10.11-1"
   }
 }
