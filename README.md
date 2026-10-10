@@ -1,21 +1,8 @@
-# unslop
+"I asked you to get rid of this slop everywhere."<br>— You, to your AI-Agent
 
-An audit skill for coding agents that looks for the tells of AI-generated UI and writes fix plans another agent can execute, one plan per fix or per tight cluster of confirmed findings. The audit is read-only: it writes plans, not code changes.
+# Get started
 
-This repository contains four parts:
-
-| Part | Path | What it does |
-|---|---|---|
-| Skill | `skills/audit/` | The audit workflow an agent follows (more skills can sit beside it under `skills/`) |
-| Plugin | `.claude-plugin/`, `.mcp.json` | Plugin and marketplace manifests for Claude Code and Codex; declares the canon MCP server |
-| Detector | `scripts/detect.mjs`, `scripts/rules/` | Deterministic checks over CSS and markup, no network |
-| Canon client | `scripts/canon-route.mjs`, `scripts/lib/` | Reads the rule canon over MCP and checks its checksums |
-
-The public rule texts are in `canon/public/` (source) and `canon/public-generated/` (the files the MCP server serves; the endpoint serves `public-2026.10.04-12`, the version in this tree).
-
-## Install
-
-unslop ships as a plugin for Claude Code and Codex. The plugin contains the skill and declares the remote read-only canon MCP server (`https://oleg.design/unslop/mcp`) in `.mcp.json`; your client connects to it at session start. There is nothing else to configure. This repository is both the plugin and its marketplace catalog, for both clients.
+unslop is an auditor. It checks the design your agent has already generated for the typical bad decisions AI makes in generated designs, and proposes fixes.
 
 Claude Code, in your shell:
 
@@ -24,8 +11,6 @@ claude plugin marketplace add 0design/unslop-skill
 claude plugin install unslop@unslop
 ```
 
-or inside a session: `/plugin marketplace add 0design/unslop-skill`, then `/plugin install unslop@unslop`. Start a new session and run `/unslop:audit` (or ask for an unslop audit). `claude mcp list` shows the server as `plugin:unslop:unslop`.
-
 Codex:
 
 ```sh
@@ -33,71 +18,63 @@ codex plugin marketplace add 0design/unslop-skill
 codex plugin add unslop@unslop
 ```
 
-or run `/plugins` inside Codex and install unslop from the `unslop` marketplace. Start a new session and ask for an unslop audit; Codex lists the skill as `unslop:audit`. `codex mcp list` shows the `unslop` server.
+Start a new session and run `/unslop:audit`. In Codex, ask for an unslop audit instead; it lists the skill as `unslop:audit`. Your agent checks every screen against the canon and writes a fix plan to `plans/`. It changes no code.
 
-The first step of every audit checks that the `unslop` server is connected and reports the canon version it serves. The routed canon helper needs Node.js 20 or newer and the MCP SDK. Claude Code does not install the SDK with this plugin: its automatic dependency install skips plugins whose `package.json` sets npm `overrides`, and this one does. Wherever it is missing, the skill tells your agent to ask before it downloads anything and, after you agree, to install a copy per plugin version into the plugin data directory (Claude Code: `${CLAUDE_PLUGIN_DATA}`; Codex: `~/.codex/plugins/data/unslop`, a location this plugin chooses because Codex exposes no data directory to skills). Without your agreement, the skill tells your agent to report that no verified canon is available and to issue no pass. These steps are instructions the skill gives your agent, not a technical lock; your agent's own permission prompts still apply.
+## Install
 
-To remove: `claude plugin uninstall unslop@unslop` or `codex plugin remove unslop@unslop`.
+The plugin holds the skill, the detector, the canon client and the rule texts, and declares the canon server at `https://oleg.design/unslop/mcp`; your client connects to it at session start. The canon client needs Node.js 20 or newer and the MCP SDK; where the SDK is missing, the skill tells your agent to ask before it downloads anything and, without your agreement, to report no verified canon and issue no pass. These steps are instructions, not a technical lock; your agent's own permission prompts still apply. To remove the plugin: `claude plugin uninstall unslop@unslop` or `codex plugin remove unslop@unslop`.
 
-## Canon over MCP
+Cursor and Lovable get a prompt instead of a plugin; it is on https://oleg.design/unslop.
 
-The canon is served read-only at:
+## How it works
 
 ```
-https://oleg.design/unslop/mcp
+  /unslop:audit
+       │
+       ▼
+  your agent ◀──── MCP ────▶ canon server (read-only): index read once, version and checksum pinned for the run
+       ├── no `unslop` server ──▶ your agent offers the connect command, runs it only after you agree
+       ├── unreadable index or checksum mismatch ──▶ "no verified canon", no pass
+       ▼
+  recon ──▶ stack, design system, conventions, documented decisions
+       │
+       ▼
+  detector ──▶ "B-1   RED  button.css:2  color: #ff0044;"
+       │
+       ▼
+  judgement against the pinned rules; every finding re-checked before it counts
+       │
+       ▼
+  plans/NNN-slug.md, one per fix or per tight cluster of findings, for a cheaper model to execute
+       │
+       ▼
+  "unslop execute <plan>", said to your agent ──▶ one plan in an isolated worktree, then the diff
 ```
 
-It is a Streamable HTTP MCP endpoint with resources only (no tools). Health check: `https://oleg.design/unslop/mcp/health`.
+unslop gives your agent a designer's quality criteria: verifiable, not taste by eye. Every finding is a `file:line` and a fix plan. It does not guarantee good design: that decision is yours; unslop only keeps your agent from breaking it. The catalogue of slop criteria keeps changing, so the audit reads it from the canon server, not from the plugin's own copy: one version per run, pinned by version and checksum, never a silent fallback to local files. A rule fixed or added on the server reaches every agent on its next run, with no reinstall.
 
-Without the plugin, connect it by hand:
+## What's in this repo
 
-```sh
-claude mcp add --transport http unslop https://oleg.design/unslop/mcp   # Claude Code
-codex mcp add unslop --url https://oleg.design/unslop/mcp               # Codex
-```
+- [`skills/audit`](skills/audit): the audit skill and its reference on design-system integrity.
+- [`.claude-plugin`](.claude-plugin) and [`.mcp.json`](.mcp.json): the plugin and marketplace manifests, and the canon server they declare.
+- [`scripts/detect.mjs`](scripts/detect.mjs), [`scripts/rules`](scripts/rules) and [`scripts/fixtures`](scripts/fixtures): the detector, 37 machine checks over CSS and markup, no network, a sample per check.
+- [`scripts/canon-route.mjs`](scripts/canon-route.mjs) and [`scripts/lib`](scripts/lib): the canon client that reads the index, routes topics and checks checksums.
+- [`canon/public/records.json`](canon/public/records.json): the 48 rules, the source of truth; [`canon/public-generated`](canon/public-generated): what the server serves, version `public-2026.10.04-12`, never edited by hand.
 
-## Run from a clone
+## Contribute
 
-Requires Node.js 20 or newer. The package is not published to npm.
+You can improve the skill, the detector or the canon, or propose a rule.
 
-```sh
-git clone <this repository> unslop
-cd unslop
-npm ci
-```
+1. Fork the repository and make a branch.
+2. Make your change and run the checks: `npm ci`, `npm test`. A rule change is a new canon version: raise the version in `canon/public/records.json`, run `npm run canon:generate:public` and add a `CHANGELOG.md` entry in the same pull request.
+3. Open a pull request. The tests run on Node.js 22 for a pull request (20 and 22 on a push to a release line), and a second check keeps internal wording out of the public text.
 
-Detector:
+A rule accepted from a pull request reaches everyone with the next canon version. Have an idea? [Open an issue](https://github.com/0design/unslop-skill/issues/new) and describe what result you want.
 
-```sh
-node scripts/detect.mjs path/to/project          # table
-node scripts/detect.mjs path/to/project --json   # JSON
-node scripts/detect.mjs path/to/project --rules B,G
-```
+## Links
 
-Exit codes: `0` no red findings, `1` at least one red finding, `2` usage error.
-
-Canon for a project (reads the index once, then only the topics that match the project's files):
-
-```sh
-node scripts/canon-route.mjs --project path/to/project
-```
-
-To install the plugin from a local clone instead of GitHub, add the clone directory as the marketplace:
-
-```sh
-claude plugin marketplace add ./unslop && claude plugin install unslop@unslop
-codex plugin marketplace add ./unslop && codex plugin add unslop@unslop
-```
-
-## Tests
-
-```sh
-npm test                       # detector, canon client, MCP store, plugin manifests
-```
-
-## License
-
-- Code and skill files: MIT, see [LICENSE](LICENSE).
-- Rule texts in `canon/public/` and `canon/public-generated/`: CC BY 4.0, attribution "UNSLOP by Oleg.Design" with a link to https://oleg.design, see [LICENSE-RULES.md](LICENSE-RULES.md).
-
-Credits: [CREDITS.md](CREDITS.md). File-by-file list: [PUBLIC_MANIFEST.md](PUBLIC_MANIFEST.md).
+- Site: https://oleg.design/unslop
+- Canon server: https://oleg.design/unslop/mcp (resources only, no tools); health: https://oleg.design/unslop/mcp/health
+- Changelog, credits, file list: [CHANGELOG.md](CHANGELOG.md), [CREDITS.md](CREDITS.md), [PUBLIC_MANIFEST.md](PUBLIC_MANIFEST.md)
+- For AI agents: the audit is read-only, plans only, no pass without a connected canon. The rules are in [the skill](skills/audit/SKILL.md).
+- License: [MIT](LICENSE) for the code and skill files, [CC BY 4.0](LICENSE-RULES.md) for the rule texts
