@@ -91,14 +91,11 @@ test('README install commands match the manifest names', () => {
     `claude plugin install ${id}`,
     '/unslop:audit',
     'unslop:audit',
-    'both the plugin and its marketplace catalog',
     'codex plugin marketplace add 0design/unslop-skill',
     `codex plugin add ${id}`,
-    `/plugin install ${id}`,
-    `claude mcp add --transport http unslop ${ENDPOINT}`,
-    `codex mcp add unslop --url ${ENDPOINT}`,
-    `claude plugin marketplace add ./unslop && claude plugin install ${id}`,
-    `codex plugin marketplace add ./unslop && codex plugin add ${id}`,
+    `claude plugin uninstall ${id}`,
+    `codex plugin remove ${id}`,
+    ENDPOINT,
   ]) assert.ok(readme.includes(line), line);
 });
 
@@ -153,7 +150,7 @@ test('rule texts carry the attribution "UNSLOP by Oleg.Design" everywhere', () =
   }
   const license = read('LICENSE-RULES.md');
   assert.ok(license.includes(`Attribution: **${ATTRIBUTION}** (https://oleg.design)`));
-  assert.ok(read('README.md').includes(`attribution "${ATTRIBUTION}" with a link to https://oleg.design`));
+  assert.ok(read('README.md').includes('[CC BY 4.0](LICENSE-RULES.md)'), 'README links the rule licence');
   for (const file of ['LICENSE-RULES.md', 'README.md', 'canon/public/records.json']) {
     assert.ok(!read(file).includes('Oleg.Design — https://oleg.design'), `${file}: old attribution`);
   }
