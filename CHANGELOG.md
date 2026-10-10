@@ -4,6 +4,28 @@ Plugin releases and public canon versions. Rule texts are generated from
 `canon/public/records.json` with `npm run canon:generate:public`; never edit
 `canon/public-generated/` by hand.
 
+## public-2026.10.11-1 (published 2026-10-11)
+
+Base: `public-2026.10.04-12`. The plugin version stays `1.0.2`: the skill reads the canon from
+the MCP endpoint at the start of every run, so an installed plugin gets this version without
+reinstalling.
+
+### Added
+
+- **XP-18 · No gray text on colored backgrounds** (topic `interface`, class `slop`, strength
+  `hard`). On a colored background, such as a brand or accent fill, text is white or black;
+  muted text lowers the opacity of that white or black instead of using a gray token or a
+  gray hex value. Accent-colored text is the only exception, and muted text still meets the
+  contrast in DEC-6.
+
+### Retired
+
+- `public-2026.10.04-12`. Its texts are no longer served. A request for that version (index
+  or topic) is answered with the current version, `public-2026.10.11-1`, under the requested
+  URI; the response's `_meta` carries `requestedVersion`, `servedVersion` and `retired: true`.
+  Its generated files leave `canon/public-generated/`; the texts of the other 48 rules are
+  unchanged in this version.
+
 ## 1.0.2 (plugin, 2026-10-07)
 
 Corrects statements in 1.0.1 that did not match the plugin. Wording only: the skill's

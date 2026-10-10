@@ -59,7 +59,7 @@ unslop gives your agent a designer's quality criteria: verifiable, not taste by 
 - [`.claude-plugin`](.claude-plugin) and [`.mcp.json`](.mcp.json): the plugin and marketplace manifests, and the canon server they declare.
 - [`scripts/detect.mjs`](scripts/detect.mjs), [`scripts/rules`](scripts/rules) and [`scripts/fixtures`](scripts/fixtures): the detector, 37 machine checks over CSS and markup, no network, a sample per check.
 - [`scripts/canon-route.mjs`](scripts/canon-route.mjs) and [`scripts/lib`](scripts/lib): the canon client that reads the index, routes topics and checks checksums.
-- [`canon/public/records.json`](canon/public/records.json): the 48 rules, the source of truth; [`canon/public-generated`](canon/public-generated): what the server serves, version `public-2026.10.04-12`, never edited by hand.
+- [`canon/public/records.json`](canon/public/records.json): the 49 rules, the source of truth; [`canon/public-generated`](canon/public-generated): what the server serves, version `public-2026.10.11-1`, never edited by hand.
 
 ## Contribute
 

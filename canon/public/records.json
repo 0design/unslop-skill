@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "release": {
-    "version": "public-2026.10.04-12",
-    "publishedAt": "2026-10-04T00:00:00Z",
+    "version": "public-2026.10.11-1",
+    "publishedAt": "2026-10-11T00:00:00Z",
     "source": "UNSLOP",
     "license": "CC-BY-4.0",
     "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
@@ -922,6 +922,21 @@
           "url": "https://impeccable.style/slop"
         }
       ],
+      "attribution": "UNSLOP by Oleg.Design",
+      "license": "CC-BY-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "id": "XP-18",
+      "topic": "interface",
+      "class": "slop",
+      "status": "accepted",
+      "scope": "global",
+      "title": "No gray text on colored backgrounds",
+      "statement": "On a colored background, such as a brand or accent fill, text is white or black. To mute it, lower the opacity of that white or black, for example rgb(255 255 255 / 0.6); never use a gray token or a gray hex value. Accent-colored text is the only exception. Muted text still meets the contrast in DEC-6. Example: #aaa text in a purple table cell. Not a finding: white text at 0.6 opacity in the same cell when it meets that contrast.",
+      "mode": "judgement",
+      "strength": "hard",
+      "source": "UNSLOP",
       "attribution": "UNSLOP by Oleg.Design",
       "license": "CC-BY-4.0",
       "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
