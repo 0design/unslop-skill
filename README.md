@@ -26,6 +26,14 @@ The plugin holds the skill, the detector, the canon client and the rule texts, a
 
 Cursor and Lovable get a prompt instead of a plugin; it is on https://oleg.design/unslop.
 
+Or install the skill alone with the [skills CLI](https://skills.sh):
+
+```sh
+npx skills add 0design/unslop-skill
+```
+
+This copies `skills/audit` into your agent's skills folder, without the detector and the canon client. Without them the audit runs no machine checks, has no verified canon and issues no pass, so install the plugin where your agent supports one.
+
 ## How it works
 
 ```
