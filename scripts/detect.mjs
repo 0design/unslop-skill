@@ -3,6 +3,7 @@
 // Node >= 20, zero dependencies.
 import fs from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { walk } from './lib/walker.mjs';
 import { buildContext, runFile, runProject } from './lib/scan.mjs';
 import { selectRules, SECTIONS } from './rules/index.mjs';
@@ -114,5 +115,5 @@ function main(argv) {
 }
 
 const invokedDirectly =
-  process.argv[1] && path.resolve(process.argv[1]) === path.resolve(new URL(import.meta.url).pathname);
+  process.argv[1] && path.resolve(process.argv[1]) === path.resolve(fileURLToPath(import.meta.url));
 if (invokedDirectly) main(process.argv.slice(2));
