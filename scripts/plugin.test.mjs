@@ -5,6 +5,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
+import os from 'node:os';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
@@ -107,7 +108,9 @@ test('SKILL.md Phase 0 connects the declared server before anything else', () =>
     `codex mcp add unslop --url ${ENDPOINT}`, 'only after the user agrees', 'from the plugin root',
     '${CLAUDE_PLUGIN_DATA}/deps-<version>', '$CODEX_HOME/plugins/data/unslop/deps-<version>',
     'npm ci --ignore-scripts --prefix DEPS', 'run it only after the user agrees', 'never install without consent',
-    'Without consent, or if the install fails, do not run the helper']) {
+    'Without consent, if the install fails, or in a skill-only install, do not run the helper',
+    'cp -R package.json package-lock.json skills DEPS/', 'node DEPS/skills/audit/scripts/canon-route.mjs',
+    'A skill-only install (no plugin root, so no `package.json`)']) {
     assert.ok(phase0.includes(text), text);
   }
 });
@@ -185,4 +188,99 @@ test('public rule texts use US English spelling', () => {
   // `judgement` survives only as the schema value of `mode`, never in prose.
   const british = /\b\w*(?:colour|centre|centring|neighbour|catalogue|behaviour|judgement|organis|recognis|normalis|licence|favour|honour|grey)\w*\b/i;
   for (const text of texts) assert.doesNotMatch(text, british, text);
+});
+
+// A skill-only install (the skills CLI) copies skills/audit and nothing else, so everything the skill runs must
+// resolve inside that folder. The detector itself must need nothing but Node.
+const SKILL_DIR = path.join(root, 'skills/audit');
+const SPECIFIERS = /^\s*(?:import|export)\b[^;'"]*?\bfrom\s*['"]([^'"\n]+)['"]|\bimport\s*\(\s*['"]([^'"\n]+)['"]\s*\)|^\s*import\s*['"]([^'"\n]+)['"]|new URL\(\s*['"](\.[^'"\n]*)['"]\s*,\s*import\.meta\.url\s*\)/gm;
+const specifiersOf = file => [...fs.readFileSync(file, 'utf8').matchAll(SPECIFIERS)]
+  .map(match => match[1] ?? match[2] ?? match[3] ?? match[4]);
+const allMjs = dir => fs.readdirSync(dir, { withFileTypes: true }).flatMap(entry => {
+  const full = path.join(dir, entry.name);
+  return entry.isDirectory() ? allMjs(full) : entry.name.endsWith('.mjs') ? [full] : [];
+});
+
+function closureOutside(skillDir, entries, allowBare) {
+  const problems = [];
+  const seen = new Set();
+  const queue = [...entries];
+  while (queue.length) {
+    const file = queue.pop();
+    if (seen.has(file)) continue;
+    seen.add(file);
+    for (const spec of specifiersOf(file)) {
+      if (spec.startsWith('node:')) continue;
+      if (!spec.startsWith('.')) {
+        if (!allowBare(spec)) problems.push(`${path.relative(skillDir, file)}: bare import ${spec}`);
+        continue;
+      }
+      const target = path.resolve(path.dirname(file), spec);
+      const inside = path.relative(skillDir, target);
+      if (inside.startsWith('..') || path.isAbsolute(inside)) {
+        problems.push(`${path.relative(skillDir, file)}: ${spec} leaves the skill folder`);
+      } else if (!fs.existsSync(target)) {
+        problems.push(`${path.relative(skillDir, file)}: ${spec} does not exist`);
+      } else if (target.endsWith('.mjs')) {
+        queue.push(target);
+      }
+    }
+  }
+  return { problems, files: seen };
+}
+
+test('the skill folder is self-contained: every import resolves inside skills/audit', () => {
+  const entries = allMjs(SKILL_DIR);
+  assert.ok(entries.length > 20, 'the detector and canon client ship in the skill folder');
+  const { problems } = closureOutside(SKILL_DIR, entries, spec => spec.startsWith('@modelcontextprotocol/sdk/'));
+  assert.deepEqual(problems, []);
+  const detector = closureOutside(SKILL_DIR, [path.join(SKILL_DIR, 'scripts/detect.mjs')], () => false);
+  assert.deepEqual(detector.problems, [], 'the detector imports only node: built-ins');
+  assert.ok(detector.files.size > 10);
+  for (const name of ['detect.mjs', 'canon-route.mjs', 'canon-server.mjs', 'canon-routed.mjs', 'lib', 'rules']) {
+    assert.ok(!fs.existsSync(path.join(root, 'scripts', name)), `scripts/${name} has one copy, in the skill folder`);
+  }
+});
+
+test('the self-containment check catches an import that leaves the skill folder', () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'unslop skill '));
+  try {
+    fs.mkdirSync(path.join(dir, 'skill/scripts'), { recursive: true });
+    fs.writeFileSync(path.join(dir, 'outside.mjs'), 'export const x = 1;\n');
+    fs.writeFileSync(path.join(dir, 'skill/scripts/a.mjs'), "import { x } from '../../outside.mjs';\nimport 'left-pad';\n");
+    const { problems } = closureOutside(path.join(dir, 'skill'), [path.join(dir, 'skill/scripts/a.mjs')], () => false);
+    assert.equal(problems.length, 2, problems.join('\n'));
+  } finally {
+    fs.rmSync(dir, { recursive: true, force: true });
+  }
+});
+
+test('every scripts/ path named in SKILL.md exists in the skill folder', () => {
+  const named = new Set([...read(SKILL).matchAll(/\bscripts\/[\w./-]*[\w/]/g)].map(match => match[0])
+    .filter(name => !name.startsWith('scripts/…')));
+  assert.ok(named.has('scripts/detect.mjs') && named.has('scripts/canon-route.mjs'));
+  for (const name of named) assert.ok(fs.existsSync(path.join(SKILL_DIR, name)), name);
+});
+
+test('the detector runs from a copy of the skill folder alone and through a symlink, in a path with a space', () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'unslop skill '));
+  try {
+    const copy = path.join(dir, 'copied skills/audit');
+    fs.cpSync(SKILL_DIR, copy, { recursive: true });
+    const link = path.join(dir, 'linked skills/audit');
+    fs.mkdirSync(path.dirname(link));
+    fs.symlinkSync(copy, link, 'dir');
+    const project = path.join(dir, 'my project');
+    fs.mkdirSync(project);
+    fs.copyFileSync(path.join(root, 'scripts/fixtures/B-1/slop/button.css'), path.join(project, 'button.css'));
+    for (const skill of [copy, link]) {
+      const run = spawnSync(process.execPath, [path.join(skill, 'scripts/detect.mjs'), project, '--json'],
+        { cwd: dir, encoding: 'utf8' });
+      assert.equal(run.status, 1, `${skill}: ${run.stderr}`);
+      const findings = JSON.parse(run.stdout);
+      assert.ok(findings.some(finding => finding.rule === 'B-1'), `${skill}: ${run.stdout}`);
+    }
+  } finally {
+    fs.rmSync(dir, { recursive: true, force: true });
+  }
 });

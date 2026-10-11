@@ -6,9 +6,9 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { ALL_RULES, selectRules, sectionOf } from './rules/index.mjs';
-import { detect, parseArgs } from './detect.mjs';
-import { classifyVerdict } from './lib/verdict.mjs';
+import { ALL_RULES, selectRules, sectionOf } from '../skills/audit/scripts/rules/index.mjs';
+import { detect, parseArgs } from '../skills/audit/scripts/detect.mjs';
+import { classifyVerdict } from '../skills/audit/scripts/lib/verdict.mjs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const FIXTURES = path.join(here, 'fixtures');

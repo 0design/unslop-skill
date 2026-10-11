@@ -1,4 +1,4 @@
-import { DETECTOR_VERSION } from './lib/detector-version.mjs';
+import { DETECTOR_VERSION } from '../skills/audit/scripts/lib/detector-version.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { mkdtemp, writeFile, rm, symlink } from 'node:fs/promises';
@@ -7,9 +7,9 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { StdioClientTransport } from '@modelcontextprotocol/sdk/client/stdio.js';
-import { createCanonRun, canonChecksum } from './lib/canon.mjs';
-import { auditCanon } from './lib/canon-audit.mjs';
-import { mcpCanonReader, CANON_LATEST_URI } from './lib/canon-mcp.mjs';
+import { createCanonRun, canonChecksum } from '../skills/audit/scripts/lib/canon.mjs';
+import { auditCanon } from '../skills/audit/scripts/lib/canon-audit.mjs';
+import { mcpCanonReader, CANON_LATEST_URI } from '../skills/audit/scripts/lib/canon-mcp.mjs';
 
 function fixture(version) {
   const payload = { schemaVersion: 1, version, publishedAt: '2026-09-14T00:00:00Z',
@@ -25,7 +25,7 @@ test('real stdio MCP: handshake, resources, pin, update and fail-closed revision
   for (const version of ['v1', 'v2']) await writeFile(path.join(directory, `${version}.json`), JSON.stringify(fixture(version)));
   await writeFile(path.join(directory, 'latest.json'), JSON.stringify({ version: 'v1' }));
   await client.connect(new StdioClientTransport({ command: process.execPath,
-    args: [fileURLToPath(new URL('./canon-server.mjs', import.meta.url)), directory], stderr: 'pipe' }));
+    args: [fileURLToPath(new URL('../skills/audit/scripts/canon-server.mjs', import.meta.url)), directory], stderr: 'pipe' }));
   assert.equal((await client.listResources()).resources[0].uri, CANON_LATEST_URI);
   const read = mcpCanonReader(client);
   const cache = new Map();

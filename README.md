@@ -32,7 +32,7 @@ Or install the skill alone with the [skills CLI](https://skills.sh):
 npx skills add 0design/unslop-skill
 ```
 
-This copies `skills/audit` into your agent's skills folder, without the detector and the canon client. Without them the audit runs no machine checks, has no verified canon and issues no pass, so install the plugin where your agent supports one.
+This copies `skills/audit` into your agent's skills folder, with the detector and the canon client in `skills/audit/scripts`. The detector needs only Node.js 20 or newer and runs its machine checks from there. The canon client also needs the MCP SDK, which only the plugin can install, so a skill-only audit has no verified canon and issues no pass; install the plugin where your agent supports one.
 
 ## How it works
 
@@ -63,10 +63,11 @@ unslop gives your agent a designer's quality criteria: verifiable, not taste by 
 
 ## What's in this repo
 
-- [`skills/audit`](skills/audit): the audit skill and its reference on design-system integrity.
+- [`skills/audit`](skills/audit): the audit skill, its reference on design-system integrity, and everything it runs in [`skills/audit/scripts`](skills/audit/scripts).
 - [`.claude-plugin`](.claude-plugin) and [`.mcp.json`](.mcp.json): the plugin and marketplace manifests, and the canon server they declare.
-- [`scripts/detect.mjs`](scripts/detect.mjs), [`scripts/rules`](scripts/rules) and [`scripts/fixtures`](scripts/fixtures): the detector, 37 machine checks over CSS and markup, no network, a sample per check.
-- [`scripts/canon-route.mjs`](scripts/canon-route.mjs) and [`scripts/lib`](scripts/lib): the canon client that reads the index, routes topics and checks checksums.
+- [`skills/audit/scripts/detect.mjs`](skills/audit/scripts/detect.mjs) and [`skills/audit/scripts/rules`](skills/audit/scripts/rules): the detector, 37 machine checks over CSS and markup, no network, no dependencies; [`scripts/fixtures`](scripts/fixtures) holds a sample per check.
+- [`skills/audit/scripts/canon-route.mjs`](skills/audit/scripts/canon-route.mjs) and [`skills/audit/scripts/lib`](skills/audit/scripts/lib): the canon client that reads the index, routes topics and checks checksums.
+- [`scripts`](scripts): the tests and the public text guard; they are not part of the skill.
 - [`canon/public/records.json`](canon/public/records.json): the 49 rules, the source of truth; [`canon/public-generated`](canon/public-generated): what the server serves, version `public-2026.10.11-1`, never edited by hand.
 
 ## Contribute

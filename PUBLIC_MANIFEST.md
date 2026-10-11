@@ -26,13 +26,9 @@ Every file in this tree, why it is public, and its license. Generated from `git 
 | `package.json` | Dependencies (MCP SDK only), test command; private: true blocks npm publish | MIT |
 | `scripts/canon-audit.test.mjs` | Test suite | MIT |
 | `scripts/canon-mcp.test.mjs` | Test suite | MIT |
-| `scripts/canon-route.mjs` | Canon client CLI used by the skill | MIT |
-| `scripts/canon-routed.mjs` | Generator for canon/public-generated and binding CLI | MIT |
 | `scripts/canon-routed.test.mjs` | Test suite | MIT |
-| `scripts/canon-server.mjs` | Local stdio MCP server for --store development runs | MIT |
 | `scripts/canon.test.mjs` | Test suite | MIT |
 | `scripts/check-public-text.mjs` | Public text guard CLI used by CI | MIT |
-| `scripts/detect.mjs` | Detector CLI | MIT |
 | `scripts/fixtures/B-1/clean/tokens.css` | Detector and routing test fixture | MIT |
 | `scripts/fixtures/B-1/slop/button.css` | Detector and routing test fixture | MIT |
 | `scripts/fixtures/B-2/clean/card.jsx` | Detector and routing test fixture | MIT |
@@ -124,39 +120,43 @@ Every file in this tree, why it is public, and its license. Generated from `git 
 | `scripts/fixtures/routed-css-markup/styles.css` | Detector and routing test fixture | MIT |
 | `scripts/fixtures/routed-css-only/styles.css` | Detector and routing test fixture | MIT |
 | `scripts/fixtures/verdict-kinds/b2.tsx` | Detector and routing test fixture | MIT |
-| `scripts/lib/canon-audit.mjs` | Shared library for detector and canon client | MIT |
-| `scripts/lib/canon-mcp-core.mjs` | Shared library for detector and canon client | MIT |
-| `scripts/lib/canon-mcp.mjs` | Shared library for detector and canon client | MIT |
-| `scripts/lib/canon-routed-core.mjs` | Shared library for detector and canon client | MIT |
-| `scripts/lib/canon-routed.mjs` | Shared library for detector and canon client | MIT |
-| `scripts/lib/canon.mjs` | Shared library for detector and canon client | MIT |
-| `scripts/lib/css.mjs` | Shared library for detector and canon client | MIT |
-| `scripts/lib/detector-version.mjs` | Shared library for detector and canon client | MIT |
-| `scripts/lib/heuristics.mjs` | Shared library for detector and canon client | MIT |
-| `scripts/lib/project-context.mjs` | Shared library for detector and canon client | MIT |
-| `scripts/lib/reporter.mjs` | Shared library for detector and canon client | MIT |
-| `scripts/lib/scan.mjs` | Shared library for detector and canon client | MIT |
-| `scripts/lib/sha256.mjs` | Shared library for detector and canon client | MIT |
-| `scripts/lib/verdict.mjs` | Shared library for detector and canon client | MIT |
-| `scripts/lib/walker.mjs` | Shared library for detector and canon client | MIT |
 | `scripts/plugin.test.mjs` | Test suite | MIT |
 | `scripts/public-text-patterns.json` | Patterns and reviewed exceptions of the public text guard | MIT |
 | `scripts/public-text.test.mjs` | Test suite | MIT |
-| `scripts/rules/b.mjs` | Detector rules by section | MIT |
-| `scripts/rules/c.mjs` | Detector rules by section | MIT |
-| `scripts/rules/d.mjs` | Detector rules by section | MIT |
-| `scripts/rules/ds.mjs` | Detector rules by section | MIT |
-| `scripts/rules/e.mjs` | Detector rules by section | MIT |
-| `scripts/rules/f.mjs` | Detector rules by section | MIT |
-| `scripts/rules/g.mjs` | Detector rules by section | MIT |
-| `scripts/rules/h.mjs` | Detector rules by section | MIT |
-| `scripts/rules/i.mjs` | Detector rules by section | MIT |
-| `scripts/rules/index.mjs` | Detector rules by section | MIT |
-| `scripts/rules/j.mjs` | Detector rules by section | MIT |
 | `scripts/test.mjs` | Test suite | MIT |
 | `scripts/verdict.test.mjs` | Test suite | MIT |
 | `skills/audit/SKILL.md` | Skill: the audit workflow the agent follows | MIT |
 | `skills/audit/references/design-system-integrity.md` | Skill reference read during recon and verification | MIT |
+| `skills/audit/scripts/canon-route.mjs` | Canon client CLI used by the skill | MIT |
+| `skills/audit/scripts/canon-routed.mjs` | Generator for canon/public-generated and binding CLI | MIT |
+| `skills/audit/scripts/canon-server.mjs` | Local stdio MCP server for --store development runs | MIT |
+| `skills/audit/scripts/detect.mjs` | Detector CLI | MIT |
+| `skills/audit/scripts/lib/canon-audit.mjs` | Shared library for detector and canon client | MIT |
+| `skills/audit/scripts/lib/canon-mcp-core.mjs` | Shared library for detector and canon client | MIT |
+| `skills/audit/scripts/lib/canon-mcp.mjs` | Shared library for detector and canon client | MIT |
+| `skills/audit/scripts/lib/canon-routed-core.mjs` | Shared library for detector and canon client | MIT |
+| `skills/audit/scripts/lib/canon-routed.mjs` | Shared library for detector and canon client | MIT |
+| `skills/audit/scripts/lib/canon.mjs` | Shared library for detector and canon client | MIT |
+| `skills/audit/scripts/lib/css.mjs` | Shared library for detector and canon client | MIT |
+| `skills/audit/scripts/lib/detector-version.mjs` | Shared library for detector and canon client | MIT |
+| `skills/audit/scripts/lib/heuristics.mjs` | Shared library for detector and canon client | MIT |
+| `skills/audit/scripts/lib/project-context.mjs` | Shared library for detector and canon client | MIT |
+| `skills/audit/scripts/lib/reporter.mjs` | Shared library for detector and canon client | MIT |
+| `skills/audit/scripts/lib/scan.mjs` | Shared library for detector and canon client | MIT |
+| `skills/audit/scripts/lib/sha256.mjs` | Shared library for detector and canon client | MIT |
+| `skills/audit/scripts/lib/verdict.mjs` | Shared library for detector and canon client | MIT |
+| `skills/audit/scripts/lib/walker.mjs` | Shared library for detector and canon client | MIT |
+| `skills/audit/scripts/rules/b.mjs` | Detector rules by section | MIT |
+| `skills/audit/scripts/rules/c.mjs` | Detector rules by section | MIT |
+| `skills/audit/scripts/rules/d.mjs` | Detector rules by section | MIT |
+| `skills/audit/scripts/rules/ds.mjs` | Detector rules by section | MIT |
+| `skills/audit/scripts/rules/e.mjs` | Detector rules by section | MIT |
+| `skills/audit/scripts/rules/f.mjs` | Detector rules by section | MIT |
+| `skills/audit/scripts/rules/g.mjs` | Detector rules by section | MIT |
+| `skills/audit/scripts/rules/h.mjs` | Detector rules by section | MIT |
+| `skills/audit/scripts/rules/i.mjs` | Detector rules by section | MIT |
+| `skills/audit/scripts/rules/index.mjs` | Detector rules by section | MIT |
+| `skills/audit/scripts/rules/j.mjs` | Detector rules by section | MIT |
 
 ## Not in this tree
 
@@ -167,4 +167,4 @@ Every file in this tree, why it is public, and its license. Generated from `git 
   including the leak scan, which runs before each export.
 - Session recordings and screenshots.
 
-Files: 149.
+Files: 153.

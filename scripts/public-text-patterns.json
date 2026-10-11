@@ -87,7 +87,7 @@
       "why": "Rule identifier that this repository does not define",
       "knownFrom": [
         "canon/public",
-        "scripts/rules"
+        "skills/audit/scripts/rules"
       ]
     }
   ],
@@ -108,7 +108,13 @@
       "id": "rule-id",
       "file": "scripts/**",
       "re": "DS-2[b]",
-      "reason": "Sub-rule that the retired combined rule points to, named in the shipped detector and its tests"
+      "reason": "Sub-rule that the retired combined rule points to, named in the detector tests"
+    },
+    {
+      "id": "rule-id",
+      "file": "skills/audit/scripts/**",
+      "re": "DS-2[b]",
+      "reason": "Sub-rule that the retired combined rule points to, named in the shipped detector"
     },
     {
       "id": "approval-wording",
