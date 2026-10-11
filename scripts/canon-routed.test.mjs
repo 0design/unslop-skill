@@ -6,16 +6,16 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { StdioClientTransport } from '@modelcontextprotocol/sdk/client/stdio.js';
-import { canonChecksum } from './lib/canon.mjs';
-import { walk, SCANNED_EXTENSIONS } from './lib/walker.mjs';
-import { CANON_LATEST_URI, mcpRoutedReader } from './lib/canon-mcp.mjs';
-import { auditRouted } from './lib/canon-audit.mjs';
-import { DETECTOR_VERSION } from './lib/detector-version.mjs';
+import { canonChecksum } from '../skills/audit/scripts/lib/canon.mjs';
+import { walk, SCANNED_EXTENSIONS } from '../skills/audit/scripts/lib/walker.mjs';
+import { CANON_LATEST_URI, mcpRoutedReader } from '../skills/audit/scripts/lib/canon-mcp.mjs';
+import { auditRouted } from '../skills/audit/scripts/lib/canon-audit.mjs';
+import { DETECTOR_VERSION } from '../skills/audit/scripts/lib/detector-version.mjs';
 import {
   ROUTED_INDEX_LATEST_URI, buildRoutedCanon, writeGenerated, publishRouted, promoteRouted, createRoutedStore,
   createRoutedRun, routeTopics, validateRoutedTopic, validateRoutedIndex, topicUri, compileGlob, readStoreBindings,
   writeStoreBindings, ruleHash, routedInstructions, MAX_INSTRUCTIONS_BYTES,
-} from './lib/canon-routed.mjs';
+} from '../skills/audit/scripts/lib/canon-routed.mjs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const records = JSON.parse(await readFile(path.join(here, 'fixtures/routed-canon/records.json'), 'utf8'));
@@ -92,7 +92,7 @@ test('real stdio MCP: index + topic template, CSS-only project requests only its
   const client = new Client({ name: 'routed-test', version: '1.0.0' });
   t.after(() => client.close());
   await client.connect(new StdioClientTransport({ command: process.execPath,
-    args: [path.join(here, 'canon-server.mjs'), store], stderr: 'pipe' }));
+    args: [path.join(here, '../skills/audit/scripts/canon-server.mjs'), store], stderr: 'pipe' }));
   const uris = (await client.listResources()).resources.map(item => item.uri);
   assert.deepEqual(uris, [CANON_LATEST_URI, ROUTED_INDEX_LATEST_URI]);
   const templates = (await client.listResourceTemplates()).resourceTemplates.map(item => item.uriTemplate);
@@ -122,7 +122,7 @@ test('negatives over real MCP: unknown topic/version, latest in topic, traversal
   const client = new Client({ name: 'routed-negatives', version: '1.0.0' });
   t.after(() => client.close());
   await client.connect(new StdioClientTransport({ command: process.execPath,
-    args: [path.join(here, 'canon-server.mjs'), store], stderr: 'pipe' }));
+    args: [path.join(here, '../skills/audit/scripts/canon-server.mjs'), store], stderr: 'pipe' }));
   const read = uri => client.readResource({ uri });
   await assert.rejects(read(`unslop://canon-topic/${V1}/layout`), dataCode('UNKNOWN_TOPIC'));
   await assert.rejects(read('unslop://canon-topic/v999/css'), dataCode('UNKNOWN_VERSION'));
@@ -210,7 +210,7 @@ test('local test PR: new judgement rule -> generate -> publish -> promote -> nex
   const client = new Client({ name: 'routed-pr', version: '1.0.0' });
   t.after(() => client.close());
   await client.connect(new StdioClientTransport({ command: process.execPath,
-    args: [path.join(here, 'canon-server.mjs'), store], stderr: 'pipe' }));
+    args: [path.join(here, '../skills/audit/scripts/canon-server.mjs'), store], stderr: 'pipe' }));
   const first = createRoutedRun({ endpoint: 'stdio:test', reader: mcpRoutedReader(client) });
   const { envelope: v1 } = await first.loadIndex();
   const oldBinding = [{ ruleId: 'B-1', canonChecksum: v1.checksum, detectorVersion: DETECTOR_VERSION }];
@@ -394,7 +394,7 @@ test('concurrent binds do not lose entries (in-process and two CLI processes)', 
   const { store: real } = await storeWith(t, records);
   const { execFile } = await import('node:child_process');
   const cli = rules => new Promise((resolve, reject) => execFile(process.execPath,
-    [path.join(here, 'canon-routed.mjs'), 'bind', '--store', real, '--version', V1, '--rules', rules],
+    [path.join(here, '../skills/audit/scripts/canon-routed.mjs'), 'bind', '--store', real, '--version', V1, '--rules', rules],
     (error, stdout) => error ? reject(error) : resolve(stdout)));
   await Promise.all([cli('B-1'), cli('B-2'), cli('B-1'), cli('B-2')]);
   const { envelope: index } = await createRoutedStore(real).readIndex(V1);
@@ -406,7 +406,7 @@ async function connectOnly(t, store) {
   const client = new Client({ name: 'instructions-test', version: '1.0.0' });
   t.after(() => client.close());
   await client.connect(new StdioClientTransport({ command: process.execPath,
-    args: [path.join(here, 'canon-server.mjs'), store], stderr: 'pipe' }));
+    args: [path.join(here, '../skills/audit/scripts/canon-server.mjs'), store], stderr: 'pipe' }));
   return client.getInstructions();
 }
 
@@ -506,8 +506,8 @@ test('a title equal to the statement or a prefix of it is rejected by generator 
 });
 
 test('index changes mid-run (deploy/rollback): one index re-read, re-route, explicit note; second failure is explicit', async () => {
-  const { createBundledRoutedStore, stableStringify: _s } = await import('./lib/canon-routed-core.mjs');
-  const { auditRoutedProject } = await import('./lib/canon-audit.mjs');
+  const { createBundledRoutedStore, stableStringify: _s } = await import('../skills/audit/scripts/lib/canon-routed-core.mjs');
+  const { auditRoutedProject } = await import('../skills/audit/scripts/lib/canon-audit.mjs');
   const v1 = buildRoutedCanon(records);
   const v2 = buildRoutedCanon(withRule(records, 'switch-2'));
   const bundleOf = built => ({ [built.version]: Object.fromEntries(built.files) });

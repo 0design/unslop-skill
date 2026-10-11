@@ -15,7 +15,7 @@ Two sources feed an audit:
 
 Everything else is judgement and is labelled as such. Deep motion work composes with Emil Kowalski's `improve-animations` skill.
 
-**Paths.** Every `scripts/…` path in this file, and `package.json`, is relative to the plugin root: the directory two levels above this `SKILL.md` (`../..` from the skill directory). Claude Code also substitutes it here: `${CLAUDE_PLUGIN_ROOT}`. Run the detector and the helper from that directory.
+**Paths.** Every `scripts/…` path in this file is relative to the skill directory, the folder that holds this `SKILL.md`; Claude Code also substitutes it here: `${CLAUDE_SKILL_DIR}`. Run them as `node <skill directory>/scripts/…`, with the project path as an argument. The skill directory carries the detector and the canon client, so it works the same from the plugin and from a skill-only install such as `~/.claude/skills/audit` or `.agents/skills/audit`. `package.json` and `package-lock.json` live in the plugin root, the directory two levels above this `SKILL.md` (`../..` from the skill directory; Claude Code substitutes it here: `${CLAUDE_PLUGIN_ROOT}`). A skill-only install has no plugin root.
 
 ## Operating Posture
 
@@ -50,19 +50,20 @@ A server that is not connected, or an index that cannot be read, is an unavailab
 
 **Then load and pin.** The routed helper below needs its dependencies (the MCP SDK). Find them in this order and never install without consent:
 
-1. `node_modules/` in the plugin root, for example in a clone whose dependencies are installed. Claude Code does not put it there for this plugin: its automatic dependency install skips plugins whose `package.json` sets npm `overrides`, and this one does. If it exists, run the helper from the plugin root.
+1. `node_modules/` in the plugin root, for example in a clone whose dependencies are installed. Claude Code does not put it there for this plugin: its automatic dependency install skips plugins whose `package.json` sets npm `overrides`, and this one does. If it exists, run the helper as `node scripts/canon-route.mjs` from the skill directory; Node finds the plugin root's `node_modules/` from there.
 2. A dependency copy for this plugin version, `DEPS`, in the plugin data directory. `<version>` is the `version` in the plugin's `package.json`.
    - Claude Code: `DEPS` is `${CLAUDE_PLUGIN_DATA}/deps-<version>`.
    - Codex: `DEPS` is `$CODEX_HOME/plugins/data/unslop/deps-<version>` (`~/.codex` when `CODEX_HOME` is unset).
-   If `DEPS/node_modules/` exists, run the helper as `node DEPS/scripts/canon-route.mjs` from the plugin root.
+   If `DEPS/node_modules/` exists, run the helper as `node DEPS/skills/audit/scripts/canon-route.mjs`.
 3. Neither exists: installing is a network download from the npm registry. Say so, show this command with the paths filled in, and run it only after the user agrees:
-   `mkdir -p DEPS && cp -R package.json package-lock.json scripts DEPS/ && npm ci --ignore-scripts --prefix DEPS` (from the plugin root). Nothing is written to the plugin root, and the copy is reused until the plugin version changes.
+   `mkdir -p DEPS && cp -R package.json package-lock.json skills DEPS/ && npm ci --ignore-scripts --prefix DEPS` (from the plugin root). Nothing is written to the plugin root, and the copy is reused until the plugin version changes.
+4. A skill-only install (no plugin root, so no `package.json`): the helper's dependencies cannot be installed from the skill directory. Say so, offer the plugin install, and do not run the helper.
 
-Without consent, or if the install fails, do not run the helper: report that there is no verified canon for this run (the index read in step 2 above is a connection check, not a verified routed canon) and do not issue a pass. The detector needs no install.
+Without consent, if the install fails, or in a skill-only install, do not run the helper: report that there is no verified canon for this run (the index read in step 2 above is a connection check, not a verified routed canon) and do not issue a pass. The detector needs no install.
 
 On connect the MCP server's `instructions` already carry the compact index (version, checksum, topics with globs, rule IDs with short titles, the resources and templates you can use); if they say the canon is unavailable, there is no verified canon for this run.
 
-Run `node scripts/canon-route.mjs --project PATH` from the plugin root. Use `--endpoint URL` only for an explicitly configured endpoint; for local development, `--store LOCAL_CANON_DIR` starts the bundled MCP server over a local copy. Never silently fall back from the remote endpoint to local data. The helper reads `unslop://canon-index/latest` once, takes the explicit version from that index, matches the project's files against the index routes (topic → file globs → rule IDs; no mapping is hardcoded in this skill), adds every topic the index marks `always`, and requests only those topics as `unslop://canon-topic/{version}/{topic}`. `latest` is never valid in a topic URI.
+Run the helper, `node scripts/canon-route.mjs --project PATH` (or the `DEPS` copy found above). Use `--endpoint URL` only for an explicitly configured endpoint; for local development, `--store LOCAL_CANON_DIR` starts the bundled MCP server over a local copy. Never silently fall back from the remote endpoint to local data. The helper reads `unslop://canon-index/latest` once, takes the explicit version from that index, matches the project's files against the index routes (topic → file globs → rule IDs; no mapping is hardcoded in this skill), adds every topic the index marks `always`, and requests only those topics as `unslop://canon-topic/{version}/{topic}`. `latest` is never valid in a topic URI.
 
 Retain the returned JSON in the run's report location: canon version, index checksum, requested and not-requested topics, bytes received versus bytes of the full canon. Use that version for the entire run; do not resolve latest again midway. A new run resolves latest again, without reinstalling this skill. `--version REVISION` requests an explicit older revision; do not describe that as latest.
 

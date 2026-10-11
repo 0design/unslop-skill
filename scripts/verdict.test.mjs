@@ -4,8 +4,8 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { detect } from './detect.mjs';
-import { evidenceLineHash } from './lib/project-context.mjs';
+import { detect } from '../skills/audit/scripts/detect.mjs';
+import { evidenceLineHash } from '../skills/audit/scripts/lib/project-context.mjs';
 import {
   EXAMPLE_RULES,
   FINDING_STATUSES,
@@ -18,7 +18,7 @@ import {
   headerMark,
   presentVerdict,
   showcaseCards,
-} from './lib/verdict.mjs';
+} from '../skills/audit/scripts/lib/verdict.mjs';
 
 const fixture = path.join(path.dirname(fileURLToPath(import.meta.url)), 'fixtures/verdict-kinds/b2.tsx');
 

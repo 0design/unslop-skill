@@ -114,6 +114,14 @@ function main(argv) {
   process.exit(result.findings.some((f) => f.severity === 'red') ? 1 : 0);
 }
 
+// Node runs the real file behind a symlinked path (a skills folder linked to a shared copy), so compare real paths.
+const realPath = (file) => {
+  try {
+    return fs.realpathSync(file);
+  } catch {
+    return path.resolve(file);
+  }
+};
 const invokedDirectly =
-  process.argv[1] && path.resolve(process.argv[1]) === path.resolve(fileURLToPath(import.meta.url));
+  process.argv[1] && realPath(process.argv[1]) === realPath(fileURLToPath(import.meta.url));
 if (invokedDirectly) main(process.argv.slice(2));

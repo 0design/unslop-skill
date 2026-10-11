@@ -26,6 +26,30 @@ reinstalling.
   Its generated files leave `canon/public-generated/`; the texts of the other 48 rules are
   unchanged in this version.
 
+## 1.0.3 (plugin, 2026-10-11)
+
+The skill folder now carries what it runs, so a skill-only install with the skills CLI
+(`npx skills add 0design/unslop-skill`) gets a working detector. Rule texts are unchanged.
+
+- Plugin and package version `1.0.3`.
+- The detector (`detect.mjs`, `rules/`, `lib/`) and the canon client (`canon-route.mjs`,
+  `canon-server.mjs`, `canon-routed.mjs`) moved from `scripts/` to `skills/audit/scripts/`.
+  There is one copy; `scripts/` keeps the tests, the fixtures and the public text guard.
+- `skills/audit/SKILL.md`: `scripts/…` paths are relative to the skill directory, not the
+  plugin root. The dependency copy for the canon client now copies `skills/` and runs
+  `node DEPS/skills/audit/scripts/canon-route.mjs`; a copy made for 1.0.2 has the old layout,
+  which is why the version changes. A skill-only install has no `package.json`, so the canon
+  client's dependencies cannot be installed there: the skill says so and issues no pass.
+- The detector now also runs when it is started through a symlink, as the skills CLI links
+  agent folders to one shared copy. Before, it exited 0 with no output there. This changes
+  the detector version (`sha256:1eba5755…`), so existing detector bindings report
+  `binding-stale` until they are bound again.
+- Tests check that every import under `skills/audit` resolves inside that folder, that the
+  detector imports only Node built-ins, and that it finds issues when run from a copy of the
+  skill folder alone and through a symlink, in a path with a space.
+- `README.md`: the skills CLI install now delivers the detector; `PUBLIC_MANIFEST.md`: new
+  paths, file count corrected to 153.
+
 ## 1.0.2 (plugin, 2026-10-07)
 
 Corrects statements in 1.0.1 that did not match the plugin. Wording only: the skill's

@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { canonChecksum, createCanonRun, validateCanon, ruleCoverage } from './lib/canon.mjs';
+import { canonChecksum, createCanonRun, validateCanon, ruleCoverage } from '../skills/audit/scripts/lib/canon.mjs';
 
 function snapshot(version = 'v1') {
   const payload = {

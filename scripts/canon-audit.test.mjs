@@ -1,12 +1,12 @@
-import { DETECTOR_VERSION } from './lib/detector-version.mjs';
+import { DETECTOR_VERSION } from '../skills/audit/scripts/lib/detector-version.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { mkdtempSync, writeFileSync, readFileSync, rmSync } from 'node:fs';
 import path from 'node:path';
 import os from 'node:os';
-import { createCanonRun, canonChecksum } from './lib/canon.mjs';
-import { auditCanon } from './lib/canon-audit.mjs';
-import { EXAMPLE_RULES, FINDING_STATUSES } from './lib/verdict.mjs';
+import { createCanonRun, canonChecksum } from '../skills/audit/scripts/lib/canon.mjs';
+import { auditCanon } from '../skills/audit/scripts/lib/canon-audit.mjs';
+import { EXAMPLE_RULES, FINDING_STATUSES } from '../skills/audit/scripts/lib/verdict.mjs';
 import { fileURLToPath } from 'node:url';
 
 function envelope(version = 'v1') {
