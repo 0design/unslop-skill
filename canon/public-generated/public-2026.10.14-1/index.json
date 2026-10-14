@@ -1,5 +1,5 @@
 {
-  "checksum": "9d6713e5b595a8aedf6dce9c51a020e3bd77d471d9723a8b3b8ca6ca7589cf68",
+  "checksum": "8e7ed6f1e54e14f7d951242788a4a045cfd121d653147aa142980ee216ebcaf8",
   "payload": {
     "classes": {
       "bad-tone": {
@@ -22,13 +22,13 @@
     "kind": "unslop-canon-index",
     "license": "CC-BY-4.0",
     "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
-    "publishedAt": "2026-10-11T00:00:00Z",
+    "publishedAt": "2026-10-14T00:00:00Z",
     "schemaVersion": 1,
     "source": "UNSLOP",
     "topics": {
       "copy": {
         "bytes": 7018,
-        "checksum": "09998c80aa21ad848da7597e13eb4efc64741ac6b399182f145028750bc9d65b",
+        "checksum": "0d66b691d0ed998f2373bac42203e025d9ca06cf21bbde6b20fef8d99fdb7c44",
         "globs": [
           "**/*.{html,jsx,tsx,vue,svelte}",
           "**/*.md",
@@ -58,8 +58,8 @@
         }
       },
       "interface": {
-        "bytes": 28932,
-        "checksum": "cb8c241c297362f5b6ef2d101fbc993a9a3f6fef15034ea7e0ab2b11a8d2b731",
+        "bytes": 29411,
+        "checksum": "5c72bb1d825b4c37473ef7b349174530cd2a56daeb5490bf5a7d1505fff8af33",
         "globs": [
           "**/*.{css,scss}",
           "**/*.{html,jsx,tsx,vue,svelte}"
@@ -120,7 +120,7 @@
           "KR-3d": "Desktop hit areas for key actions",
           "KR-4": "Optical, not arithmetic, centering",
           "KR-5": "Shadow for layers, border for state",
-          "KR-7": "Balanced wrapping for content text",
+          "KR-7": "Line breaks follow the sentence",
           "KR-8": "Font smoothing chosen per typeface and size",
           "KR-9": "Image outlines only as an option for content images",
           "NR-02": "Icon transitions transform instead of swapping",
@@ -132,7 +132,7 @@
       "process": {
         "always": true,
         "bytes": 7324,
-        "checksum": "091808e31f312699197c849c88628dfc4693e90c0a0c5bdafd72eb29d42850eb",
+        "checksum": "13ba3aecca666638a20956a158c0ed3512146b2827a748203072f5dcd0571253",
         "globs": [],
         "ruleIds": [
           "UR-1",
@@ -160,6 +160,6 @@
         }
       }
     },
-    "version": "public-2026.10.11-1"
+    "version": "public-2026.10.14-1"
   }
 }

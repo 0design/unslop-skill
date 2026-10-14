@@ -1,5 +1,5 @@
 {
-  "checksum": "cb8c241c297362f5b6ef2d101fbc993a9a3f6fef15034ea7e0ab2b11a8d2b731",
+  "checksum": "5c72bb1d825b4c37473ef7b349174530cd2a56daeb5490bf5a7d1505fff8af33",
   "payload": {
     "kind": "unslop-canon-topic",
     "rules": [
@@ -444,9 +444,9 @@
         "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
         "mode": "judgement",
         "source": "UNSLOP",
-        "statement": "Content headings use text-wrap: balance. Content paragraphs use text-wrap: pretty, so no orphan is left on the last line. This applies only to content headings and paragraphs; custom typographic compositions are not a finding.",
+        "statement": "A heading that fits the available width stays on one line; a narrow max-width or a <br> must not force a break. When it does not fit, it breaks at a sentence boundary, after the full stop, or between meaningful word groups, never in the middle of a phrase. text-wrap: balance on a short heading made of several sentences is a finding: it evens out line lengths and ignores the syntax. Content paragraphs use text-wrap: pretty, so no orphan is left on the last line. Custom typographic compositions are not a finding. Example: \"Stop scrolling. Start / your workflow.\" on a desktop screen where the heading fits on one line. Not a finding: \"Stop scrolling. / Start your workflow.\" where the width runs out.",
         "strength": "hard",
-        "title": "Balanced wrapping for content text",
+        "title": "Line breaks follow the sentence",
         "topic": "interface"
       },
       {
@@ -551,6 +551,6 @@
     ],
     "schemaVersion": 1,
     "topic": "interface",
-    "version": "public-2026.10.11-1"
+    "version": "public-2026.10.14-1"
   }
 }

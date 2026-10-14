@@ -4,6 +4,37 @@ Plugin releases and public canon versions. Rule texts are generated from
 `canon/public/records.json` with `npm run canon:generate:public`; never edit
 `canon/public-generated/` by hand.
 
+## 1.0.4 (plugin, 2026-10-14)
+
+The offline canon copy follows the published canon `public-2026.10.14-1`. The skill's
+workflow, the detector and the canon client are unchanged.
+
+- Plugin and package version `1.0.4`.
+- `canon/public/` and `canon/public-generated/` carry `public-2026.10.14-1`. A run with the
+  offline copy no longer applies the old KR-7 («content headings use text-wrap: balance»);
+  a run that reads the MCP endpoint already gets this version.
+- `PUBLIC_MANIFEST.md` names the new generated files.
+
+## public-2026.10.14-1 (published 2026-10-14)
+
+Base: `public-2026.10.11-1`. Still 49 rules.
+
+### Changed
+
+- **KR-7 · Line breaks follow the sentence** (was «Balanced wrapping for content text»;
+  topic `interface`, class `slop`, strength `hard`). A heading that fits the available width
+  stays on one line; a narrow max-width or a `<br>` must not force a break. When it does not
+  fit, it breaks at a sentence boundary or between meaningful word groups, never in the
+  middle of a phrase. `text-wrap: balance` on a short heading made of several sentences is a
+  finding. Content paragraphs keep `text-wrap: pretty`.
+
+### Retired
+
+- `public-2026.10.11-1`. A request for that version (index or topic) is answered with the
+  current version, `public-2026.10.14-1`, under the requested URI; the response's `_meta`
+  carries `requestedVersion`, `servedVersion` and `retired: true`. Its generated files leave
+  `canon/public-generated/`.
+
 ## public-2026.10.11-1 (published 2026-10-11)
 
 Base: `public-2026.10.04-12`. The plugin version stays `1.0.2`: the skill reads the canon from
