@@ -30,11 +30,14 @@ The free notes "Small details that add up" are the second source of KR-16 (feedb
 
 - https://invisibledetails.com
 
-## Benji Taylor: morphing icons
+## Benji Taylor: morphing icons and Stageshow
 
 NR-02 (icon transitions rotate rather than morph between shapes of one form) follows his post "Morphing icons with Claude".
 
-- https://benji.org
+Rules ST-1, ST-2, ST-3, ST-4, ST-5, ST-11 and ST-13, and the additions to KR-4, KR-11 and US-003, are adapted, in unslop's own words, from Stageshow, his skill for faux product UI (references/craft.md, references/motion.md, references/review.md and its teaching pairs). unslop applies them to real interfaces; rules that only fit a marketing stage were not taken. Each rule names the Stageshow section it adapts in its `credits` field.
+
+- Writing: https://benji.org
+- Skill: https://github.com/benjitaylor/skills (MIT License, © Benji Taylor). The license notice is in [LICENSES/benjitaylor-skills-MIT.txt](LICENSES/benjitaylor-skills-MIT.txt).
 
 ## Nick DiLallo: false urgency
 

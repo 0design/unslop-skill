@@ -4,6 +4,51 @@ Plugin releases and public canon versions. Rule texts are generated from
 `canon/public/records.json` with `npm run canon:generate:public`; never edit
 `canon/public-generated/` by hand.
 
+## Unreleased
+
+Draft for the next canon version. Nothing here is published or served yet: the MCP endpoint
+still serves the current version, and the plugin version does not change. The candidate canon
+version is `public-2026.11.06-1`; its number and date are set when it is released. The rule
+texts below are not yet in `canon/public/records.json` of this repository; they arrive with
+that release.
+
+### Added
+
+All in topic `interface`, class `slop`, adapted from Stageshow by Benji Taylor (MIT; see
+`CREDITS.md` and `LICENSES/benjitaylor-skills-MIT.txt`) and credited in each rule's `credits`.
+
+- **ST-1 · Icons come from one chosen set.** Icons come from the product's own set or one set
+  chosen on purpose; a glyph drawn ad hoc is a finding.
+- **ST-2 · AI features are named by what they do.** A sparkle, wand, star, gradient "AI" chip
+  or purple as the color of AI is a finding; the product's own mark is allowed.
+- **ST-3 · No near-touching edges.** Neighboring edges line up exactly or sit at least the
+  gutter apart, never under 8px; a 1 to 3px gap is a finding.
+- **ST-4 · No layout jumps on state change.** A new row carries what follows or has reserved
+  space; a button keeps one width across its states; an open popover keeps its size and anchor.
+- **ST-5 · Sentence case by default.** Title Case and tracked capitals only where the design
+  system or the platform defines them.
+- **ST-11 · Emoji are content, not interface icons.**
+- **ST-13 · No invented logo.** A letter in a colored square is not a mark; other companies'
+  logos come only from their real files.
+
+### Changed
+
+- **KR-4** also covers centering a label on its letters rather than its line box (button and
+  pill labels, avatar initials, `text-box: trim-both cap alphabetic`) and a centered price whose
+  currency sign sits outside the centered digits.
+- **KR-11** also asks for one icon family and one stroke width per screen; a filled icon beside
+  outlined ones of the same role is a finding.
+- **US-003** also says that the reviewer gets the result and the requirement without the
+  author's explanations, that a finding is backed by a screenshot, and that each theme, such as
+  light and dark, is checked on its own.
+
+The ids of KR-4, KR-11 and US-003 stay; their texts and credits change. The texts of the other
+46 rules are unchanged, so the version holds 56 rules.
+
+### Retired (on release)
+
+- `public-2026.10.14-1`, answered with the new version and marked in `_meta`, as before.
+
 ## public-2026.10.11-1 (published 2026-10-11)
 
 Base: `public-2026.10.04-12`. The plugin version stays `1.0.2`: the skill reads the canon from

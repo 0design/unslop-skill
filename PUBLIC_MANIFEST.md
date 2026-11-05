@@ -14,6 +14,7 @@ Every file in this tree, why it is public, and its license. Generated from `git 
 | `CREDITS.md` | Attribution of prior work | MIT |
 | `LICENSE` | Licence text for code and skill files | MIT |
 | `LICENSE-RULES.md` | Licence notice and scope for rule texts | MIT (notice for CC BY 4.0 files) |
+| `LICENSES/benjitaylor-skills-MIT.txt` | Third-party notice: rules adapted from Stageshow by Benji Taylor (MIT) | MIT (© Benji Taylor) |
 | `LICENSES/emilkowalski-skills-MIT.txt` | Third-party notice: motion thresholds adapted from Emil Kowalski (MIT) | MIT (© Emil Kowalski) |
 | `PUBLIC_MANIFEST.md` | This list | MIT |
 | `README.md` | What this is, MCP endpoint, how to run | MIT |
@@ -167,4 +168,4 @@ Every file in this tree, why it is public, and its license. Generated from `git 
   including the leak scan, which runs before each export.
 - Session recordings and screenshots.
 
-Files: 153.
+Files: 154.
