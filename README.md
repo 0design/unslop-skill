@@ -87,5 +87,5 @@ A rule accepted from a pull request reaches everyone with the next canon version
 - Site: https://oleg.design/unslop
 - Canon server: https://oleg.design/unslop/mcp (resources only, no tools); health: https://oleg.design/unslop/mcp/health
 - Changelog, credits, file list: [CHANGELOG.md](CHANGELOG.md), [CREDITS.md](CREDITS.md), [PUBLIC_MANIFEST.md](PUBLIC_MANIFEST.md)
-- For AI agents: the audit is read-only, plans only, no pass without a connected canon. The rules are in [the skill](skills/audit/SKILL.md).
+- For AI agents: the audit is read-only and writes plans; source changes only through execute mode, which runs in the same session when the task asks for fixes; no pass without a connected canon. The rules are in [the skill](skills/audit/SKILL.md).
 - License: [MIT](LICENSE) for the code and skill files, [CC BY 4.0](LICENSE-RULES.md) for the rule texts

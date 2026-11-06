@@ -1,5 +1,5 @@
 {
-  "checksum": "ba15f027f2ac9d25e6802d0329d896a7fc206e7345368ecb0061ee06bfb7687e",
+  "checksum": "d1ece09c40514d674ec3d9039f080165ec49beeb8aafd08f9bb9df6ff5cb67af",
   "payload": {
     "classes": {
       "bad-tone": {
@@ -145,8 +145,8 @@
       },
       "process": {
         "always": true,
-        "bytes": 17278,
-        "checksum": "3b5ad4b97447c056b7c9dd55675103739d42ec6ae6140d4e113b8464c316cb66",
+        "bytes": 17296,
+        "checksum": "4a3464c71fc3edba95c51054be045a203aeec6b41af9916c4e8df1afd02e5716",
         "globs": [],
         "ruleIds": [
           "UR-1",
