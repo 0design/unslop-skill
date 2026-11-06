@@ -68,7 +68,7 @@ unslop gives your agent a designer's quality criteria: verifiable, not taste by 
 - [`skills/audit/scripts/detect.mjs`](skills/audit/scripts/detect.mjs) and [`skills/audit/scripts/rules`](skills/audit/scripts/rules): the detector, 37 machine checks over CSS and markup, no network, no dependencies; [`scripts/fixtures`](scripts/fixtures) holds a sample per check.
 - [`skills/audit/scripts/canon-route.mjs`](skills/audit/scripts/canon-route.mjs) and [`skills/audit/scripts/lib`](skills/audit/scripts/lib): the canon client that reads the index, routes topics and checks checksums.
 - [`scripts`](scripts): the tests and the public text guard; they are not part of the skill.
-- [`canon/public/records.json`](canon/public/records.json): the 49 rules, the source of truth; [`canon/public-generated`](canon/public-generated): what the server serves, version `public-2026.10.11-1`, never edited by hand.
+- [`canon/public/records.json`](canon/public/records.json): the 56 rules, the source of truth; [`canon/public-generated`](canon/public-generated): what the server serves, version `public-2026.11.06-1`, never edited by hand.
 
 ## Contribute
 

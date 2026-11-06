@@ -1,5 +1,5 @@
 {
-  "checksum": "091808e31f312699197c849c88628dfc4693e90c0a0c5bdafd72eb29d42850eb",
+  "checksum": "157b327696a694fe1b7d7b4c2be5893f70cfe0a41fa9e9c36b9fb719cc9198a9",
   "payload": {
     "kind": "unslop-canon-topic",
     "rules": [
@@ -45,12 +45,19 @@
       {
         "attribution": "UNSLOP by Oleg.Design",
         "class": "slop",
+        "credits": [
+          {
+            "name": "Benji Taylor",
+            "url": "https://github.com/benjitaylor/skills",
+            "work": "Stageshow: references/review.md (The reviewer's brief); references/craft.md (Color and looks)"
+          }
+        ],
         "id": "US-003",
         "license": "CC-BY-4.0",
         "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
         "mode": "judgement",
         "source": "UNSLOP",
-        "statement": "Before presenting a revision, verify the actual result against its requirements. Check design-system use, behavior and visual output separately. Reading guidelines or passing a build is not evidence that the interface meets its acceptance criteria. Use an independent reviewer before handoff.",
+        "statement": "Before presenting a revision, verify the actual result against its requirements. Check design-system use, behavior and visual output separately. Reading guidelines or passing a build is not evidence that the interface meets its acceptance criteria. Use an independent reviewer before handoff. The reviewer gets the result and the original requirement, not the author's plan or explanations, and judges what is on screen. A finding is backed by a screenshot of the state it describes; a pass or a failure that is only expected, not seen, is not evidence. Each theme the product supports, such as light and dark, is checked on its own: a pass in one theme does not prove another.",
         "strength": "hard",
         "title": "Verify the actual result before handoff",
         "topic": "process"
@@ -136,6 +143,6 @@
     ],
     "schemaVersion": 1,
     "topic": "process",
-    "version": "public-2026.10.11-1"
+    "version": "public-2026.11.06-1"
   }
 }

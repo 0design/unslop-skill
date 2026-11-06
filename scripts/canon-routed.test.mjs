@@ -626,7 +626,7 @@ test('rule classes: defined once per release, carried to the index and every rul
 // Candidates, project-scoped rules and project decisions stay in the private base.
 // Strength follows the class: slop is hard; bad tone and instructions are soft.
 // Exceptions: slop rules that are recommendations only.
-const SOFT_SLOP = new Set(['KR-3d', 'KR-8']);
+const SOFT_SLOP = new Set(['KR-3d', 'KR-8', 'ST-5']);
 const strengthFor = record => record.class === 'slop' && !SOFT_SLOP.has(record.id) ? 'hard' : 'soft';
 export function publicCanonViolations(input) {
   const problems = [];

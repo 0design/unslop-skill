@@ -1,5 +1,5 @@
 {
-  "checksum": "9d6713e5b595a8aedf6dce9c51a020e3bd77d471d9723a8b3b8ca6ca7589cf68",
+  "checksum": "2ff9cedd3abd8868acb8ea7c4fffa3b32cd6ed6971788ad3aca4a1a8d19ab78f",
   "payload": {
     "classes": {
       "bad-tone": {
@@ -22,13 +22,13 @@
     "kind": "unslop-canon-index",
     "license": "CC-BY-4.0",
     "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
-    "publishedAt": "2026-10-11T00:00:00Z",
+    "publishedAt": "2026-11-06T00:00:00Z",
     "schemaVersion": 1,
     "source": "UNSLOP",
     "topics": {
       "copy": {
         "bytes": 7018,
-        "checksum": "09998c80aa21ad848da7597e13eb4efc64741ac6b399182f145028750bc9d65b",
+        "checksum": "eec7da27ed58b98e34c2b6c975091e99637d303d751d80d37bc904c9f7be0d5a",
         "globs": [
           "**/*.{html,jsx,tsx,vue,svelte}",
           "**/*.md",
@@ -58,8 +58,8 @@
         }
       },
       "interface": {
-        "bytes": 28932,
-        "checksum": "cb8c241c297362f5b6ef2d101fbc993a9a3f6fef15034ea7e0ab2b11a8d2b731",
+        "bytes": 41109,
+        "checksum": "602ce866c9eb622cd5c559ad77c2ce512b63154c82d917509062a7e7faf0eb76",
         "globs": [
           "**/*.{css,scss}",
           "**/*.{html,jsx,tsx,vue,svelte}"
@@ -92,6 +92,13 @@
           "KR-8",
           "KR-9",
           "NR-02",
+          "ST-1",
+          "ST-11",
+          "ST-13",
+          "ST-2",
+          "ST-3",
+          "ST-4",
+          "ST-5",
           "TY-1",
           "XP-18",
           "XP-31"
@@ -120,10 +127,17 @@
           "KR-3d": "Desktop hit areas for key actions",
           "KR-4": "Optical, not arithmetic, centering",
           "KR-5": "Shadow for layers, border for state",
-          "KR-7": "Balanced wrapping for content text",
+          "KR-7": "Line breaks follow the sentence",
           "KR-8": "Font smoothing chosen per typeface and size",
           "KR-9": "Image outlines only as an option for content images",
           "NR-02": "Icon transitions transform instead of swapping",
+          "ST-1": "Icons come from one chosen set",
+          "ST-11": "Emoji are content, not interface icons",
+          "ST-13": "No invented logo",
+          "ST-2": "AI features are named by what they do",
+          "ST-3": "No near-touching edges",
+          "ST-4": "No layout jumps on state change",
+          "ST-5": "Sentence case by default",
           "TY-1": "Plain font numerals in regular text",
           "XP-18": "No gray text on colored backgrounds",
           "XP-31": "Indented lists keep their markers"
@@ -131,8 +145,8 @@
       },
       "process": {
         "always": true,
-        "bytes": 7324,
-        "checksum": "091808e31f312699197c849c88628dfc4693e90c0a0c5bdafd72eb29d42850eb",
+        "bytes": 7977,
+        "checksum": "157b327696a694fe1b7d7b4c2be5893f70cfe0a41fa9e9c36b9fb719cc9198a9",
         "globs": [],
         "ruleIds": [
           "UR-1",
@@ -160,6 +174,6 @@
         }
       }
     },
-    "version": "public-2026.10.11-1"
+    "version": "public-2026.11.06-1"
   }
 }

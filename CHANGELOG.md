@@ -4,13 +4,13 @@ Plugin releases and public canon versions. Rule texts are generated from
 `canon/public/records.json` with `npm run canon:generate:public`; never edit
 `canon/public-generated/` by hand.
 
-## Unreleased
+## public-2026.11.06-1 (published 2026-11-06)
 
-Draft for the next canon version. Nothing here is published or served yet: the MCP endpoint
-still serves the current version, and the plugin version does not change. The candidate canon
-version is `public-2026.11.06-1`; its number and date are set when it is released. The rule
-texts below are not yet in `canon/public/records.json` of this repository; they arrive with
-that release.
+Base: `public-2026.10.14-1`, which was served by the MCP endpoint but never reached this
+repository's copy; its one change is listed under "Changed" too. The plugin version stays
+`1.0.3`: the audit reads the canon from the server, so the new rules reach every agent on its
+next run. `canon/public/records.json` and `canon/public-generated/public-2026.11.06-1` here are
+byte-identical to the served version; the `public-2026.10.11-1` copy is removed.
 
 ### Added
 
@@ -25,29 +25,34 @@ All in topic `interface`, class `slop`, adapted from Stageshow by Benji Taylor (
   gutter apart, never under 8px; a 1 to 3px gap is a finding.
 - **ST-4 · No layout jumps on state change.** A new row carries what follows or has reserved
   space; a button keeps one width across its states; an open popover keeps its size and anchor.
-- **ST-5 · Sentence case by default.** Title Case and tracked capitals only where the design
-  system or the platform defines them.
+- **ST-5 · Sentence case by default** (soft: a recommendation). Title Case and tracked capitals
+  only where the design system or the platform defines them.
 - **ST-11 · Emoji are content, not interface icons.**
 - **ST-13 · No invented logo.** A letter in a colored square is not a mark; other companies'
   logos come only from their real files.
 
 ### Changed
 
+- **KR-7 · Line breaks follow the sentence** (from `public-2026.10.14-1`, was «Balanced wrapping
+  for content text»). A heading that fits stays on one line; when it does not, it breaks at a
+  sentence boundary or between word groups; `text-wrap: balance` on a short multi-sentence
+  heading is a finding.
 - **KR-4** also covers centering a label on its letters rather than its line box (button and
   pill labels, avatar initials, `text-box: trim-both cap alphabetic`) and a centered price whose
   currency sign sits outside the centered digits.
-- **KR-11** also asks for one icon family and one stroke width per screen; a filled icon beside
-  outlined ones of the same role is a finding.
+- **KR-11** also asks for one icon family and one stroke width per screen; a filled icon among
+  outlined ones of the same group is a finding.
 - **US-003** also says that the reviewer gets the result and the requirement without the
   author's explanations, that a finding is backed by a screenshot, and that each theme, such as
   light and dark, is checked on its own.
 
-The ids of KR-4, KR-11 and US-003 stay; their texts and credits change. The texts of the other
-46 rules are unchanged, so the version holds 56 rules.
+The ids of KR-4, KR-7, KR-11 and US-003 stay; their texts (and, except KR-7, their credits)
+change. The texts of the other 45 rules are unchanged, so the version holds 56 rules.
 
-### Retired (on release)
+### Retired
 
-- `public-2026.10.14-1`, answered with the new version and marked in `_meta`, as before.
+- `public-2026.10.14-1` and `public-2026.10.11-1`, answered with the new version and marked in
+  `_meta`, as before.
 
 ## public-2026.10.11-1 (published 2026-10-11)
 
