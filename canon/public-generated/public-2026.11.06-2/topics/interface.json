@@ -1,5 +1,5 @@
 {
-  "checksum": "6cc64c4dbdabba67a1714fedc4178e0c6aae44f0d45e6beaf77b47f39ac9d547",
+  "checksum": "0303e5896b51653d1e3185c5e537962b693caf77d96fc913216fa4fc67b2938e",
   "payload": {
     "kind": "unslop-canon-topic",
     "rules": [
@@ -245,7 +245,7 @@
         "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
         "mode": "judgement",
         "source": "UNSLOP",
-        "statement": "An icon's stroke width matches the stroke of the text next to it. Calculate it where possible and propose adjusting the icon stroke or slightly changing the font weight; next to bold text, prefer a filled icon instead of adding another stroke width. There is no fixed stroke value. Icons on one screen share one family and one stroke width; the real marks of other brands (ST-13) keep their own drawing. Within one group of icons, such as a toolbar or a navigation list, filled and outlined styles are not mixed: the group is filled or outlined as a whole, next to bold text preferably filled. A single filled icon among outlined ones is a finding unless the design system assigns the filled style to a state such as selected. The icon size stays with the design system. Example: three navigation icons from one card, one filled and heavy, two thin outlines. Not a finding: the same three drawn the same way, with even visual weight.",
+        "statement": "An icon's stroke width matches the stroke of the text next to it. Calculate it where possible and propose adjusting the icon stroke or slightly changing the font weight; next to bold text, prefer a filled icon instead of adding another stroke width. There is no fixed stroke value. Icons on one screen share one family and one stroke width; the real marks of other brands (ST-13) keep their own drawing and fill, also inside a group of outlined icons. Within one group of icons, such as a toolbar or a navigation list, filled and outlined styles are not mixed: the group is filled or outlined as a whole, next to bold text preferably filled. A single filled icon among outlined ones is a finding unless the design system assigns the filled style to a state such as selected. The icon size stays with the design system. Example: three navigation icons from one card, one filled and heavy, two thin outlines. Not a finding: the same three drawn the same way, with even visual weight.",
         "strength": "hard",
         "title": "Icon stroke matches the adjacent text",
         "topic": "interface"
