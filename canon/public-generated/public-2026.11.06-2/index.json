@@ -1,5 +1,5 @@
 {
-  "checksum": "3b43fb0e6974afd5648edd1b931cd89ab73fa1432d4519f05e23a91749866c4e",
+  "checksum": "81e1529b2348a508dbb98600291efab291546d2c2633fdcb89f35895dbaafca8",
   "payload": {
     "classes": {
       "bad-tone": {
@@ -58,8 +58,8 @@
         }
       },
       "interface": {
-        "bytes": 43631,
-        "checksum": "e325b4f284f1af5dfcd25a3af097d5776ab92cdfca6db1b36c7e252bd039689a",
+        "bytes": 43662,
+        "checksum": "2827164aa027aca05f2a90296e4daa190eb54357f4e3cd5cec6718042a32cc7b",
         "globs": [
           "**/*.{css,scss}",
           "**/*.{html,jsx,tsx,vue,svelte}"
@@ -145,8 +145,8 @@
       },
       "process": {
         "always": true,
-        "bytes": 14212,
-        "checksum": "22a02ce52753b940b9341629617b2f50acc90aa2361e51f79d15dff6f4d0e8cf",
+        "bytes": 14767,
+        "checksum": "f2c0b48e2463f667670d089467e36e6f238b916a9a02b62b6c310af84c36d2fb",
         "globs": [],
         "ruleIds": [
           "UR-1",
