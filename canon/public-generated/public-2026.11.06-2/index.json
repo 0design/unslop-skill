@@ -1,5 +1,5 @@
 {
-  "checksum": "f8b5b3d12adea7d0082b069ed0884cbb523ae89c1e267a190c2e3dbeda486db5",
+  "checksum": "ba15f027f2ac9d25e6802d0329d896a7fc206e7345368ecb0061ee06bfb7687e",
   "payload": {
     "classes": {
       "bad-tone": {
@@ -27,8 +27,8 @@
     "source": "UNSLOP",
     "topics": {
       "copy": {
-        "bytes": 8506,
-        "checksum": "8c2dd6400f50cbe486f5814eacb90d81c09486ac230415d135ea36fd145c6eea",
+        "bytes": 8577,
+        "checksum": "a12abf49a3aeb10c32a24a7fd5853d798810b853d88be91f22fc145d8d7d5b54",
         "globs": [
           "**/*.{html,jsx,tsx,vue,svelte}",
           "**/*.md",
@@ -58,8 +58,8 @@
         }
       },
       "interface": {
-        "bytes": 44246,
-        "checksum": "89a06678dea290c473eded74e9829d24ddbaaf3ece48d2286f1eabaa8a440479",
+        "bytes": 44460,
+        "checksum": "c9108c5f4623f00eb44ffb76462b76a9b61f3345f5a582c509345388f71110b6",
         "globs": [
           "**/*.{css,scss}",
           "**/*.{html,jsx,tsx,vue,svelte}"
@@ -145,8 +145,8 @@
       },
       "process": {
         "always": true,
-        "bytes": 16448,
-        "checksum": "580af44fba62829d81884918132264002212281f9788fb2bf034a0444bb7d796",
+        "bytes": 17278,
+        "checksum": "3b5ad4b97447c056b7c9dd55675103739d42ec6ae6140d4e113b8464c316cb66",
         "globs": [],
         "ruleIds": [
           "UR-1",

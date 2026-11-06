@@ -1,5 +1,5 @@
 {
-  "checksum": "89a06678dea290c473eded74e9829d24ddbaaf3ece48d2286f1eabaa8a440479",
+  "checksum": "c9108c5f4623f00eb44ffb76462b76a9b61f3345f5a582c509345388f71110b6",
   "payload": {
     "kind": "unslop-canon-topic",
     "rules": [
@@ -654,7 +654,7 @@
         "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
         "mode": "judgement",
         "source": "UNSLOP",
-        "statement": "Headings, labels, buttons and menu items use sentence case: a capital on the first word and on proper names only. Title Case and letter-spaced capitals are allowed only where the brand or design system defines them as a style, for the roles it names, or where the platform's own convention requires them. On a page that existed before the task, a case style it uses consistently for a role, such as tracked capitals on labels, is its design system (US-011) and stays. How to check: read every heading, label and button; Title Case or tracked capitals with no design-system style or platform convention behind them are a finding. Example: a card titled \"RECENT DEPLOYS\" in tracked capitals with a button reading \"View All Logs\". Not a finding: \"Recent deploys\" and \"View all logs\", or tracked capitals on labels when the design system defines that label style. Prose on all-caps pages is covered by C-11, labels above headings by DEC-7.",
+        "statement": "Headings, labels, buttons and menu items use sentence case: a capital on the first word and on proper names only. Title Case and letter-spaced capitals are allowed only where the brand or design system defines them as a style, for the roles it names, or where the platform's own convention requires them. On a page that existed before the task, a case style it uses consistently for a role, such as tracked capitals on labels, is its design system (US-011) and stays. How to check: read every heading, label and button; Title Case or tracked capitals with no design-system style or platform convention behind them are a finding, unless the page existed before the task and uses that style consistently for that role (US-011). Example: on a page generated in the current task, a card titled \"RECENT DEPLOYS\" in tracked capitals with a button reading \"View All Logs\"; on any page, one card title in tracked capitals among sentence-case titles. Not a finding: \"Recent deploys\" and \"View all logs\", or tracked capitals on labels when the design system defines that label style. Prose on all-caps pages is covered by C-11, labels above headings by DEC-7.",
         "strength": "soft",
         "title": "Sentence case by default",
         "topic": "interface"

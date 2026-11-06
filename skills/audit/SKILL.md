@@ -1,7 +1,7 @@
 ---
 name: audit
 description: >-
-  Audit a project for "slop" (the tells of AI-generated or low-craft UI) with the bundled deterministic detector (design-system use, tokens and code, typography, colour, surfaces, layout, motion, copy, imagery, accessibility) and the UNSLOP rule canon read over MCP. Then write self-contained fix plans for other agents or cheaper models to execute. The audit is read-only on source code and writes only fix plans; the separate execute mode applies one plan in an isolated worktree. Use when the user says "unslop this", asks for a pre-ship craft review, or wants generated UI checked before it goes out. Takes an intensity level: 1, just fix the slop (the default), 2, Unslop, or 3, Total unslop.
+  Audit a project for "slop" (the tells of AI-generated or low-craft UI) with the bundled deterministic detector (design-system use, tokens and code, typography, colour, surfaces, layout, motion, copy, imagery, accessibility) and the UNSLOP rule canon read over MCP. Then write self-contained fix plans for other agents or cheaper models to execute. The audit is read-only on source code and writes only fix plans; the separate execute mode applies one plan at a time, in an isolated worktree where the project uses git, and runs after the audit when the user's task asks for the fixes. Use when the user says "unslop this", asks for a pre-ship craft review, or wants generated UI checked before it goes out. Takes an intensity level: 1, just fix the slop (the default), 2, Unslop, or 3, Total unslop.
 ---
 
 # unslop
@@ -27,7 +27,7 @@ You are a senior product designer with a brutal eye for craft. Your job is not t
 
 ## Hard Rules
 
-1. **Read-only.** Never modify source code. The only files you create or edit live under `plans/`. If asked to "just fix it", decline and point to `unslop execute <plan>`. A level name such as "just fix the slop" sets the scope of the audit; it is not a request to edit source, so it runs a read-only audit that writes plans. When the task itself asks for the page to be changed and the environment allows edits, the same audit runs and its fixes are applied as `unslop execute` would apply them, under the same conditions: the element table (Hard Rule 10) and the visual check (Hard Rule 11).
+1. **Read-only.** The audit never modifies source code; the only files it creates or edits live under `plans/`, and source changes only through `unslop execute <plan>`. When the user's task itself asks for the page to be changed, such as "fix this page" or "just fix it", finish the audit and its verified plans, then run `unslop execute` on each plan in the order of `plans/README.md`, in the same run; every condition of execute applies, including the element table (Hard Rule 10) and the visual check (Hard Rule 11). A level name alone, such as "just fix the slop", is not such a request: it sets the scope of a read-only audit that writes plans.
 2. **Recon before verdict.** Never audit blind. Map the stack, tokens, and conventions first.
 3. **One pinned canon per run.** Every auditor and verifier uses the same snapshot; delegation follows the current environment and task authorization.
 4. **Every finding is verified** (adversarial re-check) before it reaches a plan.
@@ -48,9 +48,9 @@ Every level does the same audit:
 - It keeps the page's features, links, sections and their order, invents no data, and does not change a screen that works only to make it different.
 - On a page that existed before the task, consistent use counts as the design system only for the exceptions US-011 names (DEC-1, DEC-2, DEC-7, KR-19, ST-5), never for an always-finding or a generic tell, and only while it passes the role test of US-012.
 - A finding is an always-finding of US-011, a rule break that its rule text does not exempt, a defect measured against a stated threshold (WCAG contrast, J-5 text size, KR-3 touch targets, a layout jump, the motion budget), or an element that fails the role test of US-012.
-- Fixes follow US-012: restyle first, remove only what US-012 allows, remove or replace the content always-findings, and fix a group in the same way or not at all; for content, the group is every claim of the same kind on the page.
-- Nothing changes size, weight, letter-spacing, timing or layout without a named defect, contrast is fixed by the text color of the role that fails rather than by a new accent, and a working icon, mark or illustration is not swapped for one that does the job worse (US-012). The product's own mark and the letter case the page uses consistently stay (US-011).
-- Every plan and report ends with the element table of US-012.
+- Fixes follow US-012: restyle first, remove only what US-012 allows, remove or replace the content always-findings, and fix a visual group in the same way or not at all; for content, the group is every claim of the same kind on the page, every fabricated item in it is fixed, and items with a source stay.
+- Nothing changes size, weight, letter-spacing, typeface, color, radius, shadow, timing or layout without a named defect; contrast is fixed by the text color of the role that fails, not by shifting the brand accent; a working icon, mark or illustration with no named defect stays, and a replacement names what the old one does wrong for the reader (US-012). The product's own mark and the letter case the page uses consistently for headings, labels or buttons stay (US-011).
+- Every plan, report and answer that changed a page ends with the element table of US-012 (Hard Rule 10).
 
 | Level | Ends with |
 |---|---|
@@ -113,7 +113,7 @@ Map the project before judging it:
 - **Conventions**: naming, spacing scale, type scale, existing easing and duration tokens. Plans must extend these, never invent parallel ones.
 - **Contract inputs**: facts some checks cannot decide without, such as the path of the token source file. Record them or record their absence; never guess.
 - **Documented decisions**: design docs, ADRs, comments that record deliberate tradeoffs (feeds Hard Rule 6).
-- **Always-findings and generic tells, first**: list every always-finding of US-011 in the audited UI, and every treatment that matches the Example of a rule (US-011). None of them can enter the baseline. Then apply the role test of US-012 to the decoration the page repeats: name the job each one does for the reader; only what does a job that no more fitting element would do better can enter the baseline, and the rest is replaced, for example numbers on a list of links by icons that say where each link goes.
+- **Always-findings and generic tells, first**: list every always-finding of US-011 in the audited UI, and every treatment that matches the Example of a rule (US-011). None of them can enter the baseline, except a case style the page uses consistently for headings, labels or buttons, which US-011 keeps despite the Example of ST-5. Then apply the role test of US-012 to the decoration the page repeats: name the job each one does for the reader; only what does a job that no more fitting element would do better can enter the baseline, and the rest is replaced, for example numbers on a list of links by icons that say where each link goes.
 - **Baseline**: whether the audited UI existed before this task (US-011). If it did, list every other element it uses consistently (typefaces, palette, motifs, motion), each with the places it repeats. Only listed elements take the design-system exception of DEC-1, DEC-2, DEC-7, KR-19 and ST-5; every other rule applies as written.
 
 Use the pinned canon's applicable rules and the target project's actual contracts. Canon rules count as machine-checked only through the exact-checksum bindings described above; inspect the rest manually and label them judgement or unsupported. A detector run without bindings is reported as detector findings, never as a canon-based pass.
@@ -156,10 +156,10 @@ Maintain `plans/README.md`: execution order (design-system plans first, because 
 | `unslop deep` | Full pipeline per app area (large repos and monorepos), exhaustive |
 | `unslop <area>` (`copy`, `motion`, `tokens`, `layout`, …) | Only the requested area (detector sections and judgement), full verification and plans |
 | `unslop plan <description>` | Skip the audit; write one plan for the described fix |
-| `unslop execute <plan>` | The explicit exception to read-only: apply one plan in an isolated worktree, then show the diff for review. A cheap model is fine, because the plan carries the taste |
+| `unslop execute <plan>` | The explicit exception to read-only: apply one plan in an isolated worktree (in place where the project does not use git), then show the diff for review. A cheap model is fine, because the plan carries the taste |
 | `unslop reconcile` | Re-check `plans/` against current code; mark done, stale, or still-open |
 
-Every mode except `plan` and `reconcile` takes `level=1|2|3` (default 1); `unslop execute <plan>` uses the level written at the top of the plan and ends with the plan's element table filled in from the diff.
+Every mode except `plan` and `reconcile` takes `level=1|2|3` (default 1); `unslop execute <plan>` uses the level written at the top of the plan, takes the screenshots of Hard Rule 11 and ends with the plan's element table filled in from the diff.
 
 ## Output
 
