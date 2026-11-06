@@ -1,5 +1,5 @@
 {
-  "checksum": "09998c80aa21ad848da7597e13eb4efc64741ac6b399182f145028750bc9d65b",
+  "checksum": "eec7da27ed58b98e34c2b6c975091e99637d303d751d80d37bc904c9f7be0d5a",
   "payload": {
     "kind": "unslop-canon-topic",
     "rules": [
@@ -130,6 +130,6 @@
     ],
     "schemaVersion": 1,
     "topic": "copy",
-    "version": "public-2026.10.11-1"
+    "version": "public-2026.11.06-1"
   }
 }

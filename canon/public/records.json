@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "release": {
-    "version": "public-2026.10.11-1",
-    "publishedAt": "2026-10-11T00:00:00Z",
+    "version": "public-2026.11.06-1",
+    "publishedAt": "2026-11-06T00:00:00Z",
     "source": "UNSLOP",
     "license": "CC-BY-4.0",
     "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
@@ -81,10 +81,17 @@
       "status": "accepted",
       "scope": "global",
       "title": "Verify the actual result before handoff",
-      "statement": "Before presenting a revision, verify the actual result against its requirements. Check design-system use, behavior and visual output separately. Reading guidelines or passing a build is not evidence that the interface meets its acceptance criteria. Use an independent reviewer before handoff.",
+      "statement": "Before presenting a revision, verify the actual result against its requirements. Check design-system use, behavior and visual output separately. Reading guidelines or passing a build is not evidence that the interface meets its acceptance criteria. Use an independent reviewer before handoff. The reviewer gets the result and the original requirement, not the author's plan or explanations, and judges what is on screen. A finding is backed by a screenshot of the state it describes; a pass or a failure that is only expected, not seen, is not evidence. Each theme the product supports, such as light and dark, is checked on its own: a pass in one theme does not prove another.",
       "mode": "judgement",
       "strength": "hard",
       "source": "UNSLOP",
+      "credits": [
+        {
+          "name": "Benji Taylor",
+          "work": "Stageshow: references/review.md (The reviewer's brief); references/craft.md (Color and looks)",
+          "url": "https://github.com/benjitaylor/skills"
+        }
+      ],
       "attribution": "UNSLOP by Oleg.Design",
       "license": "CC-BY-4.0",
       "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
@@ -282,7 +289,7 @@
       "status": "accepted",
       "scope": "global",
       "title": "Optical, not arithmetic, centering",
-      "statement": "Center asymmetric shapes, such as a play triangle or an icon inside a button, optically, preferably inside the SVG itself. Arithmetic centering that looks off-center is a finding.",
+      "statement": "Center asymmetric shapes, such as a play triangle or an icon inside a button, optically, preferably inside the SVG itself. Arithmetic centering that looks off-center is a finding. A text label centers by its visible letters, not by its line box: an untrimmed line box also holds the font's space for ascenders, accents and descenders, which is rarely even around the capitals, so a label centered by its box usually reads off-center, most often low. This shows in a button with an icon and a label, in a pill or badge, and in an initial inside an avatar. Trim the text to cap height and baseline (text-box: trim-both cap alphabetic) or offset it in the component. In a centered price the digits are what is centered; the currency sign is placed outside that box. Example: a check icon and the word \"Sent\" in one button, the word visibly lower than the icon. Not a finding: the same button with the word trimmed so its capitals line up with the icon's center.",
       "mode": "judgement",
       "strength": "hard",
       "source": "UNSLOP",
@@ -291,6 +298,11 @@
           "name": "Jakub Krehel",
           "work": "Details that make interfaces feel better (make-interfaces-feel-better skill)",
           "url": "https://jakub.kr/writing/details-that-make-interfaces-feel-better"
+        },
+        {
+          "name": "Benji Taylor",
+          "work": "Stageshow: references/craft.md (Spacing and alignment); pair 'Control alignment'",
+          "url": "https://github.com/benjitaylor/skills"
         }
       ],
       "attribution": "UNSLOP by Oleg.Design",
@@ -325,8 +337,8 @@
       "class": "slop",
       "status": "accepted",
       "scope": "global",
-      "title": "Balanced wrapping for content text",
-      "statement": "Content headings use text-wrap: balance. Content paragraphs use text-wrap: pretty, so no orphan is left on the last line. This applies only to content headings and paragraphs; custom typographic compositions are not a finding.",
+      "title": "Line breaks follow the sentence",
+      "statement": "A heading that fits the available width stays on one line; a narrow max-width or a <br> must not force a break. When it does not fit, it breaks at a sentence boundary, after the full stop, or between meaningful word groups, never in the middle of a phrase. text-wrap: balance on a short heading made of several sentences is a finding: it evens out line lengths and ignores the syntax. Content paragraphs use text-wrap: pretty, so no orphan is left on the last line. Custom typographic compositions are not a finding. Example: \"Stop scrolling. Start / your workflow.\" on a desktop screen where the heading fits on one line. Not a finding: \"Stop scrolling. / Start your workflow.\" where the width runs out.",
       "mode": "judgement",
       "strength": "hard",
       "source": "UNSLOP",
@@ -370,7 +382,7 @@
       "status": "accepted",
       "scope": "global",
       "title": "Icon stroke matches the adjacent text",
-      "statement": "An icon's stroke width matches the stroke of the text next to it. Calculate it where possible and propose adjusting the icon stroke or slightly changing the font weight; next to bold text, prefer a filled icon instead of adding another stroke width. There is no fixed stroke value.",
+      "statement": "An icon's stroke width matches the stroke of the text next to it. Calculate it where possible and propose adjusting the icon stroke or slightly changing the font weight; next to bold text, prefer a filled icon instead of adding another stroke width. There is no fixed stroke value. Icons on one screen share one family and one stroke width. Within one group of icons, such as a toolbar or a navigation list, filled and outlined styles are not mixed: the group is filled or outlined as a whole, next to bold text preferably filled. A single filled icon among outlined ones is a finding unless the design system assigns the filled style to a state such as selected. The icon size stays with the design system. Example: three navigation icons from one card, one filled and heavy, two thin outlines. Not a finding: the same three drawn the same way, with even visual weight.",
       "mode": "judgement",
       "strength": "hard",
       "source": "UNSLOP",
@@ -379,6 +391,11 @@
           "name": "Jakub Krehel",
           "work": "Details that make interfaces feel better (make-interfaces-feel-better skill)",
           "url": "https://jakub.kr/writing/details-that-make-interfaces-feel-better"
+        },
+        {
+          "name": "Benji Taylor",
+          "work": "Stageshow: references/craft.md (Icons and logos); pair 'Give icons a shared construction'",
+          "url": "https://github.com/benjitaylor/skills"
         }
       ],
       "attribution": "UNSLOP by Oleg.Design",
@@ -937,6 +954,160 @@
       "mode": "judgement",
       "strength": "hard",
       "source": "UNSLOP",
+      "attribution": "UNSLOP by Oleg.Design",
+      "license": "CC-BY-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "id": "ST-1",
+      "topic": "interface",
+      "class": "slop",
+      "status": "accepted",
+      "scope": "global",
+      "title": "Icons come from one chosen set",
+      "statement": "Interface icons come from the product's own icon set (its icon component, sprite or icon package) or, where the product has none, from one published set picked deliberately. A glyph drawn ad hoc for one screen is a finding: its weight and drawing differ from the icons around it, and it is among the most visible signs of generated UI. How to check: trace every icon on the screen to its set; an inline SVG path that belongs to no set, or icons from two sets on one screen, is a finding. Example: a settings card whose three icons are improvised shapes in tiles of three different hues, one filled and two outlined. Not a finding: the same three icons from the product's set, one stroke width and one color, with status carried by color alone. An icon drawn because no set has that symbol is allowed when it follows the set's grid and stroke; KR-11 covers stroke and family.",
+      "mode": "judgement",
+      "strength": "hard",
+      "source": "UNSLOP",
+      "credits": [
+        {
+          "name": "Benji Taylor",
+          "work": "Stageshow: references/craft.md (Icons and logos); pair 'Use an icon pack, not glyphs drawn on the fly'",
+          "url": "https://github.com/benjitaylor/skills"
+        }
+      ],
+      "attribution": "UNSLOP by Oleg.Design",
+      "license": "CC-BY-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "id": "ST-2",
+      "topic": "interface",
+      "class": "slop",
+      "status": "accepted",
+      "scope": "global",
+      "title": "AI features are named by what they do",
+      "statement": "An AI feature is labelled with the action it performs, such as \"Summarize thread\" or \"Explain the failure\". A sparkle, a magic wand or a star as a generic AI sign, a gradient \"AI\" chip, or purple used as the color of AI is a finding: it says only that AI is involved, not what will happen. A sparkle that is the product's own registered icon is allowed: it is the product's mark, not decoration. Gradients and glow are also covered by DEC-9. How to check: read the label of every control that starts an AI feature with its icon hidden; a label that does not say what happens is a finding. Example: a failed deploy card with a wand button and a gradient chip reading \"AI\". Not a finding: the same card with a plain button reading \"Explain the failure\".",
+      "mode": "judgement",
+      "strength": "hard",
+      "source": "UNSLOP",
+      "credits": [
+        {
+          "name": "Benji Taylor",
+          "work": "Stageshow: references/craft.md (Icons and logos); pair 'Name the AI action, don't sparkle it'",
+          "url": "https://github.com/benjitaylor/skills"
+        }
+      ],
+      "attribution": "UNSLOP by Oleg.Design",
+      "license": "CC-BY-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "id": "ST-3",
+      "topic": "interface",
+      "class": "slop",
+      "status": "accepted",
+      "scope": "global",
+      "title": "No near-touching edges",
+      "statement": "Neighboring edges of boxes, surfaces, text blocks and corners either line up exactly or sit clearly apart, by at least the layout's gutter and never less than 8px. A gap of 1 to 3px looks unintended and is a finding. How to check: measure the distance between adjacent edges in the rendered layout, horizontally and vertically, corners included; a gap above 0 and below 8px between surfaces that are not meant to touch is a finding. Example: a confirmation toast whose top edge stops 2px below the panel it belongs to. Not a finding: the toast aligned to the panel's edge, or set 12px below it. Spacing inside a component that the design system defines, such as the gap between an icon and its label, is not a near-touch.",
+      "mode": "judgement",
+      "strength": "hard",
+      "source": "UNSLOP",
+      "credits": [
+        {
+          "name": "Benji Taylor",
+          "work": "Stageshow: references/craft.md (Spacing and alignment); pair 'Make edges feel deliberate'",
+          "url": "https://github.com/benjitaylor/skills"
+        }
+      ],
+      "attribution": "UNSLOP by Oleg.Design",
+      "license": "CC-BY-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "id": "ST-4",
+      "topic": "interface",
+      "class": "slop",
+      "status": "accepted",
+      "scope": "global",
+      "title": "No layout jumps on state change",
+      "statement": "When an element is added, removed or changes its content, nothing around it jumps. A new row moves the content below it together with its own height, or its space is reserved in advance; a button keeps one width across its states (for example \"Save\", \"Saving…\", \"Saved\"), sized for the longest; a popover or menu has its final size before it appears and keeps its position against its trigger while it is open. How to check: trigger each state change and compare the frames before, during and after; a neighbor that moves in one step, a button that changes width, or an open surface that resizes or drifts from its anchor is a finding. Example: checking a task inserts a status line and the next row snaps down. Not a finding: the next row moves down together with the opening space, or the space was reserved.",
+      "mode": "judgement",
+      "strength": "hard",
+      "source": "UNSLOP",
+      "credits": [
+        {
+          "name": "Benji Taylor",
+          "work": "Stageshow: references/motion.md; pairs 'A new row that jolts its neighbors', 'A popup resizes with its content'",
+          "url": "https://github.com/benjitaylor/skills"
+        }
+      ],
+      "attribution": "UNSLOP by Oleg.Design",
+      "license": "CC-BY-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "id": "ST-5",
+      "topic": "interface",
+      "class": "slop",
+      "status": "accepted",
+      "scope": "global",
+      "title": "Sentence case by default",
+      "statement": "Headings, labels, buttons and menu items use sentence case: a capital on the first word and on proper names only. Title Case and letter-spaced capitals are allowed only where the brand or design system defines them as a style, for the roles it names, or where the platform's own convention requires them. How to check: read every heading, label and button; Title Case or tracked capitals with no design-system style or platform convention behind them are a finding. Example: a card titled \"RECENT DEPLOYS\" in tracked capitals with a button reading \"View All Logs\". Not a finding: \"Recent deploys\" and \"View all logs\", or tracked capitals on labels when the design system defines that label style. Prose on all-caps pages is covered by C-11, labels above headings by DEC-7.",
+      "mode": "judgement",
+      "strength": "soft",
+      "source": "UNSLOP",
+      "credits": [
+        {
+          "name": "Benji Taylor",
+          "work": "Stageshow: references/craft.md (Type); pair 'Write in sentence case'",
+          "url": "https://github.com/benjitaylor/skills"
+        }
+      ],
+      "attribution": "UNSLOP by Oleg.Design",
+      "license": "CC-BY-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "id": "ST-11",
+      "topic": "interface",
+      "class": "slop",
+      "status": "accepted",
+      "scope": "global",
+      "title": "Emoji are content, not interface icons",
+      "statement": "Emoji belong to content, such as messages and reactions. An emoji in the place of an interface icon, in navigation, buttons, list markers, feature lists or status, is a finding, in a playful style too: a playful style changes the shape of the icons, not their kind. How to check: search markup and copy for emoji characters and check where each one renders; one inside a control, a heading or a list marker is a finding. Example: a pricing list whose items start with a green check emoji and a sidebar item whose label starts with a bar-chart emoji. Not a finding: the same list with check icons from the product's set, or an emoji reaction on a chat message.",
+      "mode": "judgement",
+      "strength": "hard",
+      "source": "UNSLOP",
+      "credits": [
+        {
+          "name": "Benji Taylor",
+          "work": "Stageshow: references/craft.md (Icons and logos)",
+          "url": "https://github.com/benjitaylor/skills"
+        }
+      ],
+      "attribution": "UNSLOP by Oleg.Design",
+      "license": "CC-BY-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "id": "ST-13",
+      "topic": "interface",
+      "class": "slop",
+      "status": "accepted",
+      "scope": "global",
+      "title": "No invented logo",
+      "statement": "A product appears with the mark it actually uses, or with its name set in type when it has none. A letter or symbol in a colored square or circle made up to stand in for a logo is a finding, and so is a look-alike of another company's logo; other companies' logos come only from their real files, unaltered in shape and color. How to check: trace every logo on the page to a source file from the brand; a mark with no source is a finding. Example: a header with a white letter in a purple rounded square next to the product name. Not a finding: the product name set as a text wordmark when no mark exists. Customer logos used as proof are covered by DEC-5.",
+      "mode": "judgement",
+      "strength": "hard",
+      "source": "UNSLOP",
+      "credits": [
+        {
+          "name": "Benji Taylor",
+          "work": "Stageshow: references/craft.md (Icons and logos)",
+          "url": "https://github.com/benjitaylor/skills"
+        }
+      ],
       "attribution": "UNSLOP by Oleg.Design",
       "license": "CC-BY-4.0",
       "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
