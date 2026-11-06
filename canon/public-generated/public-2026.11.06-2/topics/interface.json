@@ -1,5 +1,5 @@
 {
-  "checksum": "cb90d9fc82ad65d6378eab8fa588cfe73efff460446d0a1b61bb2b8b0711a77a",
+  "checksum": "89a06678dea290c473eded74e9829d24ddbaaf3ece48d2286f1eabaa8a440479",
   "payload": {
     "kind": "unslop-canon-topic",
     "rules": [
@@ -107,7 +107,7 @@
         "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
         "mode": "judgement",
         "source": "UNSLOP",
-        "statement": "Use muted text only for truly secondary meta information and with at least the WCAG text contrast: 4.5:1 for regular text, 3:1 for large text. Muting everything secondary by default is a finding. Example: every description under headings in regular-size gray text at 3:1. Not a finding: the date and author under an article at 4.5:1. Detection signal: a large share of text nodes below the WCAG threshold for their size or using a muted token; gray text on a colored background. Detection signals only prompt a review and give no verdict: their thresholds are not calibrated.",
+        "statement": "Use muted text only for truly secondary meta information and with at least the WCAG text contrast: 4.5:1 for regular text, 3:1 for large text. Muting everything secondary by default is a finding. How to fix: change the text color of the role that fails until it passes; shifting the brand accent or the palette of the whole page is not the smallest fix (US-012). Example: every description under headings in regular-size gray text at 3:1. Not a finding: the date and author under an article at 4.5:1. Detection signal: a large share of text nodes below the WCAG threshold for their size or using a muted token; gray text on a colored background. Detection signals only prompt a review and give no verdict: their thresholds are not calibrated.",
         "strength": "hard",
         "title": "Muted text needs a role and contrast",
         "topic": "interface"
@@ -654,7 +654,7 @@
         "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
         "mode": "judgement",
         "source": "UNSLOP",
-        "statement": "Headings, labels, buttons and menu items use sentence case: a capital on the first word and on proper names only. Title Case and letter-spaced capitals are allowed only where the brand or design system defines them as a style, for the roles it names, or where the platform's own convention requires them. How to check: read every heading, label and button; Title Case or tracked capitals with no design-system style or platform convention behind them are a finding. Example: a card titled \"RECENT DEPLOYS\" in tracked capitals with a button reading \"View All Logs\". Not a finding: \"Recent deploys\" and \"View all logs\", or tracked capitals on labels when the design system defines that label style. Prose on all-caps pages is covered by C-11, labels above headings by DEC-7.",
+        "statement": "Headings, labels, buttons and menu items use sentence case: a capital on the first word and on proper names only. Title Case and letter-spaced capitals are allowed only where the brand or design system defines them as a style, for the roles it names, or where the platform's own convention requires them. On a page that existed before the task, a case style it uses consistently for a role, such as tracked capitals on labels, is its design system (US-011) and stays. How to check: read every heading, label and button; Title Case or tracked capitals with no design-system style or platform convention behind them are a finding. Example: a card titled \"RECENT DEPLOYS\" in tracked capitals with a button reading \"View All Logs\". Not a finding: \"Recent deploys\" and \"View all logs\", or tracked capitals on labels when the design system defines that label style. Prose on all-caps pages is covered by C-11, labels above headings by DEC-7.",
         "strength": "soft",
         "title": "Sentence case by default",
         "topic": "interface"
