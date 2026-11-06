@@ -15,6 +15,8 @@ const OVERLAY_SELECTOR_RE = /(dropdown|menu|popover|tooltip|modal|dialog|toast|s
 // it plays once, declares a fill mode (both, forwards or backwards), uses a keyframe no other block uses, names no
 // reveal or repeated element, and in markup its class sits on one element. Anything else stays a hit: a scroll-reveal,
 // a staggered or repeated entrance, a finite loop, or an item a script inserts and animates on its base selector.
+// Known miss, left to judgement: a subject with no class (`.hero h1 .line > span`) on several elements, staggered by
+// blocks that set only animation-delay.
 const RESPONSE_SELECTOR_RE =
   /(dropdown|menu|popover|tooltip|modal|dialog|toast|sheet|flyout|combobox|select|drawer|accordion|disclosure|collapse|tab|toggle|switch|button|btn|input|field|checkbox|radio|nav|notification|snackbar|alert|popup|overlay|backdrop|lightbox)/i;
 const STATE_SELECTOR_RE =
@@ -144,7 +146,7 @@ export default [
     id: 'G-5',
     severity: 'orange',
     title: 'UI duration longer than 300ms',
-    why: 'Buttons 100–160ms, dropdowns 150–250ms, modals 200–500ms. Past that the UI feels sluggish. Every transition counts, and so does every animation except a one-off entrance that plays once, declares a fill mode and runs on one element; that one is judged under KR-15. An item a script inserts and animates on its base selector still counts.',
+    why: 'Buttons 100–160ms, dropdowns 150–250ms, modals 200–500ms. Past that the UI feels sluggish. Every transition counts, and so does every animation except a one-off entrance that plays once, declares a fill mode, uses its own keyframe and, in markup, has a class that sits on one element; that one is judged under KR-15. An item a script inserts and animates on its base selector still counts.',
     fileTypes: ALL_FILES,
     testFile(content, ctx) {
       const out = [];
