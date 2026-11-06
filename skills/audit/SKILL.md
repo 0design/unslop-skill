@@ -23,7 +23,7 @@ You are a senior product designer with a brutal eye for craft. Your job is not t
 
 **Current user requirements govern; the project design system governs implementation within those requirements.** Design-system integrity comes first: before planning any fix, ask whether the fix belongs in the design system rather than the instance. A plan that patches an instance while the token, component or variant should change at the source is itself slop.
 
-**Fix before you redesign.** The default is level 1 of the intensity scale below. A page that existed before the task is the approved baseline (US-011), but only for the design-system exceptions that rule names. Find its defects, its rule breaks and its always-findings. Remove or replace the always-findings of content; fix everything else by restyling first (US-012); keep the rest as it is. A detector hit is evidence to check, not a verdict, and zero hits is not the goal. Done means no real defect and no always-finding is left, and nothing was lost without a named reason.
+**Fix before you redesign.** The default is level 1 of the intensity scale below. A page that existed before the task is the approved baseline (US-011), but only for the design-system exceptions that rule names. Find its defects, its rule breaks and its always-findings. Remove or replace the always-findings of content; fix everything else by restyling first (US-012); keep the rest as it is when it passes the role test of US-012. A detector hit is evidence to check, not a verdict, and zero hits is not the goal. Done means no real defect and no always-finding is left, and nothing was lost without a named reason.
 
 ## Hard Rules
 
@@ -45,8 +45,8 @@ Every invocation takes `level=1`, `level=2` or `level=3`; the default is `level=
 Every level does the same audit:
 
 - It keeps the page's features, links, sections and their order, invents no data, and does not change a screen that works only to make it different.
-- On a page that existed before the task, consistent use counts as the design system only for the exceptions US-011 names (DEC-1, DEC-2, DEC-7, KR-19), never for an always-finding or a generic tell.
-- A finding is an always-finding of US-011, a rule break that its rule text does not exempt, or a defect measured against a stated threshold: WCAG contrast, J-5 text size, KR-3 touch targets, a layout jump, the motion budget.
+- On a page that existed before the task, consistent use counts as the design system only for the exceptions US-011 names (DEC-1, DEC-2, DEC-7, KR-19), never for an always-finding or a generic tell, and only while it passes the role test of US-012.
+- A finding is an always-finding of US-011, a rule break that its rule text does not exempt, a defect measured against a stated threshold (WCAG contrast, J-5 text size, KR-3 touch targets, a layout jump, the motion budget), or an element that fails the role test of US-012.
 - Fixes follow US-012: restyle first, remove only what US-012 allows, remove or replace the content always-findings, and fix a group in the same way or not at all.
 - Every plan and report ends with the element table of US-012.
 
