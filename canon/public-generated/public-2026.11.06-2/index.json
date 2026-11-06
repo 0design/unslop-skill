@@ -1,5 +1,5 @@
 {
-  "checksum": "dad7054af2e3e4928fe2098573f6aec22f41d2a33d7a39f89868b4d7b277c8aa",
+  "checksum": "3b43fb0e6974afd5648edd1b931cd89ab73fa1432d4519f05e23a91749866c4e",
   "payload": {
     "classes": {
       "bad-tone": {
@@ -27,8 +27,8 @@
     "source": "UNSLOP",
     "topics": {
       "copy": {
-        "bytes": 7974,
-        "checksum": "7a5369ddf14f761a3db53a4b614d14061ba7d2efd6c52afcffaa2caddf26bc91",
+        "bytes": 8007,
+        "checksum": "15800957b4babdac3f5be2abda2a447e1a3da26185c7fd1662f0c7a79eb4119c",
         "globs": [
           "**/*.{html,jsx,tsx,vue,svelte}",
           "**/*.md",
@@ -145,8 +145,8 @@
       },
       "process": {
         "always": true,
-        "bytes": 13852,
-        "checksum": "7b35d05a6d0c911605bb3775b9b6527da2185cf8b48cff4daf3d88db0c4016fd",
+        "bytes": 14212,
+        "checksum": "22a02ce52753b940b9341629617b2f50acc90aa2361e51f79d15dff6f4d0e8cf",
         "globs": [],
         "ruleIds": [
           "UR-1",
