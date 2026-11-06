@@ -34,6 +34,8 @@ npx skills add 0design/unslop-skill
 
 This copies `skills/audit` into your agent's skills folder, with the detector and the canon client in `skills/audit/scripts`. The detector needs only Node.js 20 or newer and runs its machine checks from there. The canon client also needs the MCP SDK, which only the plugin can install, so a skill-only audit has no verified canon and issues no pass; install the plugin where your agent supports one.
 
+UNSLOP's rule canon is also a step you can add to an agent workflow: [unslop-canon on QFactory](https://qfactory.io/components/unslop-canon?utm_source=github&utm_medium=readme&utm_campaign=unslop-skill)
+
 ## How it works
 
 ```
@@ -87,3 +89,5 @@ A rule accepted from a pull request reaches everyone with the next canon version
 - Changelog, credits, file list: [CHANGELOG.md](CHANGELOG.md), [CREDITS.md](CREDITS.md), [PUBLIC_MANIFEST.md](PUBLIC_MANIFEST.md)
 - For AI agents: the audit is read-only, plans only, no pass without a connected canon. The rules are in [the skill](skills/audit/SKILL.md).
 - License: [MIT](LICENSE) for the code and skill files, [CC BY 4.0](LICENSE-RULES.md) for the rule texts
+
+More from Oleg.Design: [AINDF](https://github.com/0design/ai-native-design-framework) · [Q-Core](https://github.com/0design/Q-Core) · [QFactory](https://qfactory.io/?utm_source=github&utm_medium=readme&utm_campaign=unslop-skill)
