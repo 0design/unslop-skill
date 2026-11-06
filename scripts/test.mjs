@@ -375,3 +375,35 @@ test('argument parsing', () => {
   assert.ok(parseArgs(['a', 'b']).error, 'extra positional must be a usage error');
   assert.equal(parseArgs(['--help']).help, true);
 });
+
+function ruleLines(id, kind, file) {
+  return detect(path.join(fixtureDir(id, kind), file), { rules: [id] })
+    .findings.filter((f) => f.rule === id)
+    .map((f) => f.line);
+}
+
+test('J-5 skips text inside illustrations: role="img", aria-hidden="true", svg text', () => {
+  assert.deepEqual(ruleLines('J-5', 'clean', 'illustration.html'), []);
+});
+
+test('J-5 still fires on body text beside an illustration, a shared class, a sibling, aria-hidden="false" and a hidden header row', () => {
+  assert.deepEqual(ruleLines('J-5', 'slop', 'body-beside-illustration.html'), [5, 6, 7, 8, 9]);
+});
+
+test('J-5 still fires on real copy inside a role="img" frame: a heading, a paragraph or a long text run', () => {
+  assert.deepEqual(ruleLines('J-5', 'slop', 'hero-role-img.html'), [5, 6]);
+});
+
+test('G-5 skips a one-off narrative entrance and an infinite loop', () => {
+  assert.deepEqual(ruleLines('G-5', 'clean', 'entrance.css'), []);
+});
+
+test('G-5 still fires on a base-selector transition and on animations of overlays and states', () => {
+  assert.deepEqual(ruleLines('G-5', 'slop', 'response.css'), [1, 2, 3, 4]);
+  assert.deepEqual(ruleLines('G-5', 'slop', 'modal.css'), [2]);
+});
+
+test('G-5 still fires on entrance tells: scroll-reveal, stagger, finite loops, repeated and script-inserted items', () => {
+  assert.deepEqual(ruleLines('G-5', 'slop', 'reveal.css'), [1, 2, 3, 4, 5, 6, 7, 8, 9]);
+  assert.deepEqual(ruleLines('G-5', 'slop', 'repeated.html'), [5]);
+});

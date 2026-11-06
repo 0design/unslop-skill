@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+<!-- near-miss: small text inside illustrations is not body text -->
+<style>
+  .lede { font-size: 18px; }
+  .mock-bar .title { font-size: 12px; }
+  .task { font-size: 13px; }
+  [aria-hidden="true"] .tick { font-size: 10px; }
+  .chart text { font-size: 11px; }
+</style>
+</head>
+<body>
+  <p class="lede">Plan the week in one place.</p>
+  <div class="mock" role="img" aria-label="Board preview">
+    <div class="mock-bar"><span class="title">Week 44</span></div>
+    <div class="task">Draft release notes</div>
+  </div>
+  <div aria-hidden="true"><span class="tick">Mon</span></div>
+  <svg class="chart" viewBox="0 0 100 40"><text x="0" y="10">12</text></svg>
+</body>
+</html>

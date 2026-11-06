@@ -4,6 +4,28 @@ Plugin releases and public canon versions. Rule texts are generated from
 `canon/public/records.json` with `npm run canon:generate:public`; never edit
 `canon/public-generated/` by hand.
 
+## Unreleased: candidate canon public-2026.11.06-2 and audit levels
+
+Candidate, not published. The served canon stays `public-2026.11.06-1`. On this branch `canon/public/records.json` and `canon/public-generated/public-2026.11.06-2` are byte-identical copies of the candidate, because the skill text names its new rules; the branch therefore merges only after that version is served. The plugin version stays `1.0.3`.
+
+### Added
+- **US-011 · An existing page is the approved baseline** (topic `process`, class `slop`, hard). What a page that existed before the task uses consistently counts as its design system, but only for the exceptions of DEC-1, DEC-2, DEC-7 and KR-19; generic tells and template decoration never enter the baseline by repetition. A list of always-findings stays a finding on any page and is fixed, not only reported: content items are removed or replaced, and contrast, size and touch-target defects are restyled.
+- **US-012 · Restyle first, remove last** (topic `process`, class `slop`, hard). A defect is fixed by restyling; an element is removed only when it is the defect; a group is fixed in the same way or not at all; every report ends with an element table.
+- Audit skill: intensity levels `level=1` (just fix the slop, the default), `level=2` (Unslop) and `level=3` (Total unslop). Every level runs the same read-only audit; levels 2 and 3 add a short creative direction, offered as a proposal.
+
+### Changed
+- **UR-1** is about invented content (text, data, claims, features); it is never a reason to remove parts of an existing page, and content already on a page does not exempt proof and claims from DEC-5.
+- **DEC-1**: the removal test covers the decorations the rule names, not illustrations, sections or motion; consistent decoration of an existing page counts as its design system, except template decoration.
+- **DEC-5** also covers counts, versions, pricing terms and promises, defines an item without a source as fabricated, and says how to fix it: remove it, or replace it with a marked slot that XP-33 keeps out of production. Proof that a person wrote on a live product waits for its source instead.
+- **DEC-7**: a pill or badge above the H1, and numbering such as "01/" on items that are not a sequence, are findings on any page; turning the pill into a text label is not a fix.
+- Counter-examples: selectable option tiles (**DEC-3**, **DEC-8**), a lifted product mock or device frame (**DEC-4**), a one-off product demo that respects reduced motion (**KR-15**), one consistent monospace layer for one role (**KR-19**), a data tooltip (**KR-21**), tabular figures scoped to amounts and counters (**TY-1**).
+- Detector: J-5 skips text inside an illustration (an `svg`, or an `aria-hidden="true"` or `role="img"` element that holds no headings, paragraphs, links or controls and only short text). G-5 counts every transition and every animation except a one-off entrance that plays once, declares a fill mode and runs on one element; a scroll-reveal, a stagger, a finite loop or a script-inserted item still counts. The detector version changes, so detector bindings read `binding-stale` until bound again.
+
+The ids, titles, strength and credits of the 11 changed rules stay; the other 45 rules are unchanged, so the version holds 58 rules.
+
+### Retired at release
+- `public-2026.11.06-1`, answered with the new version and marked in `_meta`, as before.
+
 ## public-2026.11.06-1 (published 2026-11-06)
 
 Base: `public-2026.10.14-1`, which was served by the MCP endpoint but never reached this

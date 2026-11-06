@@ -1,5 +1,5 @@
 {
-  "checksum": "2ff9cedd3abd8868acb8ea7c4fffa3b32cd6ed6971788ad3aca4a1a8d19ab78f",
+  "checksum": "4f9001aefc73567347c642a49ac555cad97e4d237cb6355afdbd1a4411e9493d",
   "payload": {
     "classes": {
       "bad-tone": {
@@ -27,8 +27,8 @@
     "source": "UNSLOP",
     "topics": {
       "copy": {
-        "bytes": 7018,
-        "checksum": "eec7da27ed58b98e34c2b6c975091e99637d303d751d80d37bc904c9f7be0d5a",
+        "bytes": 7974,
+        "checksum": "7a5369ddf14f761a3db53a4b614d14061ba7d2efd6c52afcffaa2caddf26bc91",
         "globs": [
           "**/*.{html,jsx,tsx,vue,svelte}",
           "**/*.md",
@@ -58,8 +58,8 @@
         }
       },
       "interface": {
-        "bytes": 41109,
-        "checksum": "602ce866c9eb622cd5c559ad77c2ce512b63154c82d917509062a7e7faf0eb76",
+        "bytes": 43631,
+        "checksum": "e325b4f284f1af5dfcd25a3af097d5776ab92cdfca6db1b36c7e252bd039689a",
         "globs": [
           "**/*.{css,scss}",
           "**/*.{html,jsx,tsx,vue,svelte}"
@@ -145,8 +145,8 @@
       },
       "process": {
         "always": true,
-        "bytes": 7977,
-        "checksum": "157b327696a694fe1b7d7b4c2be5893f70cfe0a41fa9e9c36b9fb719cc9198a9",
+        "bytes": 13807,
+        "checksum": "8fe4a6932372596e6ac941dc9195ead4fdf36bb6626b82221d479145487abd6e",
         "globs": [],
         "ruleIds": [
           "UR-1",
@@ -158,7 +158,9 @@
           "US-006",
           "US-007",
           "US-008",
-          "US-010"
+          "US-010",
+          "US-011",
+          "US-012"
         ],
         "titles": {
           "UR-1": "Ship only requested content",
@@ -170,10 +172,12 @@
           "US-006": "Visual recipes stay project-scoped",
           "US-007": "Keep provenance of examples and claims",
           "US-008": "Leave everything outside the change intact",
-          "US-010": "Product-wide removal covers every occurrence"
+          "US-010": "Product-wide removal covers every occurrence",
+          "US-011": "An existing page is the approved baseline",
+          "US-012": "Restyle first, remove last"
         }
       }
     },
-    "version": "public-2026.11.06-1"
+    "version": "public-2026.11.06-2"
   }
 }

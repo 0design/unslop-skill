@@ -1,0 +1,5 @@
+/* near-miss: a one-shot narrative entrance is judged under KR-15, not as UI response */
+.hero-title { animation: rise 900ms cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+.demo-stamp { animation: stamp 500ms ease-out 2.4s both; }
+.spinner { animation: spin 1s linear infinite; }
+.hero-sun { animation: sun 1.4s cubic-bezier(0.2, 0.8, 0.2, 1) backwards; }

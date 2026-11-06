@@ -37,7 +37,7 @@ This copies `skills/audit` into your agent's skills folder, with the detector an
 ## How it works
 
 ```
-  /unslop:audit
+  /unslop:audit [level=1|2|3]
        │
        ▼
   your agent ◀──── MCP ────▶ canon server (read-only): index read once, version and checksum pinned for the run
@@ -60,6 +60,8 @@ This copies `skills/audit` into your agent's skills folder, with the detector an
 ```
 
 unslop gives your agent a designer's quality criteria: verifiable, not taste by eye. Every finding is a `file:line` and a fix plan. It does not guarantee good design: that decision is yours; unslop only keeps your agent from breaking it. The catalogue of slop criteria keeps changing, so the audit reads it from the canon server, not from the plugin's own copy: one version per run, pinned by version and checksum, never a silent fallback to local files. A rule fixed or added on the server reaches every agent on its next run, with no reinstall.
+
+The default level, 1 (just fix the slop), treats an existing page as the approved baseline: it keeps the page's features, sections and order, fixes its defects and rule breaks by restyling first, and removes or replaces the tells that are always findings, such as fabricated proof or a pill above the headline. Levels 2 (Unslop) and 3 (Total unslop) run the same audit and end with a short creative direction, offered as a proposal.
 
 ## What's in this repo
 

@@ -1,0 +1,4 @@
+.panel { transition: transform 450ms ease-out; }
+.dropdown { animation: menu-in 500ms ease-out; }
+.faq-item[open] .answer { animation: reveal 600ms ease-out; }
+.like:hover { animation: pop 500ms ease-out; }

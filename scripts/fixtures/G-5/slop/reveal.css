@@ -1,0 +1,9 @@
+.section { animation: fadeUp 900ms; }
+.reveal.in-view { animation: up 800ms; }
+.card.visible { animation: up 800ms; }
+.feature:nth-child(2) { animation: up 1200ms; }
+.cta { animation: pulse-glow 2s ease 3; }
+.section { animation: fadeUp 900ms both; }
+section { animation: rise 900ms ease-out both; }
+.item { animation: in 500ms ease-out; }
+.promo { animation-name: drop; animation-duration: 700ms; }

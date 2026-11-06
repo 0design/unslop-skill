@@ -1,7 +1,14 @@
 // Section J: readability and accessibility.
 // Contrast (J-1) and touch-target size (J-2) need computed style, so the detector has no check for them.
 import { decl, declsMatching, toPx, maxPxIn } from '../lib/css.mjs';
-import { headingLevels, isDisplaySelector, isSmallPrintSelector, isContainerSelector } from '../lib/heuristics.mjs';
+import {
+  headingLevels,
+  isDisplaySelector,
+  isSmallPrintSelector,
+  isContainerSelector,
+  illustrationOnlyClasses,
+  isIllustrationSelector,
+} from '../lib/heuristics.mjs';
 
 // Block rules also read stylesheets embedded in <style> tags (see lib/scan.mjs).
 const STYLE_FILES = ['.css', '.scss', '.html', '.vue', '.svelte'];
@@ -92,12 +99,14 @@ export default [
     id: 'J-5',
     severity: 'orange',
     title: 'Body text below 14px',
-    why: 'Under 14px body copy stops being readable on a phone. 16px is the target.',
+    why: 'Under 14px body copy stops being readable on a phone. 16px is the target. Text inside an illustration (an svg, or an aria-hidden="true" or role="img" element that holds no headings, paragraphs, links or controls and only short text) is not body text; a separate stylesheet only shows it through selectors that name those.',
     fileTypes: STYLE_FILES,
     testFile(content, ctx) {
       const out = [];
+      // Classes used only inside illustrations of this same file; a .css file has no markup to read.
+      const illustration = ctx.isMarkupFile ? illustrationOnlyClasses(content) : new Set();
       for (const block of ctx.blocks()) {
-        if (isSmallPrintSelector(block.selector)) continue;
+        if (isSmallPrintSelector(block.selector) || isIllustrationSelector(block.selector, illustration, { markup: ctx.isMarkupFile })) continue;
         const fs = decl(block, 'font-size');
         if (!fs || /var\(|calc\(|clamp\(/.test(fs.value)) continue;
         const px = toPx(fs.value);

@@ -105,3 +105,98 @@ export function textOnly(line) {
     .replace(/`[^`]*`/g, ' ')
     .replace(/https?:\/\/\S+/g, ' ');
 }
+
+const VOID_ELEMENTS = new Set(['area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'source', 'track', 'wbr']);
+const TAG_RE = /<(\/?)([A-Za-z][\w:.-]*)((?:[^>"'{]|"[^"]*"|'[^']*'|\{[^}]*\})*?)(\/?)>/g;
+const HIDDEN_ATTR_RE = /(?:^|\s)aria-hidden\s*=\s*(?:"true"|'true'|\{\s*true\s*\})/i;
+const IMG_ROLE_ATTR_RE = /(?:^|\s)role\s*=\s*(?:"img"|'img')/i;
+const CLASS_ATTR_RE = /(?:^|\s)(?:class|className)\s*=\s*(?:"([^"]*)"|'([^']*)')/;
+
+// Elements that carry readable copy or controls. A role="img" or aria-hidden="true" frame holding one of them, or a
+// text run of 40 characters or more, is not treated as an illustration: real copy stays body text for J-5. A frame
+// that is itself a list item, a table part or one of these elements is visible content hidden from assistive
+// technology, such as a header row, not an illustration.
+const COPY_ELEMENTS = new Set(['h1', 'h2', 'h3', 'p', 'a', 'button', 'input', 'textarea', 'select']);
+const CONTENT_FRAMES = new Set([...COPY_ELEMENTS, 'li', 'tr', 'td', 'th', 'thead', 'tbody', 'table', 'label']);
+const MAX_ILLUSTRATION_RUN = 40;
+
+function markupTree(content) {
+  const text = content
+    .replace(/<!--[\s\S]*?-->/g, ' ')
+    .replace(/<(script|style)\b[^>]*>[\s\S]*?<\/\1\s*>/gi, ' ');
+  const root = { name: '#root', attrs: '', children: [], runs: [], parent: null };
+  let current = root;
+  let last = 0;
+  for (const m of text.matchAll(TAG_RE)) {
+    const run = text.slice(last, m.index).replace(/\s+/g, ' ').trim();
+    if (run) current.runs.push(run);
+    last = m.index + m[0].length;
+    const [, closing, rawName, attrs, selfClosing] = m;
+    const name = rawName.toLowerCase();
+    if (closing) {
+      let open = current;
+      while (open !== root && open.name !== name) open = open.parent;
+      if (open !== root) current = open.parent;
+      continue;
+    }
+    const node = { name, attrs, children: [], runs: [], parent: current };
+    current.children.push(node);
+    if (!selfClosing && !VOID_ELEMENTS.has(name)) current = node;
+  }
+  return root;
+}
+
+function summarize(node) {
+  node.hasCopy = false;
+  node.longestRun = Math.max(0, ...node.runs.map((run) => run.length));
+  for (const child of node.children) {
+    summarize(child);
+    node.hasCopy ||= child.hasCopy || COPY_ELEMENTS.has(child.name);
+    node.longestRun = Math.max(node.longestRun, child.longestRun);
+  }
+}
+
+/**
+ * Classes that occur in this markup only inside an illustration: an <svg>, or an element with aria-hidden="true" or
+ * role="img" that is not itself a list item, table part or copy element and holds no headings, paragraphs, links or
+ * controls and no text run of 40 characters or more, and their descendants. A class that also occurs outside one is not returned, so real body text stays visible.
+ */
+export function illustrationOnlyClasses(content = '') {
+  const root = markupTree(content);
+  summarize(root);
+  const inside = new Set();
+  const outside = new Set();
+  const walk = (node, inIllustration) => {
+    for (const child of node.children) {
+      const framed = HIDDEN_ATTR_RE.test(child.attrs) || IMG_ROLE_ATTR_RE.test(child.attrs);
+      const illustration =
+        inIllustration ||
+        child.name === 'svg' ||
+        (framed && !CONTENT_FRAMES.has(child.name) && !child.hasCopy && child.longestRun < MAX_ILLUSTRATION_RUN);
+      const cls = child.attrs.match(CLASS_ATTR_RE);
+      if (cls) for (const c of (cls[1] ?? cls[2]).split(/\s+/).filter(Boolean)) (illustration ? inside : outside).add(c);
+      walk(child, illustration);
+    }
+  };
+  walk(root, false);
+  return new Set([...inside].filter((c) => !outside.has(c)));
+}
+
+const SVG_TEXT_TYPE_RE = /(?:^|[\s>])(?:svg|text|tspan|textPath)(?=$|[\s>.:#[])/i;
+const HIDDEN_SELECTOR_RE = /\[\s*(?:aria-hidden\s*=\s*["']?true|role\s*=\s*["']?img)["']?\s*\]/i;
+
+/**
+ * True when every selector in the list can only match text inside an illustration:
+ * it names svg text, a class from illustrationOnlyClasses, or, in a stylesheet without
+ * markup, an [aria-hidden="true"] or [role="img"] ancestor. Where the markup is known
+ * (`markup: true`), such a frame counts only through its classes, because the markup
+ * shows whether it holds real copy. A sibling combinator (+, ~) leaves the subject
+ * outside the illustration, so only the part after the last one is read.
+ */
+export function isIllustrationSelector(selector = '', illustrationClasses = new Set(), { markup = false } = {}) {
+  return selector.split(',').every((sel) => {
+    const chain = sel.replace(/:(?:not|is|where|has)\([^)]*\)/g, '').split(/\s*[+~]\s*/).pop();
+    if (SVG_TEXT_TYPE_RE.test(chain) || (!markup && HIDDEN_SELECTOR_RE.test(chain))) return true;
+    return [...chain.matchAll(/\.(-?[_a-zA-Z][\w-]*)/g)].some((m) => illustrationClasses.has(m[1]));
+  });
+}

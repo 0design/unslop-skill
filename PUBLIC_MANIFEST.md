@@ -18,10 +18,10 @@ Every file in this tree, why it is public, and its license. Generated from `git 
 | `LICENSES/emilkowalski-skills-MIT.txt` | Third-party notice: motion thresholds adapted from Emil Kowalski (MIT) | MIT (© Emil Kowalski) |
 | `PUBLIC_MANIFEST.md` | This list | MIT |
 | `README.md` | What this is, MCP endpoint, how to run | MIT |
-| `canon/public-generated/public-2026.11.06-1/index.json` | Generated routed canon (published version, served by the MCP endpoint) | CC BY 4.0 |
-| `canon/public-generated/public-2026.11.06-1/topics/copy.json` | Generated routed canon (published version, served by the MCP endpoint) | CC BY 4.0 |
-| `canon/public-generated/public-2026.11.06-1/topics/interface.json` | Generated routed canon (published version, served by the MCP endpoint) | CC BY 4.0 |
-| `canon/public-generated/public-2026.11.06-1/topics/process.json` | Generated routed canon (published version, served by the MCP endpoint) | CC BY 4.0 |
+| `canon/public-generated/public-2026.11.06-2/index.json` | Generated routed canon (candidate version, not yet served) | CC BY 4.0 |
+| `canon/public-generated/public-2026.11.06-2/topics/copy.json` | Generated routed canon (candidate version, not yet served) | CC BY 4.0 |
+| `canon/public-generated/public-2026.11.06-2/topics/interface.json` | Generated routed canon (candidate version, not yet served) | CC BY 4.0 |
+| `canon/public-generated/public-2026.11.06-2/topics/process.json` | Generated routed canon (candidate version, not yet served) | CC BY 4.0 |
 | `canon/public/records.json` | Public rule texts (source) | CC BY 4.0 |
 | `package-lock.json` | Dependencies (MCP SDK only), test command; private: true blocks npm publish | MIT |
 | `package.json` | Dependencies (MCP SDK only), test command; private: true blocks npm publish | MIT |
@@ -74,8 +74,12 @@ Every file in this tree, why it is public, and its license. Generated from `git 
 | `scripts/fixtures/G-2/slop/pop.css` | Detector and routing test fixture | MIT |
 | `scripts/fixtures/G-4/clean/button.css` | Detector and routing test fixture | MIT |
 | `scripts/fixtures/G-4/slop/button.css` | Detector and routing test fixture | MIT |
+| `scripts/fixtures/G-5/clean/entrance.css` | Detector and routing test fixture | MIT |
 | `scripts/fixtures/G-5/clean/modal.css` | Detector and routing test fixture | MIT |
 | `scripts/fixtures/G-5/slop/modal.css` | Detector and routing test fixture | MIT |
+| `scripts/fixtures/G-5/slop/repeated.html` | Detector and routing test fixture | MIT |
+| `scripts/fixtures/G-5/slop/response.css` | Detector and routing test fixture | MIT |
+| `scripts/fixtures/G-5/slop/reveal.css` | Detector and routing test fixture | MIT |
 | `scripts/fixtures/G-6/clean/row.css` | Detector and routing test fixture | MIT |
 | `scripts/fixtures/G-6/slop/row.css` | Detector and routing test fixture | MIT |
 | `scripts/fixtures/G-9/clean/motion.css` | Detector and routing test fixture | MIT |
@@ -95,6 +99,9 @@ Every file in this tree, why it is public, and its license. Generated from `git 
 | `scripts/fixtures/J-4/clean/copy.css` | Detector and routing test fixture | MIT |
 | `scripts/fixtures/J-4/slop/copy.css` | Detector and routing test fixture | MIT |
 | `scripts/fixtures/J-5/clean/caption.css` | Detector and routing test fixture | MIT |
+| `scripts/fixtures/J-5/clean/illustration.html` | Detector and routing test fixture | MIT |
+| `scripts/fixtures/J-5/slop/body-beside-illustration.html` | Detector and routing test fixture | MIT |
+| `scripts/fixtures/J-5/slop/hero-role-img.html` | Detector and routing test fixture | MIT |
 | `scripts/fixtures/J-5/slop/intro.css` | Detector and routing test fixture | MIT |
 | `scripts/fixtures/J-6/clean/page.html` | Detector and routing test fixture | MIT |
 | `scripts/fixtures/J-6/slop/page.html` | Detector and routing test fixture | MIT |
@@ -168,4 +175,4 @@ Every file in this tree, why it is public, and its license. Generated from `git 
   including the leak scan, which runs before each export.
 - Session recordings and screenshots.
 
-Files: 154.
+Files: 161.

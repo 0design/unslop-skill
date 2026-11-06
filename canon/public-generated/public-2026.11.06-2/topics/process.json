@@ -1,5 +1,5 @@
 {
-  "checksum": "157b327696a694fe1b7d7b4c2be5893f70cfe0a41fa9e9c36b9fb719cc9198a9",
+  "checksum": "8fe4a6932372596e6ac941dc9195ead4fdf36bb6626b82221d479145487abd6e",
   "payload": {
     "kind": "unslop-canon-topic",
     "rules": [
@@ -11,7 +11,7 @@
         "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
         "mode": "judgement",
         "source": "UNSLOP",
-        "statement": "Anything a person will see (text, copy, labels, meta rows, blocks, decoration, effects, layers, product claims) ships only if the request or the approved layout contains it. A request covers only its own content: placeholder rows or invented items inside a requested block are unrequested. Approval of a direction, a discussion or a reference unlocks proposals, not implementation. Each unrequested element in a delivered result is a finding; repeating it after a correction raises its severity. Text the user supplied verbatim is not a finding. Proposals and execution follow US-002.",
+        "statement": "Do not invent content. Text, data, claims, features, people, quotes, logos and numbers that a person will read as fact ship only if the request, the approved layout or the existing page contains them; content already on a page does not exempt proof and claims from DEC-5. A request covers only its own content: placeholder rows or invented items inside a requested block are unrequested. Approval of a direction, a discussion or a reference unlocks proposals, not implementation. Each invented item in a delivered result is a finding; repeating it after a correction raises its severity. This rule is never a reason to remove parts of an existing page, such as its navigation, footer, actions, sections, illustrations or motifs; on an existing page, new elements, sections and decoration are proposed, not added (US-002). The visual treatment of requested content (type, color, motion, an illustration of the product) is design work judged by the interface rules, not by this one; sample data inside a product illustration is not a claim unless it presents customers, quotes or results as real. Not a finding: text the user supplied verbatim; the navigation, footer and primary action that a page of the requested kind needs, when their labels claim nothing the request lacks. Proposals and execution follow US-002.",
         "strength": "hard",
         "title": "Ship only requested content",
         "topic": "process"
@@ -139,10 +139,36 @@
         "strength": "hard",
         "title": "Product-wide removal covers every occurrence",
         "topic": "process"
+      },
+      {
+        "attribution": "UNSLOP by Oleg.Design",
+        "class": "slop",
+        "id": "US-011",
+        "license": "CC-BY-4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "mode": "judgement",
+        "source": "UNSLOP",
+        "statement": "A page that existed before the current task is the approved baseline for an audit or a fix of it (US-001, US-008). The typefaces, palette, motifs and motion it uses consistently, meaning the same treatment for the same role in two or more places or a reused class, token or component, count as its design system only where one of these rules makes an exception for the approved design system: decoration (DEC-1), lines (DEC-2), labels above headings (DEC-7) and monospace type (KR-19). Every other rule applies as written, with its own counter-examples. Only what is already on the page counts: the agent does not declare signatures, and an element it added, a one-off or an inconsistent use is judged by the rule as written. Repetition alone does not make a generic tell part of the baseline: a treatment that matches the Example of the rule it would be exempt from, or template decoration that would suit any site of the category, such as a background grid or scattered decorative squares, needs a design system documented in the project or the user's explicit requirement. A page generated in the current task is not a baseline. The baseline never covers these always-findings, which stay findings on any page and are fixed, not only reported: fabricated proof, numbers and promises (DEC-5); a pill or badge above the H1 (DEC-7); section or item numbering such as \"01/\" on elements that are not a real sequence (DEC-7); a sparkle, wand or gradient chip as a generic sign of AI (ST-2; the product's own registered icon excepted); claims about competitors without a verified source (XP-22b); agent or process service notes (US-009); placeholder or service text (XP-33); text contrast below WCAG AA, 4.5:1 or 3:1 for large text (DEC-6, XP-18), and input boundaries or icons below 3:1 (WCAG 1.4.11); text too small to read on a phone, such as body text below 14px; touch targets smaller than KR-3 allows. How to fix: the content items of that list (proof, numbers and promises, the pill, the numbering, the AI sign, competitor claims, service notes, placeholder text) are removed or replaced; restyling one, or turning a pill into a text label, is not a fix. Contrast, size and touch-target defects are restyled (US-012). A fabricated item stays only when the user supplies its source. How to check: before judging, list the always-findings and the generic tells and keep them out of the baseline; then list every other element the page uses consistently, each with the places it repeats, and apply an exception only to listed elements. A report that keeps an always-finding as part of the system, or leaves it as an open question, is a finding. Example: a landing page whose serif headline with an italic accent word and monospace captions repeat across its sections keeps them (KR-19 for the captions), while its \"NEW\" pill above the headline and an invented \"2,400+ teams\" are fixed. Not a finding: keeping a consistent pattern that the baseline list names, when it is neither an always-finding nor a generic tell.",
+        "strength": "hard",
+        "title": "An existing page is the approved baseline",
+        "topic": "process"
+      },
+      {
+        "attribution": "UNSLOP by Oleg.Design",
+        "class": "slop",
+        "id": "US-012",
+        "license": "CC-BY-4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "mode": "judgement",
+        "source": "UNSLOP",
+        "statement": "Fix a defect by changing how the element looks or behaves: its contrast, size, spacing, a shadow or color token, the bounds of its motion, its reduced-motion state. Remove an element only when the element itself is the defect, or when the user asked to remove it. The content always-findings of US-011, such as fabricated proof, a pill above the H1, a service note or placeholder text, are such defects: they are removed or replaced, and restyling them is not a fix. A fix applies in the same way to every element of the same group, or to none of them: removing the border of one link in a list and keeping the borders of the others is a finding. How to check: for each changed element, name the defect by rule ID and the smallest change that removes it; a removal that a restyle would have fixed is a finding, and so is any loss without a named reason. The report ends with a table: element, kept / changed / removed, and the rule ID behind each change. Example: 10px captions raised to a readable size and kept in their typeface; a muted text color darkened until it reaches 4.5:1 instead of removing the text; every row of a link list changed the same way. Not a finding: removing fabricated testimonials (DEC-5); removing an element the user asked to remove.",
+        "strength": "hard",
+        "title": "Restyle first, remove last",
+        "topic": "process"
       }
     ],
     "schemaVersion": 1,
     "topic": "process",
-    "version": "public-2026.11.06-1"
+    "version": "public-2026.11.06-2"
   }
 }

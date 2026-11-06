@@ -1,5 +1,5 @@
 {
-  "checksum": "602ce866c9eb622cd5c559ad77c2ce512b63154c82d917509062a7e7faf0eb76",
+  "checksum": "e325b4f284f1af5dfcd25a3af097d5776ab92cdfca6db1b36c7e252bd039689a",
   "payload": {
     "kind": "unslop-canon-topic",
     "rules": [
@@ -24,7 +24,7 @@
         "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
         "mode": "judgement",
         "source": "UNSLOP",
-        "statement": "Carry grouping, hierarchy and separation with space, type and alignment first, then with background. Add a line, container, shadow, badge, icon tile or gradient only when the content does not read without it, when it marks a state or an interactive boundary, or when the approved design system defines it. Test by hand: remove the element; if nothing is lost, it is a finding. Replacing one decoration with another (a border with a ring shadow, a card with a tinted box) is the same finding. Example: a section card holding cards, each with lines between its rows. Not a finding: an input boundary, a focus state, decoration the approved design system defines.",
+        "statement": "Carry grouping, hierarchy and separation with space, type and alignment first, then with background. Add a line, container, shadow, badge, icon tile or gradient only when the content does not read without it, when it marks a state or an interactive boundary, or when the approved design system defines it. Test by hand: remove the element; if nothing is lost, it is a finding. Replacing one decoration with another (a border with a ring shadow, a card with a tinted box) is the same finding. The removal test covers the decorations this rule names; it is not a reason to remove an illustration, a section or motion, which other rules judge (US-012). On a page that existed before the task, decoration it uses consistently counts as its design system (US-011), except template decoration such as a background grid or scattered decorative squares. Example: a section card holding cards, each with lines between its rows. Not a finding: an input boundary, a focus state, decoration the approved design system defines.",
         "strength": "hard",
         "title": "Structure before decoration",
         "topic": "interface"
@@ -74,7 +74,7 @@
         "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
         "mode": "judgement",
         "source": "UNSLOP",
-        "statement": "A container with a border or shadow and with a radius or background, that is a card, is only for a real object: one that is dragged, clicked as a whole or has its own state (a kanban item, a product). A card inside a card is a finding; input fields and controls inside a card do not count as cards. Example: every section of the page wrapped in a card. Detection signal: a card inside a card, or cards in more than half of the page's sections. Detection signals only prompt a review and give no verdict: their thresholds are not calibrated.",
+        "statement": "A container with a border or shadow and with a radius or background, that is a card, is only for a real object: one that is dragged, clicked as a whole or has its own state (a kanban item, a product). A card inside a card is a finding; input fields and controls inside a card do not count as cards. Example: every section of the page wrapped in a card. Not a finding: selectable option tiles, such as plan or habit choices shown as tiles with a selected state; each is clicked as a whole and has its own state. Detection signal: a card inside a card, or cards in more than half of the page's sections. Detection signals only prompt a review and give no verdict: their thresholds are not calibrated.",
         "strength": "hard",
         "title": "Cards are not the default container",
         "topic": "interface"
@@ -87,7 +87,7 @@
         "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
         "mode": "judgement",
         "source": "UNSLOP",
-        "statement": "A shadow means a layer above the content. Use it for a real layer or when the approved design system defines it. A shadow on an element that is not a layer is a finding, including a shadow used in place of a border that DEC-2 would remove. Real layers: popovers, menus, modals, sticky elements, dragged objects, and a card that really is a layer above the content (KR-5). Example: a shadow on every card and section by default. Detection signal: a shadow on any other element. Detection signals only prompt a review and give no verdict: their thresholds are not calibrated.",
+        "statement": "A shadow means a layer above the content. Use it for a real layer or when the approved design system defines it. A shadow on an element that is not a layer is a finding, including a shadow used in place of a border that DEC-2 would remove. Real layers: popovers, menus, modals, sticky elements, dragged objects, and a card that really is a layer above the content (KR-5). Example: a shadow on every card and section by default. Not a finding: a product mock, screenshot or device frame shown lifted above the page with one shadow; it presents an object, so it is a real layer. Detection signal: a shadow on any other element. Detection signals only prompt a review and give no verdict: their thresholds are not calibrated.",
         "strength": "hard",
         "title": "Shadows only for real layers",
         "topic": "interface"
@@ -127,7 +127,7 @@
         "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
         "mode": "judgement",
         "source": "UNSLOP",
-        "statement": "Use an eyebrow, kicker, section numbering or a pill above the H1 only as a deliberate element of the brand system or for a real sequence of steps. A label above every heading by default is a finding. Example: \"01 / FEATURES\", \"02 / PRICING\" above every section. Not a finding: one deliberate kicker in the brand system; real steps of a process. Detection signal: two or more sections with a small uppercase label above h2, or a pill above the H1. Detection signals only prompt a review and give no verdict: their thresholds are not calibrated. Related: UR-1.",
+        "statement": "Use an eyebrow, kicker or section numbering above a heading only as a deliberate element of the brand system or for a real sequence of steps. A label above every heading by default is a finding, and so is numbering such as \"01/\" on items that are not a real sequence, on any page (US-011). A pill or badge above the H1, meaning a chip with a background or border and a radius that holds short status text such as \"NEW\", \"v1.4\" or \"Booking projects\", is a finding on any page, including one that uses pills elsewhere (US-011). Fix it by removing the pill and moving any real information it carried, such as a version or availability, below the H1 or into the body, for example a version next to the install command. Turning the pill into a text label above the H1 is not a fix: the space above the H1 stays free unless the page already had a plain-text kicker there that carries no status. Example: \"01 / FEATURES\", \"02 / PRICING\" above every section; a \"NEW\" pill with a dot above the hero headline. Not a finding: one deliberate kicker of the brand system, set as plain text in the page's own type and carrying no status such as \"NEW\", a version or availability; real steps of a process. Detection signal: two or more sections with a small uppercase label above h2, or a pill above the H1. Detection signals only prompt a review and give no verdict: their thresholds are not calibrated. Related: UR-1.",
         "strength": "hard",
         "title": "Labels above headings only as a system",
         "topic": "interface"
@@ -147,7 +147,7 @@
         "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
         "mode": "judgement",
         "source": "UNSLOP",
-        "statement": "Three or more identical blocks of an icon in a colored tile, a heading and text give everything the same weight; this template is a finding. Example: \"three features\" with icons in squares. Not a finding: truly equivalent options (pricing tiers, comparisons); iconography the design system defines and that carries meaning. Detection signal: neighboring containers of the same size and structure, a 32–128px icon tile right before a heading, one icon per card. Detection signals only prompt a review and give no verdict: their thresholds are not calibrated.",
+        "statement": "Three or more identical blocks of an icon in a colored tile, a heading and text give everything the same weight; this template is a finding. Example: \"three features\" with icons in squares. Not a finding: truly equivalent options (pricing tiers, comparisons); selectable option tiles in a form or an onboarding step, each a choice with a selected state; iconography the design system defines and that carries meaning. Detection signal: neighboring containers of the same size and structure, a 32–128px icon tile right before a heading, one icon per card. Detection signals only prompt a review and give no verdict: their thresholds are not calibrated.",
         "strength": "hard",
         "title": "No identical feature grids with icon tiles",
         "topic": "interface"
@@ -285,7 +285,7 @@
         "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
         "mode": "judgement",
         "source": "UNSLOP",
-        "statement": "Do not play an entrance animation every time the page loads unless the entrance is intended. An intentional entrance stays as designed.",
+        "statement": "Do not play an entrance animation every time the page loads unless the entrance is intended. An intentional entrance stays as designed. Not a finding: a one-off product demo, such as a terminal that plays a deploy or a card that types a suggestion, that plays once, does not delay reading or using the page, and shows its final state at once under prefers-reduced-motion.",
         "strength": "hard",
         "title": "No animation on first render",
         "topic": "interface"
@@ -336,7 +336,7 @@
         "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
         "mode": "judgement",
         "source": "UNSLOP",
-        "statement": "Monospace type is not slop in itself, but AI-generated interfaces overuse it, so treat it as slop by default. Use it only in code blocks and inline code in technical text, in terminal or CLI commands shown for copying, and in diff or patch views. Nowhere else: not for IDs, numbers, labels, tags, headings or interface elements. Numerals in regular text never use monospace digits; code keeps its own digits (TY-1).",
+        "statement": "Monospace type is not slop in itself, but AI-generated interfaces overuse it, so treat it as slop by default. Use it in code blocks and inline code in technical text, in terminal or CLI commands shown for copying, and in diff or patch views. Elsewhere, including IDs, numbers, labels, tags, headings and interface elements, it is a finding unless it is one consistent layer for one role: the same monospace treatment for one kind of text everywhere that kind appears on the page, such as all metadata captions, or the voice of a developer tool's own output. Monospace for a second role, or mixed into headings and body text, is a finding. Numerals in regular text never use monospace digits; code and that one layer keep their own digits (TY-1).",
         "strength": "hard",
         "title": "Monospace type only where explicitly allowed",
         "topic": "interface"
@@ -349,7 +349,7 @@
         "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
         "mode": "judgement",
         "source": "UNSLOP",
-        "statement": "A row or card that changes color on hover must do something on click. Either make it clickable or remove the hover highlight.",
+        "statement": "A row or card that changes color on hover must do something on click. Either make it clickable or remove the hover highlight. Not a finding: a tooltip, crosshair or value readout that appears on hover over a chart or a data point; the hover itself shows the data.",
         "strength": "hard",
         "title": "Hover highlight needs a click",
         "topic": "interface"
@@ -667,7 +667,7 @@
         "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
         "mode": "judgement",
         "source": "UNSLOP",
-        "statement": "Regular text uses the font's ordinary numerals. Do not use tabular figures (tabular-nums, tnum), a slashed zero (slashed-zero, zero) or monospace digits. Monospace text where KR-19 allows it, such as code, keeps its own digits.",
+        "statement": "Regular text uses the font's ordinary numerals. Do not use tabular figures (tabular-nums, tnum), a slashed zero (slashed-zero, zero) or monospace digits in it. Monospace text where KR-19 allows it, such as code, keeps its own digits. Not a finding: tabular figures scoped to amounts, prices, counters and table columns whose digits must line up, such as a ledger or a timer; set on the body or on whole paragraphs, they are a finding.",
         "strength": "hard",
         "title": "Plain font numerals in regular text",
         "topic": "interface"
@@ -701,6 +701,6 @@
     ],
     "schemaVersion": 1,
     "topic": "interface",
-    "version": "public-2026.11.06-1"
+    "version": "public-2026.11.06-2"
   }
 }

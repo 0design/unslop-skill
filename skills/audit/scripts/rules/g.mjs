@@ -10,6 +10,92 @@ const MOTION_LIB_RE = /(framer-motion|motion\/react|motion\/dom|gsap|animejs|@re
 const LAYOUT_PROPS_RE =
   /\b(width|height|top|left|right|bottom|margin|margin-[a-z]+|padding|padding-[a-z]+|font-size|line-height|inset)\b/;
 const OVERLAY_SELECTOR_RE = /(dropdown|menu|popover|tooltip|modal|dialog|toast|sheet|flyout|combobox|select)/i;
+// G-5: a transition answers a state change whatever its selector, so every transition counts. An `animation` counts
+// on a control, an overlay or a state selector. Elsewhere it is skipped only as a one-off narrative entrance (KR-15):
+// it plays once, declares a fill mode (both, forwards or backwards), uses a keyframe no other block uses, names no
+// reveal or repeated element, and in markup its class sits on one element. Anything else stays a hit: a scroll-reveal,
+// a staggered or repeated entrance, a finite loop, or an item a script inserts and animates on its base selector.
+const RESPONSE_SELECTOR_RE =
+  /(dropdown|menu|popover|tooltip|modal|dialog|toast|sheet|flyout|combobox|select|drawer|accordion|disclosure|collapse|tab|toggle|switch|button|btn|input|field|checkbox|radio|nav|notification|snackbar|alert|popup|overlay|backdrop|lightbox)/i;
+const STATE_SELECTOR_RE =
+  /:(?:hover|focus|focus-visible|focus-within|active|checked|target|open|popover-open|disabled|invalid)\b|\[(?:open|aria-(?:expanded|selected|pressed|checked|current)|data-state)\b|\.(?:is-[\w-]+|open|opened|active|expanded|selected|show|showing|closing|entering|leaving)(?![\w-])/i;
+const REPEATED_SELECTOR_RE =
+  /(reveal|in-?view|visible|aos|animate|fade|slide|stagger|section|card|feature|item|tile|row|grid|list|block)|:nth-(?:last-)?(?:child|of-type)|(?:^|[\s>+~,])(?:li|article|section)(?=$|[\s>+~,.:#[])/i;
+const ANIMATION_KEYWORDS = new Set([
+  'none', 'forwards', 'backwards', 'both', 'normal', 'reverse', 'alternate', 'alternate-reverse', 'running', 'paused',
+  'linear', 'ease', 'ease-in', 'ease-out', 'ease-in-out', 'step-start', 'step-end', 'infinite', 'initial', 'inherit', 'unset',
+]);
+
+/** Split an `animation` value into its comma-separated items, each as tokens with functions kept whole. */
+function animationItems(value) {
+  const items = [];
+  let depth = 0;
+  let current = '';
+  for (const ch of value) {
+    if (ch === '(') depth += 1;
+    if (ch === ')') depth -= 1;
+    if (ch === ',' && depth === 0) {
+      items.push(current);
+      current = '';
+    } else current += ch;
+  }
+  items.push(current);
+  return items.map((item) => item.replace(/\([^)]*\)/g, '()').trim().split(/\s+/).filter(Boolean));
+}
+
+function parseAnimation(tokens) {
+  const out = { name: null, fill: null, count: 1 };
+  for (const t of tokens) {
+    const lower = t.toLowerCase();
+    if (/^-?[\d.]+m?s$/i.test(t) || t.endsWith('()')) continue;
+    if (/^[\d.]+$/.test(t)) out.count = Number(t);
+    else if (lower === 'both' || lower === 'forwards' || lower === 'backwards' || lower === 'none') out.fill = out.fill ?? lower;
+    else if (!ANIMATION_KEYWORDS.has(lower) && out.name === null) out.name = t;
+  }
+  return out;
+}
+
+/** The animations a block declares: name, fill mode and iteration count, from the shorthand or the longhands. */
+function blockAnimations(block) {
+  const shorthand = declsMatching(block, /^animation$/).flatMap((d) => animationItems(d.value).map(parseAnimation));
+  const names = declsMatching(block, /^animation-name$/).flatMap((d) => d.value.split(',').map((v) => v.trim()));
+  const fills = declsMatching(block, /^animation-fill-mode$/).flatMap((d) => d.value.split(',').map((v) => v.trim().toLowerCase()));
+  const counts = declsMatching(block, /^animation-iteration-count$/).flatMap((d) => d.value.split(',').map((v) => v.trim()));
+  const longhand = names.map((name, i) => ({
+    name,
+    fill: fills[i] ?? fills[0] ?? null,
+    count: /^[\d.]+$/.test(counts[i] ?? counts[0] ?? '1') ? Number(counts[i] ?? counts[0] ?? '1') : Infinity,
+  }));
+  return [...shorthand, ...longhand].filter((a) => a.name && a.name.toLowerCase() !== 'none');
+}
+
+function markupClassCounts(content) {
+  const counts = new Map();
+  const text = content.replace(/<!--[\s\S]*?-->/g, ' ').replace(/<(script|style)\b[^>]*>[\s\S]*?<\/\1\s*>/gi, ' ');
+  for (const m of text.matchAll(/<[A-Za-z][^>]*?\s(?:class|className)\s*=\s*(?:"([^"]*)"|'([^']*)')/g)) {
+    for (const c of new Set((m[1] ?? m[2]).split(/\s+/).filter(Boolean))) counts.set(c, (counts.get(c) ?? 0) + 1);
+  }
+  return counts;
+}
+
+/** A one-off narrative entrance: the only kind of `animation` G-5 leaves to judgement under KR-15. */
+function isOneOffEntrance(block, keyframeUse, classCounts) {
+  if (RESPONSE_SELECTOR_RE.test(block.selector) || STATE_SELECTOR_RE.test(block.selector)) return false;
+  if (REPEATED_SELECTOR_RE.test(block.selector)) return false;
+  const animations = blockAnimations(block);
+  if (animations.length === 0) return false;
+  const oneShot = animations.every(
+    (a) => a.count <= 1 && (a.fill === 'both' || a.fill === 'forwards' || a.fill === 'backwards') && (keyframeUse.get(a.name) ?? 0) <= 1,
+  );
+  if (!oneShot) return false;
+  if (classCounts) {
+    const subject = block.selector.split(',').map((sel) => sel.trim().split(/\s*[\s>+~]\s*/).pop());
+    for (const part of subject) {
+      for (const m of part.matchAll(/\.(-?[_a-zA-Z][\w-]*)/g)) if ((classCounts.get(m[1]) ?? 0) > 1) return false;
+    }
+  }
+  return true;
+}
 
 export default [
   {
@@ -58,14 +144,22 @@ export default [
     id: 'G-5',
     severity: 'orange',
     title: 'UI duration longer than 300ms',
-    why: 'Buttons 100–160ms, dropdowns 150–250ms, modals 200–500ms. Past that the UI feels sluggish.',
+    why: 'Buttons 100–160ms, dropdowns 150–250ms, modals 200–500ms. Past that the UI feels sluggish. Every transition counts, and so does every animation except a one-off entrance that plays once, declares a fill mode and runs on one element; that one is judged under KR-15. An item a script inserts and animates on its base selector still counts.',
     fileTypes: ALL_FILES,
     testFile(content, ctx) {
       const out = [];
 
-      for (const block of ctx.blocks()) {
+      const blocks = [...ctx.blocks()];
+      const keyframeUse = new Map();
+      for (const block of blocks) {
+        for (const name of new Set(blockAnimations(block).map((a) => a.name))) keyframeUse.set(name, (keyframeUse.get(name) ?? 0) + 1);
+      }
+      const classCounts = ctx.isMarkupFile || ctx.ext === '.html' ? markupClassCounts(content) : null;
+      for (const block of blocks) {
+        const oneOff = isOneOffEntrance(block, keyframeUse, classCounts);
         for (const d of declsMatching(block, /^(transition|transition-duration|animation|animation-duration)$/)) {
           if (/infinite/i.test(d.value)) continue; // loaders/ambient loops are not UI response
+          if (d.prop.startsWith('animation') && oneOff) continue; // a one-off narrative entrance, judged under KR-15
           const worst = Math.max(0, ...durationsMs(d.value));
           if (worst > 300) {
             out.push({ line: d.line, excerpt: `${block.selector} { ${d.prop}: ${d.value} }` });
