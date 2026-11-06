@@ -1,5 +1,5 @@
 {
-  "checksum": "d1ece09c40514d674ec3d9039f080165ec49beeb8aafd08f9bb9df6ff5cb67af",
+  "checksum": "cbb085aa9d850929d5f24395406be2225ce9c5a111950876064fc2e5e4ab5825",
   "payload": {
     "classes": {
       "bad-tone": {
@@ -27,8 +27,8 @@
     "source": "UNSLOP",
     "topics": {
       "copy": {
-        "bytes": 8577,
-        "checksum": "a12abf49a3aeb10c32a24a7fd5853d798810b853d88be91f22fc145d8d7d5b54",
+        "bytes": 8855,
+        "checksum": "25c644b27cd9c06c7e9c8b716317b733fa2a4476c47fd8ee2eadda475ad28ca2",
         "globs": [
           "**/*.{html,jsx,tsx,vue,svelte}",
           "**/*.md",
@@ -58,8 +58,8 @@
         }
       },
       "interface": {
-        "bytes": 44460,
-        "checksum": "c9108c5f4623f00eb44ffb76462b76a9b61f3345f5a582c509345388f71110b6",
+        "bytes": 45047,
+        "checksum": "32392503ad9167296145054accc0e7d86a106c3806431dccedff47795feed2e3",
         "globs": [
           "**/*.{css,scss}",
           "**/*.{html,jsx,tsx,vue,svelte}"
@@ -145,8 +145,8 @@
       },
       "process": {
         "always": true,
-        "bytes": 17296,
-        "checksum": "4a3464c71fc3edba95c51054be045a203aeec6b41af9916c4e8df1afd02e5716",
+        "bytes": 19725,
+        "checksum": "586849fb37e52692c38ba08a3b0ce9efdfcb8e8471bd9c9c63268bb5019d53d3",
         "globs": [],
         "ruleIds": [
           "UR-1",
@@ -160,7 +160,8 @@
           "US-008",
           "US-010",
           "US-011",
-          "US-012"
+          "US-012",
+          "US-013"
         ],
         "titles": {
           "UR-1": "Ship only requested content",
@@ -174,7 +175,8 @@
           "US-008": "Leave everything outside the change intact",
           "US-010": "Product-wide removal covers every occurrence",
           "US-011": "An existing page is the approved baseline",
-          "US-012": "Restyle first, remove last"
+          "US-012": "Restyle first, remove last",
+          "US-013": "Keep the page's selling copy"
         }
       }
     },
